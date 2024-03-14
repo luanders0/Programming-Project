@@ -1,4 +1,4 @@
-class Bar {
+class Bar { // Lukas A added rough outline for bar object 3/14/2024
   int category;
   int height;
   color barColor;
