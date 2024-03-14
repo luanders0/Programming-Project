@@ -1,5 +1,7 @@
 class Bar_Plot {
-  int categories;
-  int height;
   ArrayList bars;
+  
+  Bar_Plot (ArrayList bars) {
+    this.bars = bars;
+  }
 }
