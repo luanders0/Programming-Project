@@ -5,7 +5,7 @@ class Bar_Plot {
     this.bars = bars;
   }
   
-  void draw() {
+  void draw() {  // Lukas A
     for (int i = 0; i < bars.size(); i++) {
       Bar aBar = (Bar)bars.get(i);
       aBar.draw();
