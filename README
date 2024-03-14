@@ -6,3 +6,6 @@ Roisin Smith
 Ella McEntee
 Eimer Hayes
 Zara Flanagan
+
+This is a project for Trinity College Dublin. This program will interpret flight data stored in a .csv file and output graphic representations of that data. 
+The user will be able to sort the data by date ranges, flight departure/destination airport and degree of lateness.
