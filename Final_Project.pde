@@ -16,14 +16,16 @@ int cancelledFlightCount = 0;
 int totalFlightCount = -1;
 
 void setup() {
-  String[] lines = loadStrings("flights2k.csv");
-  println("there are " + lines.length + " lines");
-  size (500, 500);
+  //String[] lines = loadStrings("flights2k.csv");
+  //println("there are " + lines.length + " lines");
+  size (640, 360);
+  table = loadTable("flights2k.csv", "header");
+  println(table.getRowCount() + " total rows in table");
 }
 
 void draw() {
   background(255);
+  lateness();
   pieChart(300, flightStatus);
   key();
-  lateness();
 }

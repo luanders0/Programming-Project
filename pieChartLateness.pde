@@ -1,9 +1,5 @@
 void lateness() {
 
-  table = loadTable("flights2k.csv", "header");
-
-  println(table.getRowCount() + " total rows in table");
-
   for (TableRow row : table.rows()) {
 
     totalFlightCount++;
@@ -106,10 +102,13 @@ void lateness() {
   println("total: " + totalFlightCount + "\nearly: " + earlyFlightCount + "\nonTime: " + onTimeFlightCount + "\nlate: " + lateFlightCount + "\ncancelled: " + cancelledFlightCount);
 
   // Calculate proportions
+
   float earlyProportion = (float) earlyFlightCount / totalFlightCount;
   float onTimeProportion = (float) onTimeFlightCount / totalFlightCount;
   float lateProportion = (float) lateFlightCount / totalFlightCount;
-  float cancelledProportion = (float) cancelledFlightCount / totalFlightCount;
+  float cancelledProportion = (float) cancelledFlightCount / totalFlightCount; // Include cancelled flights
+  
+  println("early proportion: " + earlyProportion + "\nOn Time proportion: " + onTimeProportion + "\nlate proportion: " + lateProportion + "\ncancelled proportion: " + cancelledProportion);
   
   // Assign proportions
   flightStatus[0] = (int) (earlyProportion * 360); // Convert proportion to degrees
@@ -120,49 +119,61 @@ void lateness() {
 }
 
 void pieChart(float diameter, int[] data) {
-  float lastAngle = 0;
+  float total = 0;
+  
+  // Calculate the total sum of data
   for (int i = 0; i < data.length; i++) {
+    total += data[i];
+  }
+  
+  float lastAngle = 0;
+  
+  for (int i = 0; i < data.length; i++) {
+    float proportion = data[i] / total;
+ 
     // Assign colors based on flight status
     if (i == 0) {
-      fill(245, 174, 229); // Red for early flights
+      fill (255, 113, 206); // pink - early flights
     } else if (i == 1) {
-      fill(245, 147, 152); // Green for on-time flights
+      fill (1, 205, 254); // blue - on time flights
     } else if (i == 2) {
-      fill(182, 169, 245); // Green for on-time flights
-    }else {
-      fill(203, 147, 245); // Blue for late flights
+      fill (185, 103, 255); // purple - late flights
+    } else {
+      fill(255, 251, 150); // yellow - cancelled flights
     }
     
     // Draw pie chart section
-    strokeWeight(1);
-    stroke(0);
-    arc(width/2, height/2, diameter, diameter, lastAngle, lastAngle+radians(data[i]));
-    lastAngle += radians(data[i]);
+    float angle = proportion * TWO_PI; // Calculate angle based on proportion
+    
+    arc(width/2, height/2, diameter, diameter, lastAngle, lastAngle + angle);
+    lastAngle += angle;
   }
 }
  void key() {
-  String e = "Early Flights";
-  String t = "On-time Flights";
-  String l = "Late Flights";
-  String c = "Cancelled Flights";
+  String e = ("Early Flights - " + earlyFlightCount);
+  String t = ("On-time Flights - " + onTimeFlightCount);
+  String l = ("Late Flights - " + lateFlightCount);
+  String c = ("Cancelled Flights - " + cancelledFlightCount);
   fill(100);
   textSize(15);
-  text(e, 45, 20, 280, 320);
-  text(t, 45, 40, 280, 320);
-  text(l, 45, 60, 280, 320);
-  text(c, 45, 80, 280, 320);
-  
-  fill(245, 174, 229); // early
-  square(20, 20, 20);
-   fill(245, 147, 152); // on time
- 
-  square(20, 40, 20);
-  
-    fill(182, 169, 245); // late
-  square(20, 60, 20);
+  text(e, 45, 25, 280, 320); 
+  text(t, 45, 50, 280, 320);  
+  text(l, 45, 75, 280, 320);
+  text(c, 45, 100, 280, 320);
 
-  fill(203, 147, 245); //cancelled
-  square(20, 80, 20);
+  
+  
+  fill(255,113,206); // early
+  square(15, 20, 20);
+  
+   fill(1,205,254); // on time
+  square(15, 45, 20);
+  
+    fill(185,103,255); // late
+  square(15, 70, 20);
+
+  fill(255,251,150); //cancelled
+  square(15, 95, 20);
 
  }
  
