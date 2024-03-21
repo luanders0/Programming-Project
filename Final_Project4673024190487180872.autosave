@@ -8,5 +8,5 @@ void setup() {
 }
 
 void draw() {
-  
+  newWidget = new Widget(100, 200, 20, 40, 
 }
