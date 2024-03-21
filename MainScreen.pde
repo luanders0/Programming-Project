@@ -2,7 +2,7 @@ class MainScreen {
   PImage HomeScreen;
   PImage Clouds;
   int areaX0 = 400;
-  int areaY0 = 130;
+  int areaY0 = 200;
   int areaWidth0 = 100;
   int areaHeight0 = 100;
 

@@ -41,8 +41,8 @@ void setup() {
   
   button = new Button(width/2, height/2, 200, 60, "Lateness Chart");
   
-  HomeScreen = loadImage("HomeScreen.png");
-  Clouds = loadImage("clouds.jpg");
+  HomeScreen = loadImage("SquareMainScreen.jpg");
+  Clouds = loadImage("ChartScreen.jpg");
 
   mainScreen = new MainScreen(HomeScreen, Clouds);
 }
