@@ -1,4 +1,6 @@
 class Screen {
+  
+  static final int EVENT_NULL = -1; 
   ArrayList screenWidgets;
   color screenColor;
   

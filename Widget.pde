@@ -1,4 +1,5 @@
 class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
+  static final int EVENT_NULL = -1; 
   int x, y, width, height;
   String label; int event;
   color widgetColor, labelColor;

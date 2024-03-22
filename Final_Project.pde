@@ -28,15 +28,15 @@ void setup() {
   size(600, 600);
   
     //zf
-  dateList = new ArrayList<String>();
-  dayList = new ArrayList<Integer>();
-  monthList = new ArrayList<Integer>();
-  yearList = new ArrayList<Integer>();
-  dayCounts = new int[7];
-  date = new Dates(dateList, dayList, monthList, yearList, lines, dayCounts);
+  //dateList = new ArrayList<String>();
+  //dayList = new ArrayList<Integer>();
+  //monthList = new ArrayList<Integer>();
+  //yearList = new ArrayList<Integer>();
+  //dayCounts = new int[7];
+  //date = new Dates(dateList, dayList, monthList, yearList, lines, dayCounts);
   //zf
   
-  table = loadTable("flights2k(1).csv", "header");
+  table = loadTable("flights2k.csv", "header");
   println(table.getRowCount() + " total rows in table");
   
   button = new Button(width/2, height/2, 200, 60, "Lateness Chart");
