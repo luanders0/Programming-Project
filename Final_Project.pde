@@ -50,12 +50,42 @@ void setup() {
 void draw() {
   background(255);
 
+ background(255);
+
   // Draw MainScreen or Clouds based on screenState
   if (screenState == 0) {
     image(HomeScreen, 0, 0);
   } else if (screenState == 1) {
     image(Clouds, 0, 0);
-    button.display();
+    mainScreen.flightsScreen();
+    mainScreen.mouseOver();
+    mainScreen.flightsScreen2();
+    mainScreen.mouseOver2();
+    mainScreen.backButton();
+  }
+  else if (screenState == 2 ) {
+    background(0);
+    mainScreen.backButton();
+  }
+  else if (screenState == 3 ) {
+    background(0);
+    mainScreen.backButton();
+  }
+  else if (screenState == 4 ) {
+    background(0);
+    mainScreen.backButton();
+  }
+  else if (screenState == 5 ) {
+    background(0);
+    mainScreen.backButton();
+  }
+  else if (screenState == 6 ) {
+    background(0);
+    mainScreen.backButton();
+  }
+  else if (screenState == 7 ) {
+    background(0);
+    mainScreen.backButton();
   }
 }
 
