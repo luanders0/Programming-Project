@@ -2,6 +2,8 @@ import processing.data.Table;
 import processing.data.TableRow;
 import java.util.HashMap;
 final int BAR_WIDTH = 20;
+String userInput = "";
+
 
 Table table;
 int difference = 0;
@@ -66,6 +68,7 @@ void draw() {
   else if (screenState == 2 ) { //bar chart 2k
     background(0);
     mainScreen.backButton();
+    mainScreen.airportTextDraw();
   }
   else if (screenState == 3 ) { // bar chart 10k
     background(0);
@@ -99,6 +102,15 @@ void mouseClicked() {
   }
 }
 void mousePressed() {
-  // Call mousePressed() of MainScreen to handle screen state change
   mainScreen.mousePressed();
+}
+
+void keyPressed() {
+  if (key == BACKSPACE) {
+    if (userInput.length() > 0) {
+      userInput = userInput.substring(0, userInput.length() - 1);
+    }
+  } else if (key != CODED) {
+      userInput += key;
+   }
 }

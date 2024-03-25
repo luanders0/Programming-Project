@@ -5,9 +5,10 @@ class MainScreen {
   int areaY0 = 200;
   int areaWidth0 = 100;
   int areaHeight0 = 100;
-  PFont font = createFont("BellMTBold-48.vlw", 18); 
+  PFont font = createFont("AgencyFB-Bold-48.vlw", 18); 
   boolean[] isHovered1 = new boolean[3]; 
   boolean[] isHovered2 = new boolean[3]; 
+  //String userInput = "";
 
   MainScreen(PImage HomeScreen, PImage Clouds) {
     this.HomeScreen = HomeScreen;
@@ -134,4 +135,11 @@ void backButton() {
    fill(255);
    text("back", 18, 25);
 }
+
+void airportTextDraw() {
+  fill(255);
+  textFont(font);
+  text("Airport: " + userInput, 70, 25);
+}
+
 }
