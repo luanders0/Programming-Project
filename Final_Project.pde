@@ -1,7 +1,8 @@
 import processing.data.Table;
 import processing.data.TableRow;
 import java.util.HashMap;
-final int BAR_WIDTH = 20;
+import java.util.Scanner;
+final int homeScreen = 0;
 
 Table table;
 int difference = 0;
@@ -45,15 +46,36 @@ void setup() {
   Clouds = loadImage("ChartScreen.jpg");
 
   mainScreen = new MainScreen(HomeScreen, Clouds);
+  
+  Scanner input = new Scanner (System.in);
+  String[] testOptions = {"Test 1", "Test 2", "Test 3", "Test 4"};
+  Query test = new Query("What would you like to test?", testOptions);
+  test.askQuestion();
+  do {
+    test.getAnswer(input);
+  } while (test.state != -1);
+  
+  switch(test.state) {
+    case 1:
+      println("This is Test 1!");
+      break;
+    case 2:
+      println("This is Test 2!");
+      break;
+    case 3:
+      println("This is Test 3!");
+      break;
+    case 4:
+      println("This is Test 4 :(");
+      break;
+  }
 }
 
 void draw() {
-  background(255);
-
  background(255);
 
   // Draw MainScreen or Clouds based on screenState
-  if (screenState == 0) {
+  if (screenState == homeScreen) {
     image(HomeScreen, 0, 0);
   } else if (screenState == 1) {
     image(Clouds, 0, 0);
