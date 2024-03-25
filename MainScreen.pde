@@ -5,7 +5,7 @@ class MainScreen {
   int areaY0 = 200;
   int areaWidth0 = 100;
   int areaHeight0 = 100;
-  PFont font = createFont("AgencyFB-Bold-48.vlw", 18); 
+  PFont font = createFont("BellMTBold-48.vlw", 18); 
   boolean[] isHovered1 = new boolean[3]; 
   boolean[] isHovered2 = new boolean[3]; 
 

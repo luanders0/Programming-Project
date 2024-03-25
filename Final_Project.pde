@@ -63,27 +63,27 @@ void draw() {
     mainScreen.mouseOver2();
     mainScreen.backButton();
   }
-  else if (screenState == 2 ) {
+  else if (screenState == 2 ) { //bar chart 2k
     background(0);
     mainScreen.backButton();
   }
-  else if (screenState == 3 ) {
+  else if (screenState == 3 ) { // bar chart 10k
     background(0);
     mainScreen.backButton();
   }
-  else if (screenState == 4 ) {
+  else if (screenState == 4 ) { // bar chart 100k
     background(0);
     mainScreen.backButton();
   }
-  else if (screenState == 5 ) {
+  else if (screenState == 5 ) { // pie chart 2k
     background(0);
     mainScreen.backButton();
   }
-  else if (screenState == 6 ) {
+  else if (screenState == 6 ) { // pie chart 10k
     background(0);
     mainScreen.backButton();
   }
-  else if (screenState == 7 ) {
+  else if (screenState == 7 ) { // pie chart 100k
     background(0);
     mainScreen.backButton();
   }
