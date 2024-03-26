@@ -1,7 +1,7 @@
 import processing.data.Table;
 import processing.data.TableRow;
 import java.util.HashMap;
-final int homeScreen = 0;
+final int HOME_SCREEN = 0;
 String userInput = "";
 
 Table table;
