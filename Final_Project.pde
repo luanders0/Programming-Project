@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+final int HOME_SCREEN = 0;
+final int CHART_SELECT = 1;
+
 String userInput = "";
 
 Table table;
@@ -20,6 +23,7 @@ int lateFlightCount = 0;
 int cancelledFlightCount = 0;
 int totalFlightCount = -1;
 
+Screen barScreen, pieScreen;
 ActionListener[] buttonListeners = new ActionListener[4];
 Dialog_Pane buttonPanel;
 
@@ -92,10 +96,10 @@ void draw() {
   background(255);
 
   switch(screenState) {
-    case 0:
+    case HOME_SCREEN:
       image(HomeScreen, 0, 0);
       break;
-    case 1:
+    case CHART_SELECT:
       image(Clouds, 0, 0);
       mainScreen.flightsScreen();
       mainScreen.mouseOver();
