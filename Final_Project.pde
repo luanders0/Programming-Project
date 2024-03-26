@@ -1,7 +1,6 @@
 import processing.data.Table;
 import processing.data.TableRow;
 import java.util.HashMap;
-final int BAR_WIDTH = 20;
 String userInput = "";
 
 Table table;
