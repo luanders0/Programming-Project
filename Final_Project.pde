@@ -1,8 +1,8 @@
 import processing.data.Table;
 import processing.data.TableRow;
 import java.util.HashMap;
-import java.util.Scanner;
 final int homeScreen = 0;
+String userInput = "";
 
 Table table;
 int difference = 0;
@@ -22,8 +22,6 @@ PImage HomeScreen;
 PImage Clouds;
 int screenState;
 MainScreen mainScreen;
-
-
 
 void setup() {
   size(600, 600);
@@ -46,68 +44,48 @@ void setup() {
   Clouds = loadImage("ChartScreen.jpg");
 
   mainScreen = new MainScreen(HomeScreen, Clouds);
-  
-  Scanner input = new Scanner (System.in);
-  String[] testOptions = {"Test 1", "Test 2", "Test 3", "Test 4"};
-  Query test = new Query("What would you like to test?", testOptions);
-  test.askQuestion();
-  do {
-    test.getAnswer(input);
-  } while (test.state != -1);
-  
-  switch(test.state) {
-    case 1:
-      println("This is Test 1!");
-      break;
-    case 2:
-      println("This is Test 2!");
-      break;
-    case 3:
-      println("This is Test 3!");
-      break;
-    case 4:
-      println("This is Test 4 :(");
-      break;
-  }
 }
 
 void draw() {
- background(255);
+  background(255);
 
-  // Draw MainScreen or Clouds based on screenState
-  if (screenState == homeScreen) {
-    image(HomeScreen, 0, 0);
-  } else if (screenState == 1) {
-    image(Clouds, 0, 0);
-    mainScreen.flightsScreen();
-    mainScreen.mouseOver();
-    mainScreen.flightsScreen2();
-    mainScreen.mouseOver2();
-    mainScreen.backButton();
-  }
-  else if (screenState == 2 ) {
-    background(0);
-    mainScreen.backButton();
-  }
-  else if (screenState == 3 ) {
-    background(0);
-    mainScreen.backButton();
-  }
-  else if (screenState == 4 ) {
-    background(0);
-    mainScreen.backButton();
-  }
-  else if (screenState == 5 ) {
-    background(0);
-    mainScreen.backButton();
-  }
-  else if (screenState == 6 ) {
-    background(0);
-    mainScreen.backButton();
-  }
-  else if (screenState == 7 ) {
-    background(0);
-    mainScreen.backButton();
+  switch(screenState) {
+    case 0:
+      image(HomeScreen, 0, 0);
+      break;
+    case 1:
+      image(Clouds, 0, 0);
+      mainScreen.flightsScreen();
+      mainScreen.mouseOver();
+      mainScreen.flightsScreen2();
+      mainScreen.mouseOver2();
+      mainScreen.backButton();
+      break;
+    case 2: // bar chart 2k
+      background(0);
+      mainScreen.backButton();
+      //mainScreen.airportTextDraw();
+      break;
+    case 3: // bar chart 10k
+      background(0);
+      mainScreen.backButton();
+      break;
+    case 4: // bar chart 100k
+      background(0);
+      mainScreen.backButton();
+      break;
+    case 5: // pie chart 2k
+      background(0);
+      mainScreen.backButton();
+      break;    
+    case 6: // pie chart 10k
+      background(0);
+      mainScreen.backButton();
+      break;
+    case 7: // pie chart 100k
+      background(0);
+      mainScreen.backButton();
+      break;
   }
 }
 
@@ -121,6 +99,15 @@ void mouseClicked() {
   }
 }
 void mousePressed() {
-  // Call mousePressed() of MainScreen to handle screen state change
   mainScreen.mousePressed();
 }
+
+//void keyPressed() {
+//  if (key == BACKSPACE) {
+//    if (userInput.length() > 0) {
+//      userInput = userInput.substring(0, userInput.length() - 1);
+//    }
+//  } else if (key != CODED) {
+//      userInput += key;
+//   }
+//}
