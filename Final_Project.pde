@@ -40,6 +40,7 @@ void setup() {
   //dayCounts = new int[7];
   //date = new Dates(dateList, dayList, monthList, yearList, lines, dayCounts);
   //zf
+  
   buttonListeners[0] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
    @Override
    public void actionPerformed (ActionEvent e) {
@@ -68,11 +69,11 @@ void setup() {
    @Override
    public void actionPerformed (ActionEvent e) {
      //this code is executed when the 4th button is pressed
-     print("button 4 performed an action");
+     print(buttonPanel.getInput("Please enter destination airport"));
    }
   };
   
-  String[] buttonText = {"Button1", "Button2", "Button3", "Button4"};
+  String[] buttonText = {"Button1", "Button2", "Button3", "Sort By Destination Airport"};
   
   buttonPanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", buttonListeners, 300, 200);
   

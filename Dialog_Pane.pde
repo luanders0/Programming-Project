@@ -35,4 +35,9 @@ class Dialog_Pane { //Lukas A added Dialog_Pane class 26/3/24
   void popup() {
     parent.setVisible(true);
   }
+  
+  String getInput(String message) {
+    String input = JOptionPane.showInputDialog(parent, message, null);
+    return input;
+  }
 }
