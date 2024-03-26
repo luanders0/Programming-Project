@@ -1,6 +1,10 @@
 import processing.data.Table;
 import processing.data.TableRow;
 import java.util.HashMap;
+import javax.swing.*;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 String userInput = "";
 
 Table table;
@@ -15,6 +19,9 @@ int onTimeFlightCount = 0;
 int lateFlightCount = 0;
 int cancelledFlightCount = 0;
 int totalFlightCount = -1;
+
+ActionListener[] buttonListeners = new ActionListener[4];
+Dialog_Pane buttonPanel;
 
 Button button;
 PImage HomeScreen;
@@ -33,6 +40,37 @@ void setup() {
   //dayCounts = new int[7];
   //date = new Dates(dateList, dayList, monthList, yearList, lines, dayCounts);
   //zf
+  buttonListeners[0] = new ActionListener() {
+   @Override
+   public void actionPerformed (ActionEvent e) {
+     print("button 1 performed an action");
+   }
+  };
+  
+  buttonListeners[1] = new ActionListener() {
+   @Override
+   public void actionPerformed (ActionEvent e) {
+     print("button 2 performed an action");
+   }
+  };
+  
+  buttonListeners[2] = new ActionListener() {
+   @Override
+   public void actionPerformed (ActionEvent e) {
+     print("button 3 performed an action");
+   }
+  };
+  
+  buttonListeners[3] = new ActionListener() {
+   @Override
+   public void actionPerformed (ActionEvent e) {
+     print("button 4 performed an action");
+   }
+  };
+  
+  String[] buttonText = {"Button1", "Button2", "Button3", "Button4"};
+  
+  buttonPanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", buttonListeners, 300, 200);
   
   table = loadTable("flights2k.csv", "header");
   println(table.getRowCount() + " total rows in table");
@@ -59,6 +97,7 @@ void draw() {
       mainScreen.flightsScreen2();
       mainScreen.mouseOver2();
       mainScreen.backButton();
+      buttonPanel.popup();
       break;
     case 2: // bar chart 2k
       background(0);
