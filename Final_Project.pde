@@ -17,6 +17,7 @@ int cancelledFlightCount = 0;
 int totalFlightCount = -1;
 
 Button button;
+Query test;
 PImage HomeScreen;
 PImage Clouds;
 int screenState;
@@ -44,10 +45,9 @@ void setup() {
   
   String[] responses = {"test 1", "test 2", "test 3", "test 4"}; 
   
-  Query test = new Query("Choose your test", responses);
+  test = new Query("Choose your test", responses);
   
   test.askQuestion();
-  test.getAnswer();
   switch (test.state) {
     case 1:
       print("test 1!");
@@ -120,6 +120,10 @@ void mouseClicked() {
 }
 void mousePressed() {
   mainScreen.mousePressed();
+}
+
+void keyTyped() {
+  test.getAnswer();
 }
 
 //void keyPressed() {

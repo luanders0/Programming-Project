@@ -18,11 +18,8 @@ class Query {
     }
   }
 
-  void keyPressed() {
+  void getAnswer() {
     int response = 0;
-    while (!keyPressed) {
-      response = key;
-    }
     
     if (response >= 1 && response <= responses.length) {
       state = response;
