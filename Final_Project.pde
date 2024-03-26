@@ -64,7 +64,7 @@ void draw() {
     case 2: // bar chart 2k
       background(0);
       mainScreen.backButton();
-      mainScreen.airportTextDraw();
+      //mainScreen.airportTextDraw();
       break;
     case 3: // bar chart 10k
       background(0);
@@ -102,12 +102,12 @@ void mousePressed() {
   mainScreen.mousePressed();
 }
 
-void keyPressed() {
-  if (key == BACKSPACE) {
-    if (userInput.length() > 0) {
-      userInput = userInput.substring(0, userInput.length() - 1);
-    }
-  } else if (key != CODED) {
-      userInput += key;
-   }
-}
+//void keyPressed() {
+//  if (key == BACKSPACE) {
+//    if (userInput.length() > 0) {
+//      userInput = userInput.substring(0, userInput.length() - 1);
+//    }
+//  } else if (key != CODED) {
+//      userInput += key;
+//   }
+//}
