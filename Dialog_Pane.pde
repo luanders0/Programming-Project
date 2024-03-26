@@ -1,4 +1,4 @@
-class Dialog_Pane {
+class Dialog_Pane { //Lukas A added Dialog_Pane class 26/3/24
   String message;
   String[] buttonText;
   JFrame parent;

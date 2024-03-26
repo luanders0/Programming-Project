@@ -40,9 +40,10 @@ void setup() {
   //dayCounts = new int[7];
   //date = new Dates(dateList, dayList, monthList, yearList, lines, dayCounts);
   //zf
-  buttonListeners[0] = new ActionListener() {
+  buttonListeners[0] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
    @Override
    public void actionPerformed (ActionEvent e) {
+     //this code is executed when the 1st button is pressed
      print("button 1 performed an action");
    }
   };
@@ -50,6 +51,7 @@ void setup() {
   buttonListeners[1] = new ActionListener() {
    @Override
    public void actionPerformed (ActionEvent e) {
+     //this code is executed when the 2nd button is pressed
      print("button 2 performed an action");
    }
   };
@@ -57,6 +59,7 @@ void setup() {
   buttonListeners[2] = new ActionListener() {
    @Override
    public void actionPerformed (ActionEvent e) {
+     //this code is executed when the 3rd button is pressed
      print("button 3 performed an action");
    }
   };
@@ -64,6 +67,7 @@ void setup() {
   buttonListeners[3] = new ActionListener() {
    @Override
    public void actionPerformed (ActionEvent e) {
+     //this code is executed when the 4th button is pressed
      print("button 4 performed an action");
    }
   };
