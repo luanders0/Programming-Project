@@ -41,6 +41,27 @@ void setup() {
   
   HomeScreen = loadImage("SquareMainScreen.jpg");
   Clouds = loadImage("ChartScreen.jpg");
+  
+  String[] responses = {"test 1", "test 2", "test 3", "test 4"}; 
+  
+  Query test = new Query("Choose your test", responses);
+  
+  test.askQuestion();
+  test.getAnswer();
+  switch (test.state) {
+    case 1:
+      print("test 1!");
+      break;
+    case 2:
+      print("test 1!");
+      break;
+    case 3:
+      print("test 1!");
+      break;
+    case 4:
+      print("test 1!");
+      break;
+  }
 
   mainScreen = new MainScreen(HomeScreen, Clouds);
 }
