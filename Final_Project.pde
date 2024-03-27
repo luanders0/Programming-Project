@@ -7,6 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 final int HOME_SCREEN = 0;
 final int CHART_SELECT = 1;
+final int BAR_CHART_2K = 2;
+final int BAR_CHART_10K = 3;
+final int BAR_CHART_100K = 4;
+final int PIE_CHART_2K = 5;
+final int PIE_CHART_10K = 6;
+final int PIE_CHART_100K = 7;
 
 String userInput = "";
 
@@ -108,28 +114,27 @@ void draw() {
       mainScreen.backButton();
       buttonPanel.popup();
       break;
-    case 2: // bar chart 2k
-      background(0);
-      mainScreen.backButton();
-      //mainScreen.airportTextDraw();
-      break;
-    case 3: // bar chart 10k
+    case BAR_CHART_2K: // bar chart 2k
       background(0);
       mainScreen.backButton();
       break;
-    case 4: // bar chart 100k
+    case BAR_CHART_10K: // bar chart 10k
       background(0);
       mainScreen.backButton();
       break;
-    case 5: // pie chart 2k
+    case BAR_CHART_100K: // bar chart 100k
+      background(0);
+      mainScreen.backButton();
+      break;
+    case PIE_CHART_2K: // pie chart 2k
       background(0);
       mainScreen.backButton();
       break;    
-    case 6: // pie chart 10k
+    case PIE_CHART_10K: // pie chart 10k
       background(0);
       mainScreen.backButton();
       break;
-    case 7: // pie chart 100k
+    case PIE_CHART_100K: // pie chart 100k
       background(0);
       mainScreen.backButton();
       break;
@@ -148,13 +153,3 @@ void mouseClicked() {
 void mousePressed() {
   mainScreen.mousePressed();
 }
-
-//void keyPressed() {
-//  if (key == BACKSPACE) {
-//    if (userInput.length() > 0) {
-//      userInput = userInput.substring(0, userInput.length() - 1);
-//    }
-//  } else if (key != CODED) {
-//      userInput += key;
-//   }
-//}
