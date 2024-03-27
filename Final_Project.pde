@@ -29,18 +29,26 @@ int lateFlightCount = 0;
 int cancelledFlightCount = 0;
 int totalFlightCount = -1;
 
-Screen barScreen, pieScreen;
+boolean latenessDraw = false;
+boolean popupDrawn = false;
+
+Screen latenessScreen, pieScreen;
 ActionListener[] buttonListeners = new ActionListener[4];
 Dialog_Pane buttonPanel;
+lateness_plot latenessPlot;
+
 
 Button button;
-PImage HomeScreen;
-PImage Clouds;
+PImage homeScreen;
+PImage clouds;
 int screenState;
 MainScreen mainScreen;
 
 void setup() {
   size(600, 600);
+  
+  table = loadTable("flights2k.csv", "header");
+  println(table.getRowCount() + " total rows in table");
   
     //zf
   //dateList = new ArrayList<String>();
@@ -55,7 +63,7 @@ void setup() {
    @Override
    public void actionPerformed (ActionEvent e) {
      //this code is executed when the 1st button is pressed
-     print("button 1 performed an action");
+     latenessDraw = true;
    }
   };
   
@@ -83,19 +91,20 @@ void setup() {
    }
   };
   
-  String[] buttonText = {"Button1", "Button2", "Button3", "Sort By Destination Airport"};
+  String[] buttonText = {"Sort by Lateness", "Button2", "Button3", "Sort By Destination Airport"};
   
   buttonPanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", buttonListeners, 300, 200);
   
-  table = loadTable("flights2k.csv", "header");
-  println(table.getRowCount() + " total rows in table");
+  lateness_plot latenessPlot = new lateness_plot(table);
+  
+  latenessScreen = new Screen(color(255), latenessPlot);
   
   button = new Button(width/2, height/2, 200, 60, "Lateness Chart");
   
-  HomeScreen = loadImage("SquareMainScreen.jpg");
-  Clouds = loadImage("ChartScreen.jpg");
+  homeScreen = loadImage("SquareMainScreen.jpg");
+  clouds = loadImage("ChartScreen.jpg");
 
-  mainScreen = new MainScreen(HomeScreen, Clouds);
+  mainScreen = new MainScreen(homeScreen, clouds);
 }
 
 void draw() {
@@ -103,20 +112,27 @@ void draw() {
 
   switch(screenState) {
     case HOME_SCREEN:
-      image(HomeScreen, 0, 0);
+      image(homeScreen, 0, 0);
       break;
     case CHART_SELECT:
-      image(Clouds, 0, 0);
+      image(clouds, 0, 0);
       mainScreen.flightsScreen();
       mainScreen.mouseOver();
       mainScreen.flightsScreen2();
       mainScreen.mouseOver2();
       mainScreen.backButton();
-      buttonPanel.popup();
       break;
     case BAR_CHART_2K: // bar chart 2k
       background(0);
       mainScreen.backButton();
+      if (!popupDrawn) {
+        buttonPanel.popup();
+        popupDrawn = true;
+      }
+      buttonPanel.popup();
+      if (latenessDraw) {
+        latenessScreen.draw();
+      }
       break;
     case BAR_CHART_10K: // bar chart 10k
       background(0);
