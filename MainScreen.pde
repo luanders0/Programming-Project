@@ -102,10 +102,10 @@ void mouseOver() {
 
     fill(0);
     textFont(font);
-    if (i == 3 ) {
+    if (i == 0 ) {
       text("2k flights", 400, y + 15); 
     }
-    else if (i == 4 ) {
+    else if (i == 1 ) {
       text("10k flights", 400, y + 15); 
     }
     else {
