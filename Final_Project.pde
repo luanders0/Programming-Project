@@ -36,6 +36,9 @@ PieChart pieChart;
 String userInput = "";
 //
 
+//
+OriginChart originChart;
+
 boolean latenessDraw = false;
 boolean popupDrawn = false;
 
@@ -43,7 +46,6 @@ Screen latenessScreen, pieScreen;
 ActionListener[] buttonListeners = new ActionListener[4];
 Dialog_Pane buttonPanel;
 lateness_plot latenessPlot;
-
 
 
 Button button;
@@ -57,6 +59,9 @@ void setup() {
   
   table = loadTable("flights2k.csv", "header");
   println(table.getRowCount() + " total rows in table");
+  
+    originChart = new OriginChart(table); // Initialize OriginChart with the loaded table
+
   
   //ZF  
   userInput = showInputBox(); // Prompt user for input
@@ -127,8 +132,9 @@ void draw() {
       mainScreen.backButton();
       break;
     case BAR_CHART_2K: // bar chart 2k
-      background(0);
+      background(255);
       mainScreen.backButton();
+      originChart.drawOriginChart();
       if (!popupDrawn) {
         buttonPanel.popup();
         popupDrawn = true;

@@ -1,109 +1,128 @@
-class origin_plot {
+import processing.core.PApplet;
+import processing.data.Table;
+import processing.data.TableRow;
+import java.util.ArrayList;
+
+public class OriginChart {
 
   Table table; // excel file loaded into object 'table'
   int colorStep = 30; // The step for grouping flights
 
-  void origin () {
+  OriginChart(Table table) {
+    this.table = table;
+  }
 
-    String[] stateAbbreviations = getStateAbbreviations(); // array 'stateAbbreviations' assign to function 'getStateAbbreviations'
+  void drawOriginChart() {
+    String[] stateAbbreviations = getStateAbbreviations();
+    int[] flightsPerState = new int[stateAbbreviations.length];
 
-    int[] flightsPerState = new int[stateAbbreviations.length]; // array 'flightsPerState' used to store the count of flights per state
-
-    // Calculate the number of flights per state
-    for (TableRow row : table.rows()) { // iterates over each row in the excel file
-      String state = row.getString(5); // retrieves the string value from the column at index 5 (column 6)
-      int stateIndex = getStateIndex(state, stateAbbreviations); // calls function 'getStateIndex()' to find the index of the current state abbreviation
-      if (stateIndex != -1) { // if the state abbreviation is found in the 'stateAbbreviations' array
-        flightsPerState[stateIndex]++; // increments element in the 'flightsPerState' array
+    for (TableRow row : table.rows()) {
+      String state = row.getString(5);
+      int stateIndex = getStateIndex(state, stateAbbreviations);
+      if (stateIndex != -1) {
+        flightsPerState[stateIndex]++;
       }
     }
 
-    int maxFlights = getMax(flightsPerState); // calculates the maximum number of flights among all states by calling 'getMax()'
+    int maxFlights = getMax(flightsPerState);
+
+    // Calculate the dimensions and positions based on canvas size
+    float chartWidth = 500;
+    float chartHeight = 600;
+    float barWidth = chartWidth / flightsPerState.length;
+    float startX = 100;
+    float startY = 350;
+    float xAxisLabelX = 300;
+    float xAxisLabelY = 560;
+    float yAxisLabelX = -600 / 2;
+    float yAxisLabelY = 20;
 
     // Draw the y-axis with numerical values
-    fill(0); // black
+    fill(0);
     textAlign(RIGHT, CENTER);
-    for (int i = 0; i <= maxFlights; i += 20) { // iterates from 0 to maxFlights in steps of 20
-      float y = map(i, 0, maxFlights, height - 50, 0); // labels are evenly distributed along y-axis
-      text(i, 90, y); // draws flight count 'i' at 90 pixels from the left of the canvas
-      line(100, y, width - 100, y); // Draw the horizontal lines for the grid
+    for (int i = 0; i <= maxFlights; i += 20) {
+      float y = map(i, 0, maxFlights, startY, 0);
+      text(i, 90, y);
+      line(100, y, 600 - 100, y);
     }
 
     // Draw the x-axis label
     textAlign(CENTER, CENTER);
-    text("STATE NAME", width / 2, height - 10); // draws label at width/2 and 10 pixels from the bottom
+    textSize(16);
+    text("STATE NAME", xAxisLabelX, xAxisLabelY);
 
     // Draw the y-axis label
     textAlign(CENTER, CENTER);
-    rotate(-HALF_PI); // rotates so the y-axis is drawn vertically
-    text("NUMBER OF FLIGHTS", -height / 2, 20); // draws label to the left of the canvas 20 pixels from the top
-    rotate(HALF_PI); // resets canvas back to orginal orientation
+    rotate(-HALF_PI);
+    textSize(16);
+    text("NUMBER OF FLIGHTS", yAxisLabelX, yAxisLabelY);
+    rotate(HALF_PI);
 
-    for (int i = 0; i < flightsPerState.length; i++) { // iterates over each element in flightsPerState array
-      int flights = flightsPerState[i]; // retrieves number of flights for the current state
-      int colorValue = getColorValue(flights); // determine the colour of the bar based on the number of flights
-      fill(colorValue, 100, 100); // set the fill colour for the bar
-      float barHeight = map(flights, 0, maxFlights, 0, height - 100); // calculate the height of the bar based on the number of flights
-      float barWidth = (width - 200) / flightsPerState.length; // calculate the width of the bar based on the number of states
-      float x = 100 + i * barWidth; // Start drawing bars from x = 100 // calculate the x coordinate of the current bar
-      rect(x, height - barHeight - 50, barWidth, barHeight); // draw the bar as a rectangle
+    // Draw bars and state abbreviations with smaller text size
+    textSize(6); // Adjust the text size here
+    for (int i = 0; i < flightsPerState.length; i++) {
+      int flights = flightsPerState[i];
+      int colorValue = getColorValue(flights);
+      fill(colorValue, 100, 100);
+      float barHeight = map(flights, 0, maxFlights, 0, chartHeight);
+      float x = startX + i * barWidth;
+      rect(x, startY - barHeight, barWidth, barHeight);
 
-      // Display state abbreviation
-      fill(0); // black
-      text(stateAbbreviations[i], x + barWidth / 2, height - 30); // draw the state abbreviation centreed below the bar
+      fill(0);
+      text(stateAbbreviations[i], x + barWidth / 2, startY + 15); // Adjusted the vertical position and added smaller text size
     }
   }
 
   // Get the index of a state abbreviation in the array
-  int getStateIndex(String stateAbbreviation, String[] stateAbbreviations) { // 'getStateIndex' takes a string 'stateAbbreviation' and an array 'stateAbbreviations'
-    for (int i = 0; i < stateAbbreviations.length; i++) { // iterates over each element in array 'stateAbbrevations'
+  int getStateIndex(String stateAbbreviation, String[] stateAbbreviations) {
+    for (int i = 0; i < stateAbbreviations.length; i++) {
       if (stateAbbreviation.equals(stateAbbreviations[i])) {
-        return i; // return the index if abbreviation is found
+        return i;
       }
     }
-    return -1; // State abbreviation not found
+    return -1;
   }
 
-  String[] getStateAbbreviations() { // retrieves state abbreviations from data in the table
-    ArrayList<String> abbreviationsList = new ArrayList<String>(); // creates an ArrayList to store state abbreviations
+  String[] getStateAbbreviations() {
+    ArrayList<String> abbreviationsList = new ArrayList<String>();
 
-    for (TableRow row : table.rows()) { // iterates over each row in the table
-      String state = row.getString(5); // retrieves state abbreviation from the column at index 5 (column 6)
-      if (!abbreviationsList.contains(state)) { // add the state abbreviation to the ArrayList if it's not already
+    for (TableRow row : table.rows()) {
+      String state = row.getString(5);
+      if (!abbreviationsList.contains(state)) {
         abbreviationsList.add(state);
       }
     }
 
-    return abbreviationsList.toArray(new String[0]); // convert the ArrayList to an array of strings
+    return abbreviationsList.toArray(new String[0]);
   }
 
   // Get the maximum value from the flightsPerState array
   int getMax(int[] array) {
-    int max = array[0]; // initialises max to the first element of the array
-    for (int i = 1; i < array.length; i++) { // iterate over the array starting from the second element
-      if (array[i] > max) { // if the current element is bigger than the max
-        max = array[i]; // the max becomes the value of the current element
+    int max = array[0];
+    for (int i = 1; i < array.length; i++) {
+      if (array[i] > max) {
+        max = array[i];
       }
     }
-    return max; // return max value
+    return max;
   }
 
   // Assign colors based on flight count
   int getColorValue(int flights) {
-    if (flights >= 0 && flights <= 30) { // flights between 0 and 30
-      return 275; // Violet
-    } else if (flights >= 31 && flights <= 60) { // flights between 31 and 60
-      return 255; // Indigo
-    } else if (flights >= 61 && flights <= 90) { // flights between 61 and 90
-      return 210; // Blue
-    } else if (flights >= 91 && flights <= 120) { // flights between 91 and 120
-      return 120; // Green
-    } else if (flights >= 121 && flights <= 150) { // flights between 121 and 150
-      return 50; // Yellow
-    } else if (flights >= 151 && flights <= 180) { // flights between 151 and 180
-      return 30; // Orange
+    if (flights >= 0 && flights <= 30) {
+      return 275;
+    } else if (flights >= 31 && flights <= 60) {
+      return 255;
+    } else if (flights >= 61 && flights <= 90) {
+      return 210;
+    } else if (flights >= 91 && flights <= 120) {
+      return 120;
+    } else if (flights >= 121 && flights <= 150) {
+      return 50;
+    } else if (flights >= 151 && flights <= 180) {
+      return 30;
     } else {
-      return 0; // Red for flights higher than 180
+      return 0;
     }
   }
 }
