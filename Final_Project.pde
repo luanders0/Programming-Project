@@ -149,6 +149,9 @@ void draw() {
     case PIE_CHART_2K: // pie chart 2k
       background(0);
       mainScreen.backButton();
+      lateness();
+      pieChart(300, flightStatus);
+      key();
       break;    
     case PIE_CHART_10K: // pie chart 10k
       background(0);
@@ -212,15 +215,15 @@ void keyPressed() {
 }
 //ZF
 
-void mouseClicked() {
-  // Check if the button is clicked and toggle showLatenessPieChart
-  if (button.isMouseOver()) {
-    lateness();
-    pieChart(300, flightStatus);
-    key();
-    button.setLabel("Hide Chart");
-  }
-}
+//void mouseClicked() {
+//  // Check if the button is clicked and toggle showLatenessPieChart
+//  if (button.isMouseOver()) {
+//    lateness();
+//    pieChart(300, flightStatus);
+//    key();
+//    button.setLabel("Hide Chart");
+//  }
+//}
 void mousePressed() {
   mainScreen.mousePressed();
 }
