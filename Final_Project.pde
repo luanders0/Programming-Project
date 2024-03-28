@@ -15,6 +15,8 @@ final int PIE_CHART_10K = 6;
 final int PIE_CHART_100K = 7;
 
 //String userInput = "";
+boolean pieUserInput = true;
+
 
 Table table;
 int difference = 0;
@@ -186,10 +188,12 @@ String showInputBox() {
    //     text("Enter three-letter abbreviation:", width/2, height/2 - 20);
    // }
    // return "";
+    if( pieUserInput == true ) {  
        if (userInput.isEmpty()) {
         text("Enter three-letter abbreviation:", width/2, height/2 - 20);
-    } else {
+      } else {
         text("Enter three-letter abbreviation: " + userInput, width/2, height/2 - 20);
+    }
     }
     return "";
 }
@@ -199,6 +203,7 @@ void keyPressed() {
   if (key == '\n') { // If Enter key is pressed
     pieChart = new PieChart(table);
     userInput = userInput.toUpperCase(); // Convert to uppercase
+    pieUserInput = false;
   } else if (keyCode == BACKSPACE) { // If Backspace key is pressed
     userInput = userInput.substring(0, max(0, userInput.length() - 1)); // Remove the last character
   } else if (keyCode != SHIFT && keyCode != DELETE && keyCode != TAB && keyCode != ESC) { // Ignore special keys
