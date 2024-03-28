@@ -136,6 +136,7 @@ void draw() {
       buttonPanel.popup();
       if (latenessDraw) {
         latenessScreen.draw();
+        mainScreen.backButton();
       }
       break;
     case BAR_CHART_10K: // bar chart 10k
@@ -147,10 +148,10 @@ void draw() {
       mainScreen.backButton();
       break;
     case PIE_CHART_2K: // pie chart 2k
-      background(0);
-      mainScreen.backButton();
+      //background(0);
       lateness();
       pieChart(300, flightStatus);
+      mainScreen.backButton();
       key();
       break;    
     case PIE_CHART_10K: // pie chart 10k
