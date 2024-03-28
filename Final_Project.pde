@@ -156,7 +156,7 @@ void draw() {
       background(0);
       mainScreen.backButton();
       //ZF
-       background(255);
+       background(#9DE4F0);
        showInputBox();
       // pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
       
