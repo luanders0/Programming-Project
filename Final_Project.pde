@@ -14,7 +14,7 @@ final int PIE_CHART_2K = 5;
 final int PIE_CHART_10K = 6;
 final int PIE_CHART_100K = 7;
 
-String userInput = "";
+//String userInput = "";
 
 Table table;
 int difference = 0;
@@ -29,6 +29,11 @@ int lateFlightCount = 0;
 int cancelledFlightCount = 0;
 int totalFlightCount = -1;
 
+//
+PieChart pieChart;
+String userInput = "";
+//
+
 boolean latenessDraw = false;
 boolean popupDrawn = false;
 
@@ -36,6 +41,7 @@ Screen latenessScreen, pieScreen;
 ActionListener[] buttonListeners = new ActionListener[4];
 Dialog_Pane buttonPanel;
 lateness_plot latenessPlot;
+
 
 
 Button button;
@@ -50,13 +56,9 @@ void setup() {
   table = loadTable("flights2k.csv", "header");
   println(table.getRowCount() + " total rows in table");
   
-    //zf
-  //dateList = new ArrayList<String>();
-  //dayList = new ArrayList<Integer>();
-  //monthList = new ArrayList<Integer>();
-  //yearList = new ArrayList<Integer>();
-  //dayCounts = new int[7];
-  //date = new Dates(dateList, dayList, monthList, yearList, lines, dayCounts);
+  //ZF  
+  userInput = showInputBox(); // Prompt user for input
+  pieChart = new PieChart(table);
   //zf
   
   buttonListeners[0] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
@@ -153,9 +155,57 @@ void draw() {
     case PIE_CHART_100K: // pie chart 100k
       background(0);
       mainScreen.backButton();
+      //ZF
+       background(#9DE4F0);
+       showInputBox();
+      // pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
+      
+        //if (!userInput.isEmpty()) {
+        //        pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
+        //    }
+         if (!userInput.isEmpty()) {
+                String label = "Number of flights leaving airport " + userInput + " in January 2022";
+                textAlign(CENTER);
+                fill(0);
+                textSize(16);
+                text(label, width / 2, 50);
+                pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
+            }
       break;
   }
 }
+//ZF
+String showInputBox() {
+  textAlign(CENTER);
+  fill(0);
+  textSize(16);
+  //text("Enter three-letter abbreviation:", width/2, height/2 - 20);
+  //return "";
+  
+   //if (userInput.isEmpty()) {
+   //     text("Enter three-letter abbreviation:", width/2, height/2 - 20);
+   // }
+   // return "";
+       if (userInput.isEmpty()) {
+        text("Enter three-letter abbreviation:", width/2, height/2 - 20);
+    } else {
+        text("Enter three-letter abbreviation: " + userInput, width/2, height/2 - 20);
+    }
+    return "";
+}
+
+
+void keyPressed() {
+  if (key == '\n') { // If Enter key is pressed
+    pieChart = new PieChart(table);
+    userInput = userInput.toUpperCase(); // Convert to uppercase
+  } else if (keyCode == BACKSPACE) { // If Backspace key is pressed
+    userInput = userInput.substring(0, max(0, userInput.length() - 1)); // Remove the last character
+  } else if (keyCode != SHIFT && keyCode != DELETE && keyCode != TAB && keyCode != ESC) { // Ignore special keys
+    userInput += key; // Add the typed character to the input
+  }
+}
+//ZF
 
 void mouseClicked() {
   // Check if the button is clicked and toggle showLatenessPieChart
