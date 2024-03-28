@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 final int HOME_SCREEN = 0;
 final int CHART_SELECT = 1;
 final int BAR_CHART_2K = 2;
