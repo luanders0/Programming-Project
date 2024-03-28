@@ -8,7 +8,7 @@ class Dialog_Pane { //Lukas A added Dialog_Pane class 26/3/24
               int height) {
     this.message = message;
     this.buttonText = buttonText;
-    parent = new JFrame(title);
+    parent = new JFrame(title, null);
     buttons = new JButton[buttonText.length];
     for (int i = 0; i < buttonText.length; i++) {
       buttons[i] = new JButton(buttonText[i]);
@@ -17,6 +17,7 @@ class Dialog_Pane { //Lukas A added Dialog_Pane class 26/3/24
     }
     parent.setLayout(new FlowLayout());
     parent.setSize(width,height);
+    parent.setLocationRelativeTo(null);
     parent.pack();
   }
 
