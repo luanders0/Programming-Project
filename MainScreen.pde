@@ -130,10 +130,10 @@ void mouseOver2() {
 
 void backButton() {
    fill(0);
-   rect(10, 10, 50, 20);
+   rect(2, 10, 50, 20);
    textFont(font);
    fill(255);
-   text("back", 18, 25);
+   text("back", 30, 20);
 }
 
 void airportTextDraw() {
