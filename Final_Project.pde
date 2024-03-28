@@ -158,10 +158,9 @@ void draw() {
       mainScreen.backButton();
       break;
     case PIE_CHART_100K: // pie chart 100k
-      background(0);
-      mainScreen.backButton();
       //ZF
        background(#9DE4F0);
+       mainScreen.backButton();
        showInputBox();
       // pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
       
