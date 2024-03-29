@@ -3,6 +3,7 @@ import processing.data.TableRow;
 import java.util.HashMap;
 import javax.swing.*;
 import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -103,7 +104,7 @@ void setup() {
   
   String[] buttonText = {"Sort by Lateness", "Button2", "Button3", "Sort By Destination Airport"};
   
-  buttonPanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", buttonListeners, 300, 200);
+  buttonPanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", buttonListeners, 200, 100);
   
   lateness_plot latenessPlot = new lateness_plot(table);
   
