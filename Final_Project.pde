@@ -39,16 +39,16 @@ String userInput = "";
 //
 
 //
-OriginChart originChart;
 
 boolean latenessDraw = false;
 boolean popupDrawn = false;
+boolean originDraw = false;
 
 Screen latenessScreen, pieScreen;
 ActionListener[] buttonListeners = new ActionListener[4];
 Dialog_Pane buttonPanel;
 lateness_plot latenessPlot;
-
+OriginChart originChart;
 
 Button button;
 PImage homeScreen;
@@ -83,6 +83,7 @@ void setup() {
    public void actionPerformed (ActionEvent e) {
      //this code is executed when the 2nd button is pressed
      print("button 2 performed an action");
+     originDraw = true;
    }
   };
   
@@ -146,6 +147,7 @@ void draw() {
         latenessScreen.draw();
         mainScreen.backButton();
       }
+    
       break;
     case BAR_CHART_10K: // bar chart 10k
       background(0);
