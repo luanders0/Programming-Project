@@ -18,7 +18,7 @@ class MainScreen {
   void mousePressed() {
     if (mouseX > areaX0 && mouseX < areaX0 + areaWidth0 && mouseY > areaY0 && mouseY < areaY0 + areaHeight0 && screenState == 0) {
       screenState = 1; 
-      clickSound.play(); // Play the click sound
+      //clickSound.play(); // Play the click sound
     }
     else if (mouseX > 350 && mouseX < 550 && mouseY > 110 && mouseY < 140 && screenState == 1) {
       screenState = 2; 

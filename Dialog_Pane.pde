@@ -26,10 +26,23 @@ class Dialog_Pane { //Lukas A added Dialog_Pane class 26/3/24
     parent.pack();
   }
 
-  Dialog_Pane(JRadioButton[] radioButtons, String message) {
+  Dialog_Pane(JRadioButton[] radioButtons, String message, int height, int width) {
     parent = new JFrame();
-    JRadioButton[] buttons = new JRadioButtons[radioButtons.length];
+    panel = new JPanel();
+    panel.setLayout(new FlowLayout());
+    parent.setLayout(new BorderLayout());
     
+    JLabel label = new JLabel(message);
+    label.setHorizontalAlignment(SwingConstants.CENTER);
+    ButtonGroup bg = new ButtonGroup();   
+    parent.add(label, BorderLayout.NORTH);
+    for (int i = 0; i < radioButtons.length; i++) {
+      panel.add(radioButtons[i]);
+      bg.add(radioButtons[i]);
+    }
+    parent.add(panel, BorderLayout.CENTER);
+    parent.setSize(width,height);
+    parent.setLocationRelativeTo(null);
     
     parent.pack();
   }
