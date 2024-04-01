@@ -2,6 +2,7 @@ class Button {
   float x, y;
   float w, h;
   String label;
+  SoundFile clickSound; 
 
   Button(float x, float y, float w, float h, String label) {
     this.x = x;
@@ -29,4 +30,13 @@ class Button {
     textSize(20);
     text(label, x, y + 3); // Slightly offset the text vertically for better centering
   }
+    
+  void mousePressed() {
+    if (isMouseOver()) {
+      // Play click sound
+       if (clickSound != null) {
+      clickSound.play();
+    }
+  }
+}
 }

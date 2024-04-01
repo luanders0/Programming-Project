@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import processing.sound.*;
 
 final int HOME_SCREEN = 0;
 final int CHART_SELECT = 1;
@@ -55,11 +56,14 @@ PImage homeScreen;
 PImage clouds;
 int screenState;
 MainScreen mainScreen;
+SoundFile clickSound;
 
 void setup() {
   size(600, 600);
   
   table = loadTable("flights2k.csv", "header");
+  clickSound = new SoundFile(this, "click.wav");
+
   println(table.getRowCount() + " total rows in table");
   
     originChart = new OriginChart(table); // Initialize OriginChart with the loaded table
