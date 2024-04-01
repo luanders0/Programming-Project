@@ -28,7 +28,7 @@ class Dialog_Pane { //Lukas A added Dialog_Pane class 26/3/24
 
   Dialog_Pane(JRadioButton[] radioButtons, String message) {
     parent = new JFrame();
-    JRadioButton[] buttons = new JRadioButtons[radioButtons.length];
+    JRadioButton[] buttons = new JRadioButton[radioButtons.length];
     
     
     parent.pack();
