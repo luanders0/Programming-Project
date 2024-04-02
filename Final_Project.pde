@@ -107,7 +107,7 @@ void setup() {
    }
   };
   
-  String[] buttonText = {"Sort by Lateness", "Sort by Origin", "Button3", "Sort By Destination Airport"};
+  String[] buttonText = {"Sort by Lateness", "Sort by Origin", "Sort by Busy Routes", "Sort By Destination Airport"};
   
   buttonPanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", buttonListeners, 200, 100);
   
