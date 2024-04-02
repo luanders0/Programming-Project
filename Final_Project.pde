@@ -118,7 +118,8 @@ void setup() {
   button = new Button(width/2, height/2, 200, 60, "Lateness Chart");
   
   homeScreen = loadImage("SquareMainScreen.jpg");
-  clouds = loadImage("ChartScreen.jpg");
+  //clouds = loadImage("ChartScreen.jpg");
+  clouds = loadImage("cloudsBlack.jpg");
 
   mainScreen = new MainScreen(homeScreen, clouds);
 }
@@ -132,10 +133,10 @@ void draw() {
       break;
     case CHART_SELECT:
       image(clouds, 0, 0);
-      mainScreen.flightsScreen();
-      mainScreen.mouseOver();
-      mainScreen.flightsScreen2();
-      mainScreen.mouseOver2();
+      //mainScreen.flightsScreen();
+      //mainScreen.mouseOver();
+      //mainScreen.flightsScreen2();
+      //mainScreen.mouseOver2();
       mainScreen.backButton();
       break;
     case BAR_CHART_2K: // bar chart 2k
