@@ -26,7 +26,7 @@ class Dialog_Pane { //Lukas A added Dialog_Pane class 26/3/24
     parent.pack();
   }
 
-  Dialog_Pane(JRadioButton[] radioButtons, String message, int height, int width) {
+  Dialog_Pane(JRadioButton[] radioButtons, String message, int height, int width, JButton chooseButton) {
     parent = new JFrame();
     panel = new JPanel();
     panel.setLayout(new FlowLayout());
@@ -41,6 +41,7 @@ class Dialog_Pane { //Lukas A added Dialog_Pane class 26/3/24
       bg.add(radioButtons[i]);
     }
     parent.add(panel, BorderLayout.CENTER);
+    parent.add(chooseButton, BorderLayout.SOUTH);
     parent.setSize(width,height);
     parent.setLocationRelativeTo(null);
     

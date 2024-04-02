@@ -52,7 +52,6 @@ boolean originDraw = false;
 
 Screen latenessScreen, pieScreen;
 ActionListener[] buttonListeners = new ActionListener[4];
-ActionListener[] fileListeners = new ActionListener[4];
 JRadioButton[] fileButtons = new JRadioButton[4];
 Dialog_Pane buttonPanel;
 Dialog_Pane fileSelect;
@@ -89,46 +88,38 @@ void setup() {
   pieChart = new PieChart(table);
   //zf
 
-  fileListeners[0] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
-    @Override
-      public void actionPerformed (ActionEvent e) {
-      //this code is executed when the 1st radioButton is pressed
-      table = table2k;
-    }
-  };
-
-  fileListeners[1] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
-    @Override
-      public void actionPerformed (ActionEvent e) {
-      //this code is executed when the 1st radioButton is pressed
-      table = table10k;
-    }
-  };
-
-  fileListeners[2] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
-    @Override
-      public void actionPerformed (ActionEvent e) {
-      //this code is executed when the 1st radioButton is pressed
-      table = table100k;
-    }
-  };
-
-  fileListeners[3] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
-    @Override
-      public void actionPerformed (ActionEvent e) {
-      //this code is executed when the 1st radioButton is pressed
-      table = tableFull;
-    }
-  };
-
   for (int i = 0; i < fileButtons.length; i++) {
     if (i == 0) {
       fileButtons[i] = new JRadioButton(FILE_TEXT[i], true);
     } else {
       fileButtons[i] = new JRadioButton(FILE_TEXT[i]);
     }
-    fileButtons[i].addActionListener(fileListeners[i]);
   }
+
+  ActionListener fileListener = new ActionListener() {
+    @Override
+      public void actionPerformed (ActionEvent e) {
+      if (fileButtons[0].isSelected()) {
+        table = table2k;
+        print("2K Table Selected");
+      }
+      if (fileButtons[1].isSelected()) {
+        table = table10k;
+        print("10K Table Selected");
+      }
+      if (fileButtons[2].isSelected()) {
+        table = table100k;
+        print("100K Table Selected");
+      }
+      if (fileButtons[3].isSelected()) {
+        table = tableFull;
+        print("Full Table Selected");
+      }
+    }
+  };
+
+  JButton chooseFile = new JButton("Choose File");
+  chooseFile.addActionListener(fileListener);
 
   buttonListeners[0] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
     @Override
@@ -167,7 +158,7 @@ void setup() {
 
   buttonPanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", buttonListeners, 200, 100);
 
-  fileSelect = new Dialog_Pane(fileButtons, "Please select file size", 100, 100);
+  fileSelect = new Dialog_Pane(fileButtons, "Please select file size", 100, 100, chooseFile);
 
   lateness_plot latenessPlot = new lateness_plot(table);
 
