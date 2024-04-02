@@ -153,9 +153,9 @@ void setup() {
       print(buttonPanel.getInput("Please enter destination airport"));
     }
   };
-
-  String[] buttonText = {"Sort by Lateness", "Sort by Origin", "Button3", "Sort By Destination Airport"};
-
+  
+  String[] buttonText = {"Sort by Lateness", "Sort by Origin", "Sort by Busy Routes", "Sort By Destination Airport"};
+ 
   buttonPanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", buttonListeners, 200, 100);
 
   fileSelect = new Dialog_Pane(fileButtons, "Please select file size", 100, 100, chooseFile);
@@ -167,7 +167,8 @@ void setup() {
   button = new Button(width/2, height/2, 200, 60, "Lateness Chart");
 
   homeScreen = loadImage("SquareMainScreen.jpg");
-  clouds = loadImage("ChartScreen.jpg");
+  //clouds = loadImage("ChartScreen.jpg");
+  clouds = loadImage("cloudsBlack.jpg");
 
   mainScreen = new MainScreen(homeScreen, clouds);
 }
@@ -176,23 +177,26 @@ void draw() {
   background(255);
 
   switch(screenState) {
-  case HOME_SCREEN:
-    image(homeScreen, 0, 0);
-    break;
-  case CHART_SELECT:
-    fileSelect.popup();
-    image(clouds, 0, 0);
-    mainScreen.flightsScreen();
-    mainScreen.mouseOver();
-    mainScreen.flightsScreen2();
-    mainScreen.mouseOver2();
-    mainScreen.backButton();
-    break;
-  case BAR_CHART_2K: // bar chart 2k
-    background(255);
-    mainScreen.backButton();
-    originChart.drawOriginChart();
-    if (!popupDrawn) {
+    case HOME_SCREEN:
+      image(homeScreen, 0, 0);
+      break;
+    case CHART_SELECT:
+      fileSelect.popup();
+      image(clouds, 0, 0);
+      //mainScreen.flightsScreen();
+      //mainScreen.mouseOver();
+      //mainScreen.flightsScreen2();
+      //mainScreen.mouseOver2();
+      mainScreen.backButton();
+      break;
+    case BAR_CHART_2K: // bar chart 2k
+      background(255);
+      mainScreen.backButton();
+      originChart.drawOriginChart();
+      if (!popupDrawn) {
+        buttonPanel.popup();
+        popupDrawn = true;
+      }
       buttonPanel.popup();
       popupDrawn = true;
     }
