@@ -196,14 +196,14 @@ void draw() {
   case CHART_SELECT:
     //fileSelect.popup();
     image(clouds, 0, 0);
-    fill(119, 221, 119);
-    noStroke();
-    rect(30, 30, 550, 550);
+    //fill(119, 221, 119);
+    //noStroke();
+    //rect(30, 30, 550, 550);
     fileButton.draw();
-    //mainScreen.flightsScreen();
-    //mainScreen.mouseOver();
-    //mainScreen.flightsScreen2();
-    //mainScreen.mouseOver2();
+    mainScreen.flightsScreen();
+    mainScreen.mouseOver();
+    mainScreen.flightsScreen2();
+    mainScreen.mouseOver2();
     mainScreen.backButton();
     break;
     case BLANK_SCREEN:
@@ -265,6 +265,7 @@ void draw() {
     }
     break;
   }
+
 }
 
 //ZF
