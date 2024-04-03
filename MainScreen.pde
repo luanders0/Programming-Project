@@ -48,7 +48,7 @@ class MainScreen {
     //  screenState = 1; 
     //  clickSound.play();
     //}
-    else if (mouseX > 10 && mouseX < 60 && mouseY > 10 && mouseY < 30 && screenState == 1) {
+    else if (mouseX > 30 && mouseX < 80 && mouseY > 30 && mouseY < 50 && screenState == 1) {
       screenState = 0; 
       clickSound.play();
     }
@@ -138,10 +138,10 @@ class MainScreen {
 
 void backButton() {
    fill(0);
-   rect(2, 10, 50, 20);
+   rect(30, 30, 50, 20);
    textFont(font);
    fill(255);
-   text("back", 30, 20);
+   text("back", 55, 39);
 }
 
 void airportTextDraw() {
