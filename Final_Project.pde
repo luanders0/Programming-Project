@@ -18,6 +18,9 @@ final int PIE_CHART_10K = 6;
 final int PIE_CHART_100K = 7;
 final int FILE_BUTTON = 8;
 final int EVENT_NULL = -1;
+final int BLANK_SCREEN = 9;
+final int BAR_CHART_2K_LATENESS = 10;
+final int BAR_CHART_2K_BUSY_ROUTES = 11;
 
 
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
@@ -89,6 +92,11 @@ void setup() {
 
 
   originChart = new OriginChart(table); // Initialize OriginChart with the loaded table
+  
+  latenessPlot = new lateness_plot(table); // Initialize latenessPlot 
+  
+  busyRoutes = new busyRoutes(table);
+
 
 
   //ZF
@@ -109,6 +117,7 @@ void setup() {
       public void actionPerformed (ActionEvent e) {
       if (fileButtons[0].isSelected()) {
         table = table2k;
+        screenState = BLANK_SCREEN;
         print("2K Table Selected");
       }
       if (fileButtons[1].isSelected()) {
@@ -201,21 +210,25 @@ void draw() {
     //mainScreen.mouseOver2();
     mainScreen.backButton();
     break;
+    case BLANK_SCREEN:
+    fill(0);
+    textSize(24);
+    text("Click 1 to see Flights by State", width/2, height/4);
+      text("Click 2 to see Flights by Lateness", width/2, height/2);
+      text("Click 3 to see Flights by Most Busy Routes", width/2, 3*height/4);
+    break;
   case BAR_CHART_2K: // bar chart 2k
-    background(255);
-    mainScreen.backButton();
-    originChart.drawOriginChart();
-    if (!popupDrawn) {
-      buttonPanel.popup();
-      popupDrawn = true;
-    }
-    buttonPanel.popup();
-    popupDrawn = true;
-    buttonPanel.popup();
-    if (latenessDraw) {
-      latenessScreen.draw();
+      background(255);
       mainScreen.backButton();
-    }
+      originChart.drawOriginChart(); 
+    break;
+    case BAR_CHART_2K_LATENESS:
+    mainScreen.backButton();
+    latenessPlot.drawChart();
+    break;
+    case BAR_CHART_2K_BUSY_ROUTES:
+    mainScreen.backButton();
+    busyRoutes.drawChart();
     break;
   case BAR_CHART_10K: // bar chart 10k
     background(0);
@@ -291,6 +304,15 @@ void keyPressed() {
   } else if (keyCode != SHIFT && keyCode != DELETE && keyCode != TAB && keyCode != ESC) { // Ignore special keys
     userInput += key; // Add the typed character to the input
   }
+  if (key == '1') {
+    screenState = BAR_CHART_2K; // Set screenState to display the Origin chart
+  }
+  if(key == '2'){
+    screenState = BAR_CHART_2K_LATENESS; // Set screenState to display the Latenes chart
+  }
+  if(key == '3'){
+    screenState = BAR_CHART_2K_BUSY_ROUTES; // Set the screenState to display the Busy Routes chart
+}
 }
 //ZF
 
@@ -307,9 +329,10 @@ void mousePressed() {
   mainScreen.mousePressed();
   switch(fileButton.getEvent(mouseX, mouseY)) {
     case(FILE_BUTTON):
-    fileSelect.popup();
-    break;
+      fileSelect.popup();
+      break;
     case(EVENT_NULL):
-    break;
+      break;
   }
+
 }

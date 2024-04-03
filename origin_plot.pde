@@ -30,19 +30,20 @@ public class OriginChart {
     float chartWidth = 500;
     float chartHeight = 600;
     float barWidth = chartWidth / flightsPerState.length;
-    float startX = 100;
-    float startY = 350;
-    float xAxisLabelX = 300;
+    float startX = 50;
+    float startY = 500;
+    float xAxisLabelX = 250;
     float xAxisLabelY = 560;
-    float yAxisLabelX = -600 / 2;
-    float yAxisLabelY = 20;
+    float yAxisLabelX = 20;
+    float yAxisLabelY = 10;
 
     // Draw the y-axis with numerical values
     fill(0);
     textAlign(RIGHT, CENTER);
     for (int i = 0; i <= maxFlights; i += 20) {
       float y = map(i, 0, maxFlights, startY, 0);
-      text(i, 90, y);
+      text(i, 40, y);
+      textSize(12);
       line(100, y, 600 - 100, y);
     }
 
@@ -108,21 +109,9 @@ public class OriginChart {
   }
 
   // Assign colors based on flight count
-  int getColorValue(int flights) {
-    if (flights >= 0 && flights <= 30) {
-      return 275;
-    } else if (flights >= 31 && flights <= 60) {
-      return 255;
-    } else if (flights >= 61 && flights <= 90) {
-      return 210;
-    } else if (flights >= 91 && flights <= 120) {
-      return 120;
-    } else if (flights >= 121 && flights <= 150) {
-      return 50;
-    } else if (flights >= 151 && flights <= 180) {
-      return 30;
-    } else {
-      return 0;
-    }
-  }
+  // Assign blue color to all bars
+int getColorValue(int flights) {
+    return color(0, 0, 255); // Blue color
+}
+
 }
