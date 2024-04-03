@@ -89,15 +89,11 @@ void setup() {
 
 
   //ZF
-
-
   originChart = new OriginChart(table); // Initialize OriginChart with the loaded table
   
   latenessPlot = new lateness_plot(table); // Initialize latenessPlot 
   
   busyRoutes = new busyRoutes(table);
-
-
 
   //ZF
   userInput = showInputBox(); // Prompt user for input
@@ -334,5 +330,6 @@ void mousePressed() {
     case(EVENT_NULL):
       break;
   }
+  clickSound.play();
 
 }
