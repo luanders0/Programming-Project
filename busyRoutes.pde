@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+class busyRoutes{
 Table table1;
 HashMap<String, Integer> routeCounts; // Store flight counts for each route
 ArrayList<String> topRoutes; // Store top routes
@@ -70,6 +71,25 @@ void drawChart() {
   int startY = 100;
   int maxHeight = height - 200;
   int maxFlights = routeCounts.get(topRoutes.get(0));
+  
+    textSize(16);
+  // Draw y-axis
+  stroke(0);
+  line(startX, startY, startX, startY + maxHeight);
+  textAlign(RIGHT, CENTER);
+  fill(0);
+  pushMatrix(); // Save the current transformation matrix
+  translate(startX - 10, startY + maxHeight); // Move the origin to the end of the y-axis
+  rotate(-HALF_PI); // Rotate the coordinate system by -90 degrees
+  text("Flights", 200, -30); // Draw the label
+  popMatrix(); // Restore the previous transformation matrix
+  
+  // Draw x-axis
+  line(startX, startY + maxHeight, startX + (min(10, topRoutes.size()) * 60), startY + maxHeight);
+  textAlign(CENTER, CENTER);
+  text("Routes", startX + (min(10, topRoutes.size()) * 60) / 2, startY + maxHeight + 60);
+  
+    textSize(12);
  
   // Draw bars for each route
   for (int i = 0; i < min(10, topRoutes.size()); i++) {
@@ -88,4 +108,5 @@ void drawChart() {
     textAlign(LEFT, CENTER);
     text(route, startX + i * 60, startY + maxHeight + 20);
   }
+}
 }
