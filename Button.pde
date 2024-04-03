@@ -33,9 +33,10 @@ class Button {
     
   void mousePressed() {
     if (isMouseOver()) {
-      // Play click sound
-       //if (clickSound != null) {
-      //clickSound.play();
+       //Play click sound
+       if (clickSound != null) {
+      clickSound.play();
     }
   }
+}
 }
