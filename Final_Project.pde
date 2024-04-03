@@ -77,8 +77,8 @@ void setup() {
   table100k = loadTable("flights100k.csv", "header");
   tableFull = loadTable("flights_full.csv", "header");
 
-  PImage file = loadImage("file.png");
-  fileButton = new Widget(400, 100, file, FILE_BUTTON);
+  PImage file = loadImage("fileButton.png");
+  fileButton = new Widget(525, 30, file, FILE_BUTTON);
 
 
   table = table2k;
