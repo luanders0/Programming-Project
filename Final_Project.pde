@@ -16,6 +16,8 @@ final int BAR_CHART_100K = 4;
 final int PIE_CHART_2K = 5;
 final int PIE_CHART_10K = 6;
 final int PIE_CHART_100K = 7;
+final int FILE_BUTTON = 8;
+final int EVENT_NULL = -1;
 
 
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
@@ -55,6 +57,7 @@ Dialog_Pane fileSelect;
 lateness_plot latenessPlot;
 OriginChart originChart;
 busyRoutes busyRoutes;
+Widget fileButton;
 
 Button button;
 PImage homeScreen;
@@ -71,24 +74,24 @@ void setup() {
   table100k = loadTable("flights100k.csv", "header");
   tableFull = loadTable("flights_full.csv", "header");
 
+  PImage file = loadImage("file.png");
+  fileButton = new Widget(400, 100, file, FILE_BUTTON);
+
 
   table = table2k;
 
   clickSound = new SoundFile(this, "click.wav");
 
   println(table.getRowCount() + " total rows in table");
-<<<<<<< HEAD
-  
-    originChart = new OriginChart(table); // Initialize OriginChart with the loaded table
-  
-  //ZF  
-=======
+
+
+  //ZF
+
 
   originChart = new OriginChart(table); // Initialize OriginChart with the loaded table
 
 
   //ZF
->>>>>>> cfbc1382f96db3fce58cbc51f82c48318b705489
   userInput = showInputBox(); // Prompt user for input
   pieChart = new PieChart(table);
   //zf
@@ -186,8 +189,12 @@ void draw() {
     image(homeScreen, 0, 0);
     break;
   case CHART_SELECT:
-    fileSelect.popup();
+    //fileSelect.popup();
     image(clouds, 0, 0);
+    fill(119, 221, 119);
+    noStroke();
+    rect(30, 30, 550, 550);
+    fileButton.draw();
     //mainScreen.flightsScreen();
     //mainScreen.mouseOver();
     //mainScreen.flightsScreen2();
@@ -250,6 +257,7 @@ void draw() {
     break;
   }
 }
+
 //ZF
 String showInputBox() {
   textAlign(CENTER);
@@ -275,7 +283,7 @@ String showInputBox() {
 
 void keyPressed() {
   if (key == '\n') { // If Enter key is pressed
-    pieChart = new PieChart(table); 
+    pieChart = new PieChart(table);
     userInput = userInput.toUpperCase(); // Convert to uppercase
     pieUserInput = false;
   } else if (keyCode == BACKSPACE) { // If Backspace key is pressed
@@ -297,4 +305,11 @@ void keyPressed() {
 //}
 void mousePressed() {
   mainScreen.mousePressed();
+  switch(fileButton.getEvent(mouseX, mouseY)) {
+    case(FILE_BUTTON):
+    fileSelect.popup();
+    break;
+    case(EVENT_NULL):
+    break;
+  }
 }
