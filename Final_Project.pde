@@ -201,9 +201,9 @@ void draw() {
   case CHART_SELECT:
     //fileSelect.popup();
     image(clouds, 0, 0);
-    //fill(119, 221, 119);
-    //noStroke();
-    //rect(30, 30, 550, 550);
+    fill(119, 221, 119);
+    noStroke();
+    rect(30, 30, 550, 550);
     fileButton.draw();
     barChart.draw();
     //mainScreen.flightsScreen();
@@ -211,12 +211,12 @@ void draw() {
     //mainScreen.flightsScreen2();
     //mainScreen.mouseOver2();
     break;
-    case BLANK_SCREEN:
+  case BLANK_SCREEN:
     fill(0);
     textSize(24);
     text("Click 1 to see Flights by State", width/2, height/4);
-      text("Click 2 to see Flights by Lateness", width/2, height/2);
-      text("Click 3 to see Flights by Most Busy Routes", width/2, 3*height/4);
+    text("Click 2 to see Flights by Lateness", width/2, height/2);
+    text("Click 3 to see Flights by Most Busy Routes", width/2, 3*height/4);
     break;
   case BAR_CHART_2K: // bar chart 2k
       background(255);
