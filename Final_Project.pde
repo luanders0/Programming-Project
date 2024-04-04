@@ -20,6 +20,7 @@ final int FILE_BUTTON = 8;
 final int EVENT_NULL = -1;
 final int BLANK_SCREEN = 9;
 final int BAR_CHART_2K_LATENESS = 10;
+final int PIE_CHART_TEXT = 12;
 final int BAR_CHART_2K_BUSY_ROUTES = 11;
 
 
@@ -105,6 +106,7 @@ void setup() {
   pieChart = new PieChart(table);
   pieChartOrigin = new PieChartOrigin("flights2k.csv", color(0, 0, 255), color(255, 0, 255));
   BusyRoutesPie = new BusyPie(table);
+
   //zf
 
   for (int i = 0; i < fileButtons.length; i++) {
@@ -201,7 +203,7 @@ void draw() {
     image(homeScreen, 0, 0);
     break;
   case CHART_SELECT:
-    //fileSelect.popup();
+    //buttonPanel.popup();
     image(clouds, 0, 0);
     fileButton.draw();
     //mainScreen.flightsScreen();
@@ -215,7 +217,7 @@ void draw() {
     textSize(24);
     text("Click 1 or 4 to see Flights by State", width/2, height/4);
     text("Click 2 or 5 to see Flights by Lateness", width/2, height/2);
-    text("Click 3 or 6 to see Flights by Most Busy Routes", width/2, 3*height/4);
+    text("Click 3 or 6 or 7 to see Flights by Most Busy Routes", width/2, 3*height/4);
     break;
   case BAR_CHART_2K: // bar chart 2k
     background(255);
@@ -290,6 +292,19 @@ void draw() {
     text("Top 15 Busiest Routes", width/2, 30);
 
     break;
+  case PIE_CHART_TEXT:
+    background(#9DE4F0);
+    mainScreen.backButton();
+    showInputBox();
+    if (!userInput.isEmpty()) {
+      String label = "Number of flights leaving airport " + userInput + " in January 2022";
+      textAlign(CENTER);
+      fill(0);
+      textSize(16);
+      text(label, width / 2, 50);
+      pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
+    }
+    break;
   }
 }
 
@@ -343,6 +358,9 @@ void keyPressed() {
   }
   if (key == '6') {
     screenState = PIE_CHART_100K; // Set the screenState to display the Busy Routes chart
+  }
+  if (key == '7') {
+    screenState = PIE_CHART_TEXT; // Set the screenState to display the Busy Routes chart
   }
 }
 //ZF
