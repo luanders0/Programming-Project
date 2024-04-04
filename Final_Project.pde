@@ -17,6 +17,7 @@ final int PIE_SCREEN = 4;
 final int FILE_BUTTON = 5;
 final int BAR_SCREEN = 5;
 final int BACK_BUTTON = 7;
+final int PIE_CHART_TEXT = 8;
 
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
 
