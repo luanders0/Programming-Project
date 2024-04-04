@@ -1,6 +1,9 @@
 //ZF
 class PieChart {
   Table table;
+  Table table1;
+  Table table2;
+  Table table3;
   
   PieChart(Table table) {
     this.table = table;
@@ -52,7 +55,7 @@ class PieChart {
       float labelY = y + sin(startAngle - angle / 2) * diameter / 2;
       textAlign(CENTER, CENTER);
       fill(0);
-      String[] dateParts = dates[i].split(" ");
+      String[] dateParts = dates[i].split(" ");    
       text(dateParts[0], labelX, labelY); // Display only the date part
     }
   }

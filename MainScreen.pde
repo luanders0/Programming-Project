@@ -25,7 +25,7 @@ class MainScreen {
   } else {
     // Check for mouse click on the back button
     if (mouseX > 30 && mouseX < 80 && mouseY > 30 && mouseY < 50) {
-      screenState = 0;
+      screenState = 1;
       clickSound.play();
     }
     
