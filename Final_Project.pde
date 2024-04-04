@@ -222,6 +222,7 @@ void draw() {
   case BAR_CHART_2K: // bar chart 2k
       background(255);
       mainScreen.backButton();
+      originChart.drawOriginChart();
     break;
     case BAR_CHART_2K_LATENESS:
     mainScreen.backButton();
