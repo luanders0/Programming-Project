@@ -207,6 +207,7 @@ void draw() {
     break;
   case BLANK_SCREEN:
     fill(0);
+    textAlign(CENTER,CENTER);
     textSize(24);
     text("Click 1 to see Flights by State", width/2, height/4);
     text("Click 2 to see Flights by Lateness", width/2, height/2);
@@ -215,7 +216,7 @@ void draw() {
   case BAR_CHART_2K: // bar chart 2k
       background(255);
       mainScreen.backButton();
-      originChart.drawOriginChart(); 
+      originChart.drawOriginChart();
     break;
     case BAR_CHART_2K_LATENESS:
     mainScreen.backButton();
