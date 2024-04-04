@@ -64,7 +64,7 @@ Dialog_Pane fileSelect;
 lateness_plot latenessPlot;
 OriginChart originChart;
 busyRoutes busyRoutes;
-Widget fileButton, barChart;
+Widget fileButton, barChart, backButton;
 
 PFont barChartFont;
 
@@ -87,7 +87,7 @@ void setup() {
   PImage file = loadImage("fileButton.png");
   fileButton = new Widget(525, 30, file, FILE_BUTTON);
   barChart = new Widget(200, 200, 80, 30, "Bar Chart", color(255, 0, 0), null, BAR_CHART_2K);
-  backButton = new Widget(30, 50, 50, 20, "back", 0, font, BACK_BUTTON);
+  backButton = new Widget(30, 50, 50, 20, "back", color(255), barChartFont, BACK_BUTTON);
 
 
   table = table2k;
@@ -213,6 +213,7 @@ void draw() {
     image(clouds, 0, 0);
     fileButton.draw();
     barChart.draw();
+    backButton.draw();
     //mainScreen.flightsScreen();
     //mainScreen.mouseOver();
     //mainScreen.flightsScreen2();
@@ -378,28 +379,28 @@ void mousePressed() {
   mainScreen.mousePressed();
   switch(fileButton.getEvent(mouseX, mouseY)) {
     case(FILE_BUTTON):
-    fileSelect.popup();
+      fileSelect.popup();
     break;
-    case(EVENT_NULL):
+      case(EVENT_NULL):
     break;
   }
   switch(barChart.getEvent(mouseX, mouseY)) {
     case(BAR_CHART_2K):
-    buttonPanel.popup();
+      buttonPanel.popup();
     break;
-    if (screenState != 0 ) {
-      switch(backButton.getEvent(mouseX, mouseY)) {
-        case(BACK_BUTTON):
-        if (screenState = 1 ) {
+  }
+  if (screenState != 0 ) {
+    switch(backButton.getEvent(mouseX, mouseY)) {
+      case(BACK_BUTTON):
+        if (screenState == 1 ) {
           screenState = 0;
         } else {
           screenState = 1;
         }
         break;
-        case(EVENT_NULL):
+      case(EVENT_NULL):
         break;
-      }
-      clickSound.play();
     }
+    clickSound.play();
   }
 }
