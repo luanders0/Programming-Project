@@ -145,22 +145,20 @@ void key() {
   String c = ("Cancelled Flights - " + cancelledFlightCount);
   fill(100);
   textSize(15);
-  text(e, 100, 25, 280, 320);
-  text(t, 100, 50, 280, 320);
-  text(l, 100, 75, 280, 320);
-  text(c, 100, 100, 280, 320);
-
-
+  text(e, 100, 45, 280, 320);
+  text(t, 100, 70, 280, 320);
+  text(l, 100, 95, 280, 320);
+  text(c, 100, 120, 280, 320);
 
   fill(255, 113, 206); // early
-  square(15, 20, 20);
+  square(15, 40, 20);
 
   fill(1, 205, 254); // on time
-  square(15, 45, 20);
+  square(15, 65, 20);
 
   fill(185, 103, 255); // late
-  square(15, 70, 20);
+  square(15, 90, 20);
 
   fill(255, 251, 150); //cancelled
-  square(15, 95, 20);
+  square(15, 115, 20);
 }

@@ -10,7 +10,8 @@ Table table1;
 HashMap<String, Integer> routeCounts; // Store flight counts for each route
 ArrayList<String> topRoutes; // Store top routes
   
-  void busyRoutes(Table flightTable) {
+  
+  busyRoutes(Table flightTable) {
  
   // Load CSV file
     table = flightTable;
@@ -67,7 +68,7 @@ void sortRoutes() {
 void drawChart() {
   // Draw top N routes
   int barWidth = 20;
-  int startX = 100;
+  int startX = 10;
   int startY = 100;
   int maxHeight = height - 200;
   int maxFlights = routeCounts.get(topRoutes.get(0));

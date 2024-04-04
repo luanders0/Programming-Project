@@ -2,7 +2,7 @@ class Button {
   float x, y;
   float w, h;
   String label;
-  SoundFile clickSound; 
+  //SoundFile clickSound; 
 
   Button(float x, float y, float w, float h, String label) {
     this.x = x;
@@ -33,7 +33,7 @@ class Button {
     
   void mousePressed() {
     if (isMouseOver()) {
-      // Play click sound
+       //Play click sound
        if (clickSound != null) {
       clickSound.play();
     }
