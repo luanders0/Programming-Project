@@ -60,7 +60,9 @@ Dialog_Pane fileSelect;
 lateness_plot latenessPlot;
 OriginChart originChart;
 busyRoutes busyRoutes;
-Widget fileButton;
+Widget fileButton, barChart;
+
+PFont barChartFont;
 
 Button button;
 PImage homeScreen;
@@ -76,9 +78,12 @@ void setup() {
   table10k = loadTable("flights10k.csv", "header");
   table100k = loadTable("flights100k.csv", "header");
   tableFull = loadTable("flights_full.csv", "header");
+  barChartFont = loadFont("BellMTBold-48.vlw");
 
   PImage file = loadImage("fileButton.png");
   fileButton = new Widget(525, 30, file, FILE_BUTTON);
+  barChart = new Widget(100, 100, 100, 25, "Bar Chart",
+    color(224, 160, 56), barChartFont, BAR_CHART_2K);
 
 
   table = table2k;
@@ -181,7 +186,7 @@ void setup() {
 
   homeScreen = loadImage("SquareMainScreen.jpg");
   //clouds = loadImage("ChartScreen.jpg");
-  clouds = loadImage("cloudsBlack.jpg");
+  clouds = loadImage("clouds.jpg");
 
   mainScreen = new MainScreen(homeScreen, clouds);
 }
@@ -196,23 +201,23 @@ void draw() {
   case CHART_SELECT:
     //fileSelect.popup();
     image(clouds, 0, 0);
-    //fill(119, 221, 119);
-    //noStroke();
-    //rect(30, 30, 550, 550);
+    fill(119, 221, 119);
+    noStroke();
+    rect(30, 30, 550, 550);
     fileButton.draw();
-    mainScreen.flightsScreen();
-    mainScreen.mouseOver();
-    mainScreen.flightsScreen2();
-    mainScreen.mouseOver2();
-    mainScreen.backButton();
+    barChart.draw();
+    //mainScreen.flightsScreen();
+    //mainScreen.mouseOver();
+    //mainScreen.flightsScreen2();
+    //mainScreen.mouseOver2();
     break;
-    case BLANK_SCREEN:
+  case BLANK_SCREEN:
     fill(0);
     textAlign(CENTER,CENTER);
     textSize(24);
     text("Click 1 to see Flights by State", width/2, height/4);
-      text("Click 2 to see Flights by Lateness", width/2, height/2);
-      text("Click 3 to see Flights by Most Busy Routes", width/2, 3*height/4);
+    text("Click 2 to see Flights by Lateness", width/2, height/2);
+    text("Click 3 to see Flights by Most Busy Routes", width/2, 3*height/4);
     break;
   case BAR_CHART_2K: // bar chart 2k
       background(255);
@@ -331,6 +336,12 @@ void mousePressed() {
     case(EVENT_NULL):
       break;
   }
+  switch(barChart.getEvent(mouseX, mouseY)) {
+    case(BAR_CHART_2K):
+    screenState = BAR_CHART_2K;
+    break;
+    case(EVENT_NULL):
+    break;
+  }
   clickSound.play();
-
 }
