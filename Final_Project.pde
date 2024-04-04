@@ -22,6 +22,7 @@ final int BLANK_SCREEN = 9;
 final int BAR_CHART_2K_LATENESS = 10;
 final int PIE_CHART_TEXT = 12;
 final int BAR_CHART_2K_BUSY_ROUTES = 11;
+final int BACK_BUTTON = 13;
 
 
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
@@ -85,8 +86,8 @@ void setup() {
 
   PImage file = loadImage("fileButton.png");
   fileButton = new Widget(525, 30, file, FILE_BUTTON);
-  
-  barChart = new Widget(200, 200, 80, 30, "Bar Chart", color(255,0,0), null, BAR_CHART_2K);
+  barChart = new Widget(200, 200, 80, 30, "Bar Chart", color(255, 0, 0), null, BAR_CHART_2K);
+  backButton = new Widget(30, 50, 50, 20, "back", 0, font, BACK_BUTTON);
 
 
   table = table2k;
@@ -227,28 +228,28 @@ void draw() {
     break;
   case BAR_CHART_2K: // bar chart 2k
     background(255);
-    mainScreen.backButton();
+    //mainScreen.backButton();
     originChart.drawOriginChart();
     break;
   case BAR_CHART_2K_LATENESS:
-    mainScreen.backButton();
+    //mainScreen.backButton();
     latenessPlot.drawChart();
     break;
   case BAR_CHART_2K_BUSY_ROUTES:
-    mainScreen.backButton();
+    //mainScreen.backButton();
     busyRoutes.drawChart();
     break;
   case BAR_CHART_10K: // bar chart 10k
     background(0);
-    mainScreen.backButton();
+    //mainScreen.backButton();
     break;
   case BAR_CHART_100K: // bar chart 100k
     background(0);
-    mainScreen.backButton();
+    //mainScreen.backButton();
     break;
   case PIE_CHART_2K: // pie chart 2k
     background(0);
-    mainScreen.backButton();
+    //mainScreen.backButton();
     background(#9DE4F0);
     pieChartOrigin.draw(width/2, height/2, 300);
     textAlign(CENTER, CENTER);
@@ -258,7 +259,7 @@ void draw() {
     break;
   case PIE_CHART_10K: // pie chart 10k
     background(#9DE4F0);
-    mainScreen.backButton();
+    //mainScreen.backButton();
 
     lateness();
     pieChart(300, flightStatus);
@@ -290,8 +291,8 @@ void draw() {
     //  pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
     //}
     background(#9DE4F0);
-    mainScreen.backButton();
-    mainScreen.backButton();
+    //mainScreen.backButton();
+    //mainScreen.backButton();
     BusyRoutesPie.drawPieChart(width/2, height/2, 300);
     fill(0);
     textSize(20);
@@ -300,7 +301,7 @@ void draw() {
     break;
   case PIE_CHART_TEXT:
     background(#9DE4F0);
-    mainScreen.backButton();
+    //mainScreen.backButton();
     showInputBox();
     if (!userInput.isEmpty()) {
       String label = "Number of flights leaving airport " + userInput + " in January 2022";
@@ -384,8 +385,21 @@ void mousePressed() {
   }
   switch(barChart.getEvent(mouseX, mouseY)) {
     case(BAR_CHART_2K):
-      buttonPanel.popup();
-      break;
+    buttonPanel.popup();
+    break;
+    if (screenState != 0 ) {
+      switch(backButton.getEvent(mouseX, mouseY)) {
+        case(BACK_BUTTON):
+        if (screenState = 1 ) {
+          screenState = 0;
+        } else {
+          screenState = 1;
+        }
+        break;
+        case(EVENT_NULL):
+        break;
+      }
+      clickSound.play();
+    }
   }
-  clickSound.play();
 }
