@@ -29,34 +29,34 @@ class MainScreen {
       clickSound.play();
     }
     
-    if (mouseX > areaX0 && mouseX < areaX0 + areaWidth0 && mouseY > areaY0 && mouseY < areaY0 + areaHeight0 && screenState == 0) {
-      screenState = 1; 
-     clickSound.play(); // Play the click sound
-    }
-    else if (mouseX > 350 && mouseX < 550 && mouseY > 110 && mouseY < 140 && screenState == 1) {
-      screenState = 2; 
-      clickSound.play();
-    }
-    else if (mouseX > 350 && mouseX < 550 && mouseY > 160 && mouseY < 190 && screenState == 1) {
-      screenState = 3; 
-      clickSound.play();
-    }
-    else if (mouseX > 350 && mouseX < 550 && mouseY > 210 && mouseY < 240 && screenState == 1) {
-      screenState = 4; 
-      clickSound.play();
-    }
-    else if (mouseX > 350 && mouseX < 550 && mouseY > 410 && mouseY < 440 && screenState == 1) {
-      screenState = 5; 
-      clickSound.play();
-    }
-    else if (mouseX > 350 && mouseX < 550 && mouseY > 460 && mouseY < 490 && screenState == 1) {
-      screenState = 6; 
-      clickSound.play();
-    }
-    else if (mouseX > 350 && mouseX < 550 && mouseY > 510 && mouseY < 540 && screenState == 1) {
-      screenState = 7; 
-      clickSound.play();
-    }
+    //if (mouseX > areaX0 && mouseX < areaX0 + areaWidth0 && mouseY > areaY0 && mouseY < areaY0 + areaHeight0 && screenState == 0) {
+    //  screenState = 1; 
+    // clickSound.play(); // Play the click sound
+    //}
+    //else if (mouseX > 350 && mouseX < 550 && mouseY > 110 && mouseY < 140 && screenState == 1) {
+    //  screenState = 2; 
+    //  clickSound.play();
+    //}
+    //else if (mouseX > 350 && mouseX < 550 && mouseY > 160 && mouseY < 190 && screenState == 1) {
+    //  screenState = 3; 
+    //  clickSound.play();
+    //}
+    //else if (mouseX > 350 && mouseX < 550 && mouseY > 210 && mouseY < 240 && screenState == 1) {
+    //  screenState = 4; 
+    //  clickSound.play();
+    //}
+    //else if (mouseX > 350 && mouseX < 550 && mouseY > 410 && mouseY < 440 && screenState == 1) {
+    //  screenState = 5; 
+    //  clickSound.play();
+    //}
+    //else if (mouseX > 350 && mouseX < 550 && mouseY > 460 && mouseY < 490 && screenState == 1) {
+    //  screenState = 6; 
+    //  clickSound.play();
+    //}
+    //else if (mouseX > 350 && mouseX < 550 && mouseY > 510 && mouseY < 540 && screenState == 1) {
+    //  screenState = 7; 
+    //  clickSound.play();
+    //}
     else if (mouseX > 10 && mouseX < 60 && mouseY > 10 && mouseY < 30 && screenState != 1) {
       screenState = 1; 
       clickSound.play();

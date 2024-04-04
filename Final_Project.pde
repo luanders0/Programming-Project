@@ -127,14 +127,17 @@ void setup() {
       }
       if (fileButtons[1].isSelected()) {
         table = table10k;
+        screenState = BLANK_SCREEN;
         print("10K Table Selected");
       }
       if (fileButtons[2].isSelected()) {
         table = table100k;
+        screenState = BLANK_SCREEN;
         print("100K Table Selected");
       }
       if (fileButtons[3].isSelected()) {
         table = tableFull;
+        screenState = BLANK_SCREEN;
         print("Full Table Selected");
       }
     }
@@ -172,7 +175,7 @@ void setup() {
     @Override
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 4th button is pressed
-      print(buttonPanel.getInput("Please enter destination airport"));
+      userInput = buttonPanel.getInput("Please enter destination airport");
     }
   };
 
@@ -313,13 +316,6 @@ String showInputBox() {
   textAlign(CENTER);
   fill(0);
   textSize(16);
-  //text("Enter three-letter abbreviation:", width/2, height/2 - 20);
-  //return "";
-
-  //if (userInput.isEmpty()) {
-  //     text("Enter three-letter abbreviation:", width/2, height/2 - 20);
-  // }
-  // return "";
   if ( pieUserInput == true ) {
     if (userInput.isEmpty()) {
       text("Enter three-letter abbreviation:", width/2, height/2 - 20);
