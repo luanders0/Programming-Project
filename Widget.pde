@@ -27,7 +27,7 @@ class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
       fill(widgetColor);
       rect(x,y,width,height);
       fill(labelColor);
-      text(label, x+10, y+height-10);
+      text(label, x+width/2, y+height-10);
     }
   }
   int getEvent(int mX, int mY){

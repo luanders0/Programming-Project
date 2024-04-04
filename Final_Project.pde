@@ -60,7 +60,9 @@ Dialog_Pane fileSelect;
 lateness_plot latenessPlot;
 OriginChart originChart;
 busyRoutes busyRoutes;
-Widget fileButton;
+Widget fileButton, barChart;
+
+PFont barChartFont;
 
 Button button;
 PImage homeScreen;
@@ -76,9 +78,12 @@ void setup() {
   table10k = loadTable("flights10k.csv", "header");
   table100k = loadTable("flights100k.csv", "header");
   tableFull = loadTable("flights_full.csv", "header");
+  barChartFont = loadFont("BellMTBold-48.vlw");
 
   PImage file = loadImage("fileButton.png");
   fileButton = new Widget(525, 30, file, FILE_BUTTON);
+  barChart = new Widget(100, 100, 100, 25, "Bar Chart",
+    color(224, 160, 56), barChartFont, BAR_CHART_2K);
 
 
   table = table2k;
@@ -200,11 +205,11 @@ void draw() {
     //noStroke();
     //rect(30, 30, 550, 550);
     fileButton.draw();
-    mainScreen.flightsScreen();
-    mainScreen.mouseOver();
-    mainScreen.flightsScreen2();
-    mainScreen.mouseOver2();
-    mainScreen.backButton();
+    barChart.draw();
+    //mainScreen.flightsScreen();
+    //mainScreen.mouseOver();
+    //mainScreen.flightsScreen2();
+    //mainScreen.mouseOver2();
     break;
     case BLANK_SCREEN:
     fill(0);
@@ -331,6 +336,12 @@ void mousePressed() {
     case(EVENT_NULL):
       break;
   }
+  switch(barChart.getEvent(mouseX, mouseY)) {
+    case(BAR_CHART_2K):
+    screenState = BAR_CHART_2K;
+    break;
+    case(EVENT_NULL):
+    break;
+  }
   clickSound.play();
-
 }
