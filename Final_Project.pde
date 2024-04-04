@@ -85,6 +85,8 @@ void setup() {
 
   PImage file = loadImage("fileButton.png");
   fileButton = new Widget(525, 30, file, FILE_BUTTON);
+  
+  barChart = new Widget(200, 200, 80, 30, "Bar Chart", color(255,0,0), null, BAR_CHART_2K);
 
 
   table = table2k;
@@ -209,6 +211,7 @@ void draw() {
     buttonPanel.popup();
     image(clouds, 0, 0);
     fileButton.draw();
+    barChart.draw();
     //mainScreen.flightsScreen();
     //mainScreen.mouseOver();
     //mainScreen.flightsScreen2();
@@ -378,6 +381,11 @@ void mousePressed() {
     break;
     case(EVENT_NULL):
     break;
+  }
+  switch(barChart.getEvent(mouseX, mouseY)) {
+    case(BAR_CHART_2K):
+      buttonPanel.popup();
+      break;
   }
   clickSound.play();
 }
