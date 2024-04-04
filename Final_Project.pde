@@ -11,20 +11,12 @@ import processing.sound.*;
 final int EVENT_NULL = -1;
 final int HOME_SCREEN = 0;
 final int CHART_SELECT = 1;
-final int BAR_CHART_2K = 2;
-final int BAR_CHART_10K = 3;
-final int BAR_CHART_100K = 4;
-final int PIE_CHART_2K = 5;
-final int PIE_CHART_10K = 6;
-final int PIE_CHART_100K = 7;
-final int FILE_BUTTON = 8;
-final int BLANK_SCREEN = 9;
-final int BAR_CHART_2K_LATENESS = 10;
-final int PIE_CHART_TEXT = 12;
-final int BAR_CHART_2K_BUSY_ROUTES = 11;
-final int BACK_BUTTON = 13;
-final int BAR_CHART_BUTTON = 14;
-
+final int PIE_CHART_BUTTON = 2;
+final int BAR_CHART_BUTTON = 3;
+final int PIE_SCREEN = 4;
+final int FILE_BUTTON = 5;
+final int BAR_SCREEN = 5;
+final int BACK_BUTTON = 7;
 
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
 
@@ -66,7 +58,7 @@ Dialog_Pane fileSelect;
 lateness_plot latenessPlot;
 OriginChart originChart;
 busyRoutes busyRoutes;
-Widget fileButton, barChart, backButton;
+Widget fileButton, barChart, pieChartButton, backButton;
 
 PFont barChartFont;
 
@@ -90,6 +82,7 @@ void setup() {
   fileButton = new Widget(525, 30, file, FILE_BUTTON);
   barChart = new Widget(200, 200, 80, 30, "Bar Chart", color(255, 0, 0), null, BAR_CHART_BUTTON);
   backButton = new Widget(30, 50, 50, 20, "back", color(255), barChartFont, BACK_BUTTON);
+  pieChartButton = new Widget(300, 300, 80, 30, "Pie Chart", color(255,0,0), null, PIE_CHART_BUTTON);
 
 
   table = table2k;
@@ -127,22 +120,18 @@ void setup() {
       public void actionPerformed (ActionEvent e) {
       if (fileButtons[0].isSelected()) {
         table = table2k;
-        screenState = BLANK_SCREEN;
         print("2K Table Selected");
       }
       if (fileButtons[1].isSelected()) {
         table = table10k;
-        screenState = BLANK_SCREEN;
         print("10K Table Selected");
       }
       if (fileButtons[2].isSelected()) {
         table = table100k;
-        screenState = BLANK_SCREEN;
         print("100K Table Selected");
       }
       if (fileButtons[3].isSelected()) {
         table = tableFull;
-        screenState = BLANK_SCREEN;
         print("Full Table Selected");
       }
     }
@@ -156,6 +145,8 @@ void setup() {
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 1st button is pressed
       latenessDraw = true;
+      originDraw = false;
+      busyDraw = false;
     }
   };
 
@@ -164,6 +155,8 @@ void setup() {
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 2nd button is pressed
       originDraw = true;
+      latenessDraw = false;
+      busyDraw = false;      
     }
   };
 
@@ -172,6 +165,8 @@ void setup() {
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 3rd button is pressed
       busyDraw = true;
+      originDraw = false;
+      latenessDraw = false;
     }
   };
 
@@ -214,94 +209,68 @@ void draw() {
     fileButton.draw();
     barChart.draw();
     backButton.draw();
+    pieChartButton.draw();
     //mainScreen.flightsScreen();
     //mainScreen.mouseOver();
     //mainScreen.flightsScreen2();
     //mainScreen.mouseOver2();
     break;
-  case BLANK_SCREEN:
-    fill(0);
-    textAlign(CENTER, CENTER);
-    textSize(24);
-    if (busyDraw == true) {
-      screenState = BAR_CHART_2K_BUSY_ROUTES;
-    }
-    text("Click 1 or 4 to see Flights by State", width/2, height/4);
-    text("Click 2 or 5 to see Flights by Lateness", width/2, height/2);
-    text("Click 3 or 6 or 7 to see Flights by Most Busy Routes", width/2, 3*height/4);
-    break;
-  case BAR_CHART_2K: // bar chart 2k
+  case BAR_SCREEN:
     background(255);
-    //mainScreen.backButton();
-    originChart.drawOriginChart();
+    backButton.draw();
+    if (busyDraw) {
+      busyRoutes.drawChart();
+    }
+    else if (latenessDraw) {
+      latenessPlot.drawChart();      
+    }
+    else if (originDraw) {
+      originChart.drawOriginChart();
+    }
+    //text("Click 1 or 4 to see Flights by State", width/2, height/4);
+    //text("Click 2 or 5 to see Flights by Lateness", width/2, height/2);
+    //text("Click 3 or 6 or 7 to see Flights by Most Busy Routes", width/2, 3*height/4);
     break;
-  case BAR_CHART_2K_LATENESS:
-    //mainScreen.backButton();
-    latenessPlot.drawChart();
-    break;
-  case BAR_CHART_2K_BUSY_ROUTES:
-    //mainScreen.backButton();
-    busyRoutes.drawChart();
-    break;
-  case BAR_CHART_10K: // bar chart 10k
-    background(0);
-    //mainScreen.backButton();
-    break;
-  case BAR_CHART_100K: // bar chart 100k
-    background(0);
-    //mainScreen.backButton();
-    break;
-  case PIE_CHART_2K: // pie chart 2k
-    background(0);
-    //mainScreen.backButton();
+  case PIE_SCREEN:
     background(#9DE4F0);
-    pieChartOrigin.draw(width/2, height/2, 300);
-    textAlign(CENTER, CENTER);
-    fill(0);
-    textSize(20);
-    text("Number of Flights Flown per State", width/2, 30);
-    break;
-  case PIE_CHART_10K: // pie chart 10k
-    background(#9DE4F0);
-    //mainScreen.backButton();
-
-    lateness();
-    pieChart(300, flightStatus);
-    key();
-
-    //      background(#9DE4F0);
-    //    mainScreen.backButton();
-    //    showInputBox();
-    //    if (!userInput.isEmpty()) {
-    //      String label = "Number of flights leaving airport " + userInput + " in January 2022";
-    //      textAlign(CENTER);
-    //      fill(0);
-    //      textSize(16);
-    //      text(label, width / 2, 50);
-    //      pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
-    //  }
-    break;
-  case PIE_CHART_100K: // pie chart 100k
-    //ZF
-    //background(#9DE4F0);
-    //mainScreen.backButton();
-    //showInputBox();
-    //if (!userInput.isEmpty()) {
-    //  String label = "Number of flights leaving airport " + userInput + " in January 2022";
-    //  textAlign(CENTER);
-    //  fill(0);
-    //  textSize(16);
-    //  text(label, width / 2, 50);
-    //  pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
-    //}
-    background(#9DE4F0);
-    //mainScreen.backButton();
-    //mainScreen.backButton();
-    BusyRoutesPie.drawPieChart(width/2, height/2, 300);
-    fill(0);
-    textSize(20);
-    text("Top 15 Busiest Routes", width/2, 30);
-
+    backButton.draw();
+    if (originDraw) {
+      pieChartOrigin.draw(width/2, height/2, 300);
+    }
+    if (latenessDraw) {
+      lateness();
+      pieChart(300, flightStatus);
+      key();
+      //      background(#9DE4F0);
+      //    mainScreen.backButton();
+      //    showInputBox();
+      //    if (!userInput.isEmpty()) {
+      //      String label = "Number of flights leaving airport " + userInput + " in January 2022";
+      //      textAlign(CENTER);
+      //      fill(0);
+      //      textSize(16);
+      //      text(label, width / 2, 50);
+      //      pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
+      //  }
+    }
+    if (busyDraw) {
+       BusyRoutesPie.drawPieChart(width/2, height/2, 300);
+       fill(0);
+      textSize(20);
+      text("Top 15 Busiest Routes", width/2, 30);
+      //ZF
+      //background(#9DE4F0);
+      //mainScreen.backButton();
+      //showInputBox();
+      //if (!userInput.isEmpty()) {
+      //  String label = "Number of flights leaving airport " + userInput + " in January 2022";
+      //  textAlign(CENTER);
+      //  fill(0);
+      //  textSize(16);
+      //  text(label, width / 2, 50);
+      //  pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
+      //}
+    }
     break;
   case PIE_CHART_TEXT:
     background(#9DE4F0);
@@ -345,27 +314,6 @@ void keyPressed() {
   } else if (keyCode != SHIFT && keyCode != DELETE && keyCode != TAB && keyCode != ESC) { // Ignore special keys
     userInput += key; // Add the typed character to the input
   }
-  if (key == '1') {
-    screenState = BAR_CHART_2K; // Set screenState to display the Origin chart
-  }
-  if (key == '2') {
-    screenState = BAR_CHART_2K_LATENESS; // Set screenState to display the Latenes chart
-  }
-  if (key == '3') {
-    screenState = BAR_CHART_2K_BUSY_ROUTES; // Set the screenState to display the Busy Routes chart
-  }
-  if (key == '4') {
-    screenState = PIE_CHART_2K; // Set screenState to display the Origin chart
-  }
-  if (key == '5') {
-    screenState = PIE_CHART_10K; // Set screenState to display the Latenes chart
-  }
-  if (key == '6') {
-    screenState = PIE_CHART_100K; // Set the screenState to display the Busy Routes chart
-  }
-  if (key == '7') {
-    screenState = PIE_CHART_TEXT; // Set the screenState to display the Busy Routes chart
-  }
 }
 //ZF
 
@@ -389,9 +337,16 @@ void mousePressed() {
   }
   switch(barChart.getEvent(mouseX, mouseY)) {
     case(BAR_CHART_BUTTON):
+      screenState = BAR_SCREEN;
       buttonPanel.popup();
-      screenState = BLANK_SCREEN;
+      break;
+    case(EVENT_NULL):
+      break;
+  }
+  switch(pieChartButton.getEvent(mouseX, mouseY)) {
+    case(PIE_CHART_BUTTON):
       buttonPanel.popup();
+      screenState = PIE_SCREEN;
       break;
     case(EVENT_NULL):
       break;
@@ -407,7 +362,7 @@ void mousePressed() {
         break;
       case(EVENT_NULL):
         break;
-    }
+    }  
     clickSound.play();
   }
 }

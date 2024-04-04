@@ -68,6 +68,10 @@ class PieChartOrigin {
       fill(0);
       text(threeLetterStrings[i] + " " + counts[i], labelX, labelY);
       startAngle = endAngle;
+      textAlign(CENTER, CENTER);
+      fill(0);
+      textSize(20);
+      text("Number of Flights Flown per State", width/2, 30);
     }
   }
 }
