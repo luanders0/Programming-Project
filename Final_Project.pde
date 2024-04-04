@@ -82,8 +82,6 @@ void setup() {
 
   PImage file = loadImage("fileButton.png");
   fileButton = new Widget(525, 30, file, FILE_BUTTON);
-  barChart = new Widget(100, 100, 100, 25, "Bar Chart",
-    color(224, 160, 56), barChartFont, BAR_CHART_2K);
 
 
   table = table2k;
@@ -201,11 +199,7 @@ void draw() {
   case CHART_SELECT:
     //fileSelect.popup();
     image(clouds, 0, 0);
-    fill(119, 221, 119);
-    noStroke();
-    rect(30, 30, 550, 550);
     fileButton.draw();
-    barChart.draw();
     //mainScreen.flightsScreen();
     //mainScreen.mouseOver();
     //mainScreen.flightsScreen2();
@@ -314,6 +308,16 @@ void keyPressed() {
   }
   if(key == '3'){
     screenState = BAR_CHART_2K_BUSY_ROUTES; // Set the screenState to display the Busy Routes chart
+  }
+if (key == '4') {
+    screenState = PIE_CHART_2K; // Set screenState to display the Origin chart
+  }
+  if(key == '5'){
+    screenState = PIE_CHART_10K; // Set screenState to display the Latenes chart
+  }
+  if(key == '6'){
+    screenState = PIE_CHART_100K; // Set the screenState to display the Busy Routes chart
+
 }
 }
 //ZF
