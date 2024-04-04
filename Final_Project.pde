@@ -181,7 +181,7 @@ void setup() {
 
   homeScreen = loadImage("SquareMainScreen.jpg");
   //clouds = loadImage("ChartScreen.jpg");
-  clouds = loadImage("cloudsBlack.jpg");
+  clouds = loadImage("clouds.jpg");
 
   mainScreen = new MainScreen(homeScreen, clouds);
 }
