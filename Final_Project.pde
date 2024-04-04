@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import processing.sound.*;
 
+final int EVENT_NULL = -1;
 final int HOME_SCREEN = 0;
 final int CHART_SELECT = 1;
 final int BAR_CHART_2K = 2;
@@ -17,12 +18,12 @@ final int PIE_CHART_2K = 5;
 final int PIE_CHART_10K = 6;
 final int PIE_CHART_100K = 7;
 final int FILE_BUTTON = 8;
-final int EVENT_NULL = -1;
 final int BLANK_SCREEN = 9;
 final int BAR_CHART_2K_LATENESS = 10;
 final int PIE_CHART_TEXT = 12;
 final int BAR_CHART_2K_BUSY_ROUTES = 11;
 final int BACK_BUTTON = 13;
+final int BAR_CHART_BUTTON = 14;
 
 
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
@@ -54,6 +55,7 @@ String userInput = "";
 boolean latenessDraw = false;
 boolean popupDrawn = false;
 boolean originDraw = false;
+boolean busyDraw = false;
 boolean busyRoutesDraw = false;
 
 Screen latenessScreen, pieScreen;
@@ -86,7 +88,7 @@ void setup() {
 
   PImage file = loadImage("fileButton.png");
   fileButton = new Widget(525, 30, file, FILE_BUTTON);
-  barChart = new Widget(200, 200, 80, 30, "Bar Chart", color(255, 0, 0), null, BAR_CHART_2K);
+  barChart = new Widget(200, 200, 80, 30, "Bar Chart", color(255, 0, 0), null, BAR_CHART_BUTTON);
   backButton = new Widget(30, 50, 50, 20, "back", color(255), barChartFont, BACK_BUTTON);
 
 
@@ -161,7 +163,6 @@ void setup() {
     @Override
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 2nd button is pressed
-      print("button 2 performed an action");
       originDraw = true;
     }
   };
@@ -170,7 +171,7 @@ void setup() {
     @Override
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 3rd button is pressed
-      print("button 3 performed an action");
+      busyDraw = true;
     }
   };
 
@@ -209,7 +210,6 @@ void draw() {
     image(homeScreen, 0, 0);
     break;
   case CHART_SELECT:
-    buttonPanel.popup();
     image(clouds, 0, 0);
     fileButton.draw();
     barChart.draw();
@@ -223,6 +223,9 @@ void draw() {
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(24);
+    if (busyDraw == true) {
+      screenState = BAR_CHART_2K_BUSY_ROUTES;
+    }
     text("Click 1 or 4 to see Flights by State", width/2, height/4);
     text("Click 2 or 5 to see Flights by Lateness", width/2, height/2);
     text("Click 3 or 6 or 7 to see Flights by Most Busy Routes", width/2, 3*height/4);
@@ -380,14 +383,18 @@ void mousePressed() {
   switch(fileButton.getEvent(mouseX, mouseY)) {
     case(FILE_BUTTON):
       fileSelect.popup();
-    break;
-      case(EVENT_NULL):
-    break;
+      break;
+    case(EVENT_NULL):
+      break;
   }
   switch(barChart.getEvent(mouseX, mouseY)) {
-    case(BAR_CHART_2K):
+    case(BAR_CHART_BUTTON):
       buttonPanel.popup();
-    break;
+      screenState = BLANK_SCREEN;
+      buttonPanel.popup();
+      break;
+    case(EVENT_NULL):
+      break;
   }
   if (screenState != 0 ) {
     switch(backButton.getEvent(mouseX, mouseY)) {
