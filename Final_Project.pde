@@ -203,7 +203,7 @@ void draw() {
     image(homeScreen, 0, 0);
     break;
   case CHART_SELECT:
-    //buttonPanel.popup();
+    buttonPanel.popup();
     image(clouds, 0, 0);
     fileButton.draw();
     //mainScreen.flightsScreen();
