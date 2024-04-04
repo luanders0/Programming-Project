@@ -34,7 +34,7 @@ public class OriginChart {
     float startY = 500;
     float xAxisLabelX = 250;
     float xAxisLabelY = 560;
-    float yAxisLabelX = 20;
+    float yAxisLabelX =-250;
     float yAxisLabelY = 10;
 
     // Draw the y-axis with numerical values
