@@ -31,9 +31,9 @@ public class OriginChart {
     float chartHeight = 600;
     float barWidth = chartWidth / flightsPerState.length;
     float startX = 50;
-    float startY = 500;
+    float startY = 550;
     float xAxisLabelX = 250;
-    float xAxisLabelY = 560;
+    float xAxisLabelY = 580;
     float yAxisLabelX =-250;
     float yAxisLabelY = 10;
 
