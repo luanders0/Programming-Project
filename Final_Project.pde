@@ -50,6 +50,7 @@ boolean popupDrawn = false;
 boolean originDraw = false;
 boolean busyDraw = false;
 boolean busyRoutesDraw = false;
+boolean destDraw = false;
 
 Screen latenessScreen, pieScreen;
 ActionListener[] buttonListeners = new ActionListener[4];
@@ -177,6 +178,9 @@ void setup() {
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 4th button is pressed
       userInput = buttonPanel.getInput("Please enter destination airport");
+      pieChart = new PieChart(table);
+      userInput = userInput.toUpperCase(); // Convert to uppercase
+      destDraw = true;
     }
   };
 
@@ -275,12 +279,7 @@ void draw() {
       //  pieChart.drawPieChart(width / 2, height / 2, 200, userInput); // Draw the pie chart
       //}
     }
-    break;
-  case PIE_CHART_TEXT:
-    background(#9DE4F0);
-    //mainScreen.backButton();
-    showInputBox();
-    if (!userInput.isEmpty()) {
+    if (destDraw) {
       String label = "Number of flights leaving airport " + userInput + " in January 2022";
       fill(0);
       textSize(16);
@@ -307,15 +306,15 @@ String showInputBox() {
 
 
 void keyPressed() {
-  if (key == '\n') { // If Enter key is pressed
-    pieChart = new PieChart(table);
-    userInput = userInput.toUpperCase(); // Convert to uppercase
-    pieUserInput = false;
-  } else if (keyCode == BACKSPACE) { // If Backspace key is pressed
-    userInput = userInput.substring(0, max(0, userInput.length() - 1)); // Remove the last character
-  } else if (keyCode != SHIFT && keyCode != DELETE && keyCode != TAB && keyCode != ESC) { // Ignore special keys
-    userInput += key; // Add the typed character to the input
-  }
+  //if (key == '\n') { // If Enter key is pressed
+  //  pieChart = new PieChart(table);
+  //  userInput = userInput.toUpperCase(); // Convert to uppercase
+  //  pieUserInput = false;
+  //} else if (keyCode == BACKSPACE) { // If Backspace key is pressed
+  //  userInput = userInput.substring(0, max(0, userInput.length() - 1)); // Remove the last character
+  //} else if (keyCode != SHIFT && keyCode != DELETE && keyCode != TAB && keyCode != ESC) { // Ignore special keys
+  //  userInput += key; // Add the typed character to the input
+  //}
 }
 //ZF
 
