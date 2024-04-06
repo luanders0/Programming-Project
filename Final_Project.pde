@@ -63,6 +63,7 @@ busyRoutes busyRoutes;
 Widget fileButton, barChart, pieChartButton, backButton;
 
 PFont barChartFont;
+PFont rockwellFont; 
 
 Button button;
 PImage homeScreen;
@@ -80,12 +81,20 @@ void setup() {
   table100k = loadTable("flights100k.csv", "header");
   tableFull = loadTable("flights_full.csv", "header");
   barChartFont = loadFont("BellMTBold-48.vlw");
+  
+  rockwellFont = loadFont("Rockwell-BoldItalic-48.vlw");
 
   PImage file = loadImage("fileButton.png");
   fileButton = new Widget(525, 30, file, FILE_BUTTON);
-  barChart = new Widget(200, 200, 80, 30, "Bar Chart", color(255, 0, 0), null, BAR_CHART_BUTTON);
-  backButton = new Widget(30, 50, 50, 20, "back", color(255), barChartFont, BACK_BUTTON);
-  pieChartButton = new Widget(300, 300, 80, 30, "Pie Chart", color(255,0,0), null, PIE_CHART_BUTTON);
+  //barChart = new Widget(250, 200, 100, 60, "Bar Chart", color(255, 0, 0), null, BAR_CHART_BUTTON);
+  //backButton = new Widget(30, 50, 50, 20, "back", color(255), barChartFont, BACK_BUTTON);
+  //pieChartButton = new Widget(250, 300, 100, 60, "Pie Chart", color(255,0,0), null, PIE_CHART_BUTTON);
+  
+   barChart = new Widget(230, 200, 150, 80, "Bar Chart", color(255, 255, 255), rockwellFont, BAR_CHART_BUTTON);
+   pieChartButton = new Widget(230, 300, 150, 80, "Pie Chart", color(255, 255, 255), rockwellFont, PIE_CHART_BUTTON);
+   
+   backButton = new Widget(30, 50, 100, 40, "Back", color(255), rockwellFont, BACK_BUTTON);
+   
 
 
   table = table2k;
@@ -243,7 +252,7 @@ void draw() {
     background(#9DE4F0);
     backButton.draw();
     if (originDraw) {
-      pieChartOrigin.draw(width/2, height/2, 300);
+    pieChartOrigin.draw(width/2, height/2, width/2, height/2, 300);
     }
     if (latenessDraw) {
       lateness();

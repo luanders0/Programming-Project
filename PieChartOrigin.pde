@@ -50,28 +50,42 @@ class PieChartOrigin {
     }
   }
 
-  void draw(float x, float y, float diameter) {
-    float startAngle = 0;
-    for (int i = 0; i < counts.length; i++) {
-      float angle = map(counts[i], 0, totalStrings, 0, TWO_PI);
-      float endAngle = startAngle + angle;
-      // Interpolate color between startColor and endColor
-      fill(lerpColor(startColor, endColor, map(i, 0, counts.length, 0, 1))); 
-      arc(x, y, diameter, diameter, startAngle, endAngle);
+  void draw(float centerX, float centerY, float x, float y, float diameter) {
+  float startAngle = 0;
+  for (int i = 0; i < counts.length; i++) {
+    float angle = map(counts[i], 0, totalStrings, 0, TWO_PI);
+    float endAngle = startAngle + angle;
+    // Interpolate color between startColor and endColor
+    fill(lerpColor(startColor, endColor, map(i, 0, counts.length, 0, 1))); 
+    arc(centerX, centerY, diameter, diameter, startAngle, endAngle);
+    // Check if mouse is over the current slice
+    if (mouseOverSlice(centerX, centerY, x, y, diameter, startAngle, endAngle)) {
       // Compute label position
       float labelAngle = startAngle + angle / 2;
       float labelRadius = diameter * 0.5;
-      float labelX = x + cos(labelAngle) * labelRadius;
-      float labelY = y + sin(labelAngle) * labelRadius;
+      float labelX = centerX + cos(labelAngle) * labelRadius;
+      float labelY = centerY + sin(labelAngle) * labelRadius;
       // Display label
       textAlign(CENTER, CENTER);
       fill(0);
       text(threeLetterStrings[i] + " " + counts[i], labelX, labelY);
-      startAngle = endAngle;
-      textAlign(CENTER, CENTER);
-      fill(0);
-      textSize(20);
-      text("Number of Flights Flown per State", width/2, 30);
     }
+    startAngle = endAngle;
   }
 }
+
+boolean mouseOverSlice(float centerX, float centerY, float x, float y, float diameter, float startAngle, float endAngle) {
+  // Compute angle to the mouse position
+  float angleToMouse = atan2(mouseY - centerY, mouseX - centerX);
+  // Normalize angle to be between 0 and TWO_PI
+  if (angleToMouse < 0) {
+    angleToMouse += TWO_PI;
+  }
+  // Check if angle to mouse is within the range of the current slice
+  return angleToMouse >= startAngle && angleToMouse <= endAngle && dist(mouseX, mouseY, centerX, centerY) <= diameter / 2;
+}
+}
+//textAlign(CENTER, CENTER);
+//      fill(0);
+//      textSize(20);
+//      text("Number of Flights Flown per State", width/2, 30);

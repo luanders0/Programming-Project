@@ -6,28 +6,39 @@ class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
   boolean mouseOver;
   PImage image;
 
-  Widget(int x,int y, int width, int height, String label,
-  color widgetColor, PFont widgetFont, int event){
-    this.x=x; this.y=y; this.width = width; this.height= height;
-    this.label=label; this.event=event; 
-    this.widgetColor=widgetColor; this.widgetFont=widgetFont;
+  Widget(int x,int y, int width, int height, String label, color widgetColor, PFont widgetFont, int event){
+    this.x=x; 
+    this.y=y; 
+    this.width = width; 
+    this.height= height;
+    this.label=label; 
+    this.event=event; 
+    this.widgetColor=widgetColor; 
+    this.widgetFont=widgetFont;
     labelColor= color(0);
    }
    
   Widget(int x,int y, PImage image, int event){
-    this.x=x; this.y=y; this.width = image.width; this.height= image.height;
-    this.event=event; this.image = image;
+    this.x=x; 
+    this.y=y; 
+    this.width = image.width; 
+    this.height= image.height;
+    this.event=event; 
+    this.image = image;
    }
    
-  void draw(){
+   void draw(){
     if (image != null) {
       image(image, x, y);
     }
     else {
       fill(widgetColor);
-      rect(x,y,width,height);
+      rect(x,y,width,height, 10);
+   
       fill(labelColor);
-      text(label, x+width/2, y+height-10);
+      text(label, x + width/2, y + height/2);
+      textAlign(CENTER, CENTER);
+      
     }
   }
   int getEvent(int mX, int mY){

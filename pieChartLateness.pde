@@ -1,5 +1,3 @@
-
-
 void lateness() {
 
   for (TableRow row : table.rows()) {
