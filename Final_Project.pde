@@ -18,6 +18,8 @@ final int FILE_BUTTON = 5;
 final int BAR_SCREEN = 5;
 final int BACK_BUTTON = 7;
 final int PIE_CHART_TEXT = 8;
+final int LABELX = 500;
+final int LABELY = 500;
 
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
 
@@ -60,6 +62,7 @@ Dialog_Pane fileSelect;
 lateness_plot latenessPlot;
 OriginChart originChart;
 busyRoutes busyRoutes;
+LatenessPieChart latenessChart;
 Widget fileButton, barChart, pieChartButton, backButton;
 
 PFont barChartFont;
@@ -116,6 +119,7 @@ void setup() {
   pieChart = new PieChart(table);
   pieChartOrigin = new PieChartOrigin("flights2k.csv", color(0, 0, 255), color(255, 0, 255));
   BusyRoutesPie = new BusyPie(table);
+  latenessChart = new LatenessPieChart(table);
 
   //zf
 
@@ -252,12 +256,22 @@ void draw() {
     background(#9DE4F0);
     backButton.draw();
     if (originDraw) {
-    pieChartOrigin.draw(width/2, height/2, width/2, height/2, 300);
+      pieChartOrigin.draw(width/2, height/2, width/2, height/2, 300);
+      fill(0);
+      textSize(20);
+      text("Flights by State", width/2, 30);
+      textSize(16);
     }
     if (latenessDraw) {
-      lateness();
-      pieChart(300, flightStatus);
-      key();
+      //lateness();
+      //pieChart(300, flightStatus);
+      //key();
+      latenessChart.draw(width/2, height/2, width/2, height/2, 300);
+      fill(0);
+      textSize(20);
+      text("Flights by Lateness", width/2, 30);
+      textSize(16);
+
       //backButton.draw();
       //      background(#9DE4F0);
       //    mainScreen.backButton();

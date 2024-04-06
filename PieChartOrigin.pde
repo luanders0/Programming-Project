@@ -6,6 +6,8 @@ class PieChartOrigin {
   String[] threeLetterStrings;
   int[] counts;
   int totalStrings;
+  color[] sliceColors = {#acfeff, #89e2ff, #6fa8ff, #5349ff, #7420ff, #98fabc};
+
 
   PieChartOrigin(String filename, color startColor, color endColor) {
     this.startColor = startColor;
@@ -55,37 +57,34 @@ class PieChartOrigin {
   for (int i = 0; i < counts.length; i++) {
     float angle = map(counts[i], 0, totalStrings, 0, TWO_PI);
     float endAngle = startAngle + angle;
-    // Interpolate color between startColor and endColor
-    fill(lerpColor(startColor, endColor, map(i, 0, counts.length, 0, 1))); 
-    arc(centerX, centerY, diameter, diameter, startAngle, endAngle);
+    
     // Check if mouse is over the current slice
-    if (mouseOverSlice(centerX, centerY, x, y, diameter, startAngle, endAngle)) {
-      // Compute label position
-      float labelAngle = startAngle + angle / 2;
-      float labelRadius = diameter * 0.5;
-      float labelX = centerX + cos(labelAngle) * labelRadius;
-      float labelY = centerY + sin(labelAngle) * labelRadius;
-      // Display label
-      textAlign(CENTER, CENTER);
+    if (mouseOverSlice(centerX, centerY, x, y, diameter, startAngle, endAngle)) { 
       fill(0);
-      text(threeLetterStrings[i] + " " + counts[i], labelX, labelY);
+      textSize(20); // Use a bolder font and larger size
+      text(threeLetterStrings[i]+ ": " + counts[i], 490, 570);
+
+      float expandedDiameter = diameter + 20; // Increase diameter by 20 pixels
+      fill(sliceColors[i % sliceColors.length]);
+      arc(centerX, centerY, expandedDiameter, expandedDiameter, startAngle, endAngle);
+    } else {
+      // Regular drawing if mouse is not over the slice
+      fill(sliceColors[i % sliceColors.length]);
+      arc(centerX, centerY, diameter, diameter, startAngle, endAngle);
     }
     startAngle = endAngle;
   }
 }
 
-boolean mouseOverSlice(float centerX, float centerY, float x, float y, float diameter, float startAngle, float endAngle) {
-  // Compute angle to the mouse position
-  float angleToMouse = atan2(mouseY - centerY, mouseX - centerX);
-  // Normalize angle to be between 0 and TWO_PI
-  if (angleToMouse < 0) {
-    angleToMouse += TWO_PI;
+   boolean mouseOverSlice(float centerX, float centerY, float x, float y, float diameter, float startAngle, float endAngle) {
+    // Compute angle to the mouse position
+    float angleToMouse = atan2(mouseY - centerY, mouseX - centerX);
+    // Normalize angle to be between 0 and TWO_PI
+    if (angleToMouse < 0) {
+      angleToMouse += TWO_PI;
+    }
+    // Check if angle to mouse is within the range of the current slice
+    return angleToMouse >= startAngle && angleToMouse <= endAngle && dist(mouseX, mouseY, centerX, centerY) <= diameter / 2;
   }
-  // Check if angle to mouse is within the range of the current slice
-  return angleToMouse >= startAngle && angleToMouse <= endAngle && dist(mouseX, mouseY, centerX, centerY) <= diameter / 2;
+
 }
-}
-//textAlign(CENTER, CENTER);
-//      fill(0);
-//      textSize(20);
-//      text("Number of Flights Flown per State", width/2, 30);

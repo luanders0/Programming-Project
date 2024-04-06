@@ -11,6 +11,8 @@ class BusyPie {
   ArrayList<String> topRoutes; // Store top routes
   ArrayList<Integer> colors; // Store colors for each route
   int totalFlights; // Total number of flights
+  color[] sliceColors = {#fa41e9, #9e30fc, #05c9e8, #04e09f, #54ed07, #98fabc}; //colours for pie slices
+  
   
   BusyPie(Table flightTable) {
     table = flightTable;
@@ -59,31 +61,49 @@ class BusyPie {
   }
   
   void drawPieChart(float x, float y, float diameter) {
-  int totalTopFlights = 0;
-  for (String route : topRoutes) {
-    totalTopFlights += routeCounts.get(route);
-  }
+    int totalTopFlights = 0;
+    for (String route : topRoutes) {
+      totalTopFlights += routeCounts.get(route);
+    }
+    
+    float startAngle = 0;
+    for (String route : topRoutes) {
+      float angle = map(routeCounts.get(route), 0, totalTopFlights, 0, TWO_PI);
+      float endAngle = startAngle + angle;
   
-  float startAngle = 0;
-  for (String route : topRoutes) {
-    float angle = map(routeCounts.get(route), 0, totalTopFlights, 0, TWO_PI);
-    float endAngle = startAngle + angle;
-    fill(colors.get(topRoutes.indexOf(route)));
-    arc(x, y, diameter, diameter, startAngle, endAngle);
-    
-     // Calculate label position
-    float labelAngle = startAngle + angle / 2;
-    float labelRadius = diameter / 2.5;
-    float labelX = x + cos(labelAngle) * labelRadius;
-    float labelY = y + sin(labelAngle) * labelRadius;
-    
-    // Draw label
-    fill(0);
-    String[] routeCities = route.split("-");
-    String label = routeCities[0] + " to " + routeCities[1] + ": " + routeCounts.get(route) + " flights";
-    text(label, labelX, labelY);
-    
-    startAngle = endAngle;
+      // Determine slice color
+      int sliceColorIndex = topRoutes.indexOf(route) % sliceColors.length;
+      color sliceColor = sliceColors[sliceColorIndex];
+  
+      // Draw the slice
+      fill(sliceColor);
+      arc(x, y, diameter, diameter, startAngle, endAngle);
+      
+      // If the mouse is over the slice make it bigger
+      if (mouseOverSlice(x, y, diameter, startAngle, endAngle)) {
+        float expandedDiameter = diameter + 20; // Increase diameter by 20 pixels
+        arc(x, y, expandedDiameter, expandedDiameter, startAngle, endAngle);
+        
+        // Display label at the bottom right corner
+        fill(0);
+        textSize(20);
+        String[] routeCities = route.split("-");
+        String labelText = routeCities[0] + " to " + routeCities[1] + ": " + routeCounts.get(route) + " flights\n";
+        text(labelText, 490, 570);
+      }
+      
+      startAngle = endAngle;
+    }
   }
+
+  boolean mouseOverSlice(float x, float y, float diameter, float startAngle, float endAngle) {
+    // Compute angle to the mouse position
+    float angleToMouse = atan2(mouseY - y, mouseX - x);
+    // Normalize angle to be between 0 and TWO_PI
+    if (angleToMouse < 0) {
+      angleToMouse += TWO_PI;
+    }
+    // Check if angle to mouse is within the range of the current slice
+    return angleToMouse >= startAngle && angleToMouse <= endAngle && dist(mouseX, mouseY, x, y) <= diameter / 2;
 }
 }

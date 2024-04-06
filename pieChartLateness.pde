@@ -1,6 +1,16 @@
-void lateness() {
-
-  for (TableRow row : table.rows()) {
+class LatenessPieChart {
+  int totalFlightCount;
+  int earlyFlightCount;
+  int onTimeFlightCount;
+  int lateFlightCount;
+  int cancelledFlightCount;
+  
+  LatenessPieChart(Table table) {
+    calculateLateness(table);
+  }
+  
+  void calculateLateness(Table table) {
+    for (TableRow row : table.rows()) {
 
     totalFlightCount++;
 
@@ -85,77 +95,53 @@ void lateness() {
       }
     }
   }
-  noStroke();
-  noLoop();  // Run once and stop
-  background(#daf2f9);
-
-  println("total: " + totalFlightCount + "\nearly: " + earlyFlightCount + "\nonTime: " + onTimeFlightCount + "\nlate: " + lateFlightCount + "\ncancelled: " + cancelledFlightCount);
-
-  // Calculate proportions
-
-  float earlyProportion = (float) earlyFlightCount / totalFlightCount;
-  float onTimeProportion = (float) onTimeFlightCount / totalFlightCount;
-  float lateProportion = (float) lateFlightCount / totalFlightCount;
-  float cancelledProportion = (float) cancelledFlightCount / totalFlightCount; // Include cancelled flights
-
-  println("early proportion: " + earlyProportion + "\nOn Time proportion: " + onTimeProportion + "\nlate proportion: " + lateProportion + "\ncancelled proportion: " + cancelledProportion);
-
-  // Assign proportions
-  flightStatus[0] = (int) (earlyProportion * 360); // Convert proportion to degrees
-  flightStatus[1] = (int) (onTimeProportion * 360); // Convert proportion to degrees
-  flightStatus[2] = (int) (lateProportion * 360); // Convert proportion to degrees
-  flightStatus[3] = (int) (cancelledProportion * 360); // Convert proportion to degrees
-}
-
-void pieChart(float diameter, int[] data) {
-  float total = 0;
-
-  // Calculate the total sum of data
-  for (int i = 0; i < data.length; i++) {
-    total += data[i];
   }
+  
+void draw(float centerX, float centerY, float x, float y, float diameter) {
+    int[] flightStatus = {earlyFlightCount, onTimeFlightCount, lateFlightCount, cancelledFlightCount};
+    String[] flightLabels = {"Early", "On Time", "Late", "Cancelled"};
+    color[] sliceColors = {#000080, #6495ed,  #ccccff, #40e0d0};
+    
+    float startAngle = 0;
+    
+    for (int i = 0; i < flightStatus.length; i++) {
+      float angle = map(flightStatus[i], 0, totalFlightCount, 0, TWO_PI);
+      float endAngle = startAngle + angle;
+    
 
-  float lastAngle = 0;
-
-  for (int i = 0; i < data.length; i++) {
-    float proportion = data[i] / total;
-
-    if (i == 0) {
-      fill(#349ae0); // blue - early flights
-    } else if (i == 1) {
-      fill(255, 255, 255); // white - on time flights
-    } else if (i == 2) {
-      fill(#faf2b4); // yellow - late flights
+    if (mouseOverSlice(centerX, centerY, x, y, diameter, startAngle, endAngle)) {
+ 
+    
+      fill(0);
+      textSize(20); // Use a bolder font and larger size
+      text(flightLabels[i]+ ": " + flightStatus[i], 490, 570);
+      //text(threeLetterStrings[i] + " " + counts[i], labelX, labelY);
+      // Check if label position is inside the pie chart
+    
+      
+      // Draw slice with the same color but slightly larger size
+      float expandedDiameter = diameter + 20; // Increase diameter by 20 pixels
+      fill(sliceColors[i % sliceColors.length]);
+      arc(centerX, centerY, expandedDiameter, expandedDiameter, startAngle, endAngle);
     } else {
-      fill(#a098a0); // gray - cancelled flights
+      // Regular drawing if mouse is not over the slice
+      fill(sliceColors[i % sliceColors.length]);
+      arc(centerX, centerY, diameter, diameter, startAngle, endAngle);
     }
-
-    float angle = proportion * TWO_PI;
-    arc(width/2, height/2, diameter, diameter, lastAngle, lastAngle + angle);
-    lastAngle += angle;
+    startAngle = endAngle;
   }
 }
-void key() {
-  //String e = ("Early Flights: " + earlyFlightCount);
-  //String t = ("On-time Flights: " + onTimeFlightCount);
-  //String l = ("Late Flights: " + lateFlightCount);
-  //String c = ("Cancelled Flights: " + cancelledFlightCount);
-  fill(100);
-  textSize(17);
-  text("Early Flights: " + earlyFlightCount, 110, 460);
-  text("On-time Flights: " + onTimeFlightCount, 115, 490);
-  text("Late Flights: " + lateFlightCount, 110, 520);
-  text("Cancelled Flights: " + cancelledFlightCount, 125, 550);
+        
 
-  fill(#349ae0); // early
-  square(15, 450, 20);
+  boolean mouseOverSlice(float centerX, float centerY, float x, float y, float diameter, float startAngle, float endAngle) {
+      // Compute angle to the mouse position
+      float angleToMouse = atan2(mouseY - y, mouseX - x);
+      // Normalize angle to be between 0 and TWO_PI
+      if (angleToMouse < 0) {
+          angleToMouse += TWO_PI;
+      }
+      // Check if angle to mouse is within the range of the current slice
+      return angleToMouse >= startAngle && angleToMouse <= endAngle && dist(mouseX, mouseY, x, y) <= diameter / 2;
+  }
 
-  fill(255, 255, 255); // on time
-  square(15, 480, 20);
-
-  fill(#faf2b4); // late
-  square(15, 510, 20);
-
-  fill(#a098a0); //cancelled
-  square(15, 540, 20);
 }

@@ -36,7 +36,8 @@ class Button {
        //Play click sound
        if (clickSound != null) {
       clickSound.play();
-    }
+    
   }
+}
 }
 }
