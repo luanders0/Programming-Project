@@ -242,6 +242,7 @@ void draw() {
       lateness();
       pieChart(300, flightStatus);
       key();
+      //backButton.draw();
       //      background(#9DE4F0);
       //    mainScreen.backButton();
       //    showInputBox();
@@ -352,13 +353,13 @@ void mousePressed() {
     case(EVENT_NULL):
       break;
   }
-  if (screenState != 0 ) {
+   if (screenState != HOME_SCREEN ) { // Adjusted condition to check for PIE_SCREEN
     switch(backButton.getEvent(mouseX, mouseY)) {
       case(BACK_BUTTON):
-        if (screenState == 1 ) {
-          screenState = 0;
+        if (screenState == PIE_SCREEN ) { // Adjusted condition to check for PIE_SCREEN
+          screenState = CHART_SELECT; // Set back to CHART_SELECT when pressing back on PIE_SCREEN
         } else {
-          screenState = 1;
+          screenState = HOME_SCREEN; // Set back to HOME_SCREEN for other screens
         }
         break;
       case(EVENT_NULL):

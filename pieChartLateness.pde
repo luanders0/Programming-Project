@@ -1,3 +1,5 @@
+
+
 void lateness() {
 
   for (TableRow row : table.rows()) {
@@ -87,7 +89,7 @@ void lateness() {
   }
   noStroke();
   noLoop();  // Run once and stop
-  background(255);
+  background(#daf2f9);
 
   println("total: " + totalFlightCount + "\nearly: " + earlyFlightCount + "\nonTime: " + onTimeFlightCount + "\nlate: " + lateFlightCount + "\ncancelled: " + cancelledFlightCount);
 
@@ -120,45 +122,42 @@ void pieChart(float diameter, int[] data) {
   for (int i = 0; i < data.length; i++) {
     float proportion = data[i] / total;
 
-    // Assign colors based on flight status
     if (i == 0) {
-      fill (255, 113, 206); // pink - early flights
+      fill(#349ae0); // blue - early flights
     } else if (i == 1) {
-      fill (1, 205, 254); // blue - on time flights
+      fill(255, 255, 255); // white - on time flights
     } else if (i == 2) {
-      fill (185, 103, 255); // purple - late flights
+      fill(#faf2b4); // yellow - late flights
     } else {
-      fill(255, 251, 150); // yellow - cancelled flights
+      fill(#a098a0); // gray - cancelled flights
     }
 
-    // Draw pie chart section
-    float angle = proportion * TWO_PI; // Calculate angle based on proportion
-
+    float angle = proportion * TWO_PI;
     arc(width/2, height/2, diameter, diameter, lastAngle, lastAngle + angle);
     lastAngle += angle;
   }
 }
 void key() {
-  String e = ("Early Flights - " + earlyFlightCount);
-  String t = ("On-time Flights - " + onTimeFlightCount);
-  String l = ("Late Flights - " + lateFlightCount);
-  String c = ("Cancelled Flights - " + cancelledFlightCount);
+  //String e = ("Early Flights: " + earlyFlightCount);
+  //String t = ("On-time Flights: " + onTimeFlightCount);
+  //String l = ("Late Flights: " + lateFlightCount);
+  //String c = ("Cancelled Flights: " + cancelledFlightCount);
   fill(100);
-  textSize(15);
-  text(e, 100, 200, 280, 320);
-  text(t, 100, 230, 280, 320);
-  text(l, 100, 260, 280, 320);
-  text(c, 100, 290, 280, 320);
+  textSize(17);
+  text("Early Flights: " + earlyFlightCount, 110, 460);
+  text("On-time Flights: " + onTimeFlightCount, 115, 490);
+  text("Late Flights: " + lateFlightCount, 110, 520);
+  text("Cancelled Flights: " + cancelledFlightCount, 125, 550);
 
-  fill(255, 113, 206); // early
+  fill(#349ae0); // early
   square(15, 450, 20);
 
-  fill(1, 205, 254); // on time
+  fill(255, 255, 255); // on time
   square(15, 480, 20);
 
-  fill(185, 103, 255); // late
+  fill(#faf2b4); // late
   square(15, 510, 20);
 
-  fill(255, 251, 150); //cancelled
+  fill(#a098a0); //cancelled
   square(15, 540, 20);
 }
