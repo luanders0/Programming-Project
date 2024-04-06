@@ -72,6 +72,7 @@ SoundFile clickSound;
 
 void setup() {
   size(600, 600);
+  textAlign(CENTER, CENTER);
 
   table2k = loadTable("flights2k.csv", "header");
   table10k = loadTable("flights10k.csv", "header");
@@ -260,6 +261,7 @@ void draw() {
        fill(0);
       textSize(20);
       text("Top 15 Busiest Routes", width/2, 30);
+      textSize(16);
       //ZF
       //background(#9DE4F0);
       //mainScreen.backButton();
@@ -280,7 +282,6 @@ void draw() {
     showInputBox();
     if (!userInput.isEmpty()) {
       String label = "Number of flights leaving airport " + userInput + " in January 2022";
-      textAlign(CENTER);
       fill(0);
       textSize(16);
       text(label, width / 2, 50);
@@ -292,7 +293,6 @@ void draw() {
 
 //ZF
 String showInputBox() {
-  textAlign(CENTER);
   fill(0);
   textSize(16);
   if ( pieUserInput == true ) {

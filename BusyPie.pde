@@ -78,7 +78,6 @@ class BusyPie {
     float labelY = y + sin(labelAngle) * labelRadius;
     
     // Draw label
-    textAlign(CENTER, CENTER);
     fill(0);
     String[] routeCities = route.split("-");
     String label = routeCities[0] + " to " + routeCities[1] + ": " + routeCounts.get(route) + " flights";

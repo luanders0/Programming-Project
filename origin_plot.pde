@@ -39,23 +39,18 @@ public class OriginChart {
 
     // Draw the y-axis with numerical values
     fill(0);
-    textAlign(RIGHT, CENTER);
     for (int i = 0; i <= maxFlights; i += 20) {
       float y = map(i, 0, maxFlights, startY, 0);
-      text(i, 40, y);
+      text(i, 30, y);
       textSize(12);
       line(100, y, 600 - 100, y);
     }
 
     // Draw the x-axis label
-    textAlign(CENTER, CENTER);
-    textSize(16);
     text("STATE NAME", xAxisLabelX, xAxisLabelY);
 
     // Draw the y-axis label
-    textAlign(CENTER, CENTER);
     rotate(-HALF_PI);
-    textSize(16);
     text("NUMBER OF FLIGHTS", yAxisLabelX, yAxisLabelY);
     rotate(HALF_PI);
 
@@ -72,6 +67,7 @@ public class OriginChart {
       fill(0);
       text(stateAbbreviations[i], x + barWidth / 2, startY + 15); // Adjusted the vertical position and added smaller text size
     }
+    textSize(16);
   }
 
   // Get the index of a state abbreviation in the array

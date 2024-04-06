@@ -71,7 +71,6 @@ class lateness_plot {
     fill(0, 0, 255); // Set blue color for bars
     rect(x, height - 100 - barHeight, barWidth, barHeight);
     fill(0);
-    textAlign(CENTER);
     textSize(8); // Adjusted text size for state abbreviations
     text(state, x + barWidth / 2, height - 80); // Adjusted Y position
     x += barWidth + 5; // Increased spacing between bars
@@ -82,7 +81,6 @@ class lateness_plot {
   pushMatrix();
   translate(30, height / 2);
   rotate(-HALF_PI);
-  textAlign(CENTER, CENTER);
   textFont(createFont("Arial", 16,true)); // Setting font to Arial 
   text("Number of Delayed Flights", -10, -20); // Adjusted X position
   popMatrix();
@@ -90,9 +88,8 @@ class lateness_plot {
   // Draw y-axis tick marks and labels
   for (int j = 0; j <= 10; j++) {
     float y = map(j * (maxDelayedFlights / 10), 0, maxDelayedFlights, height - 100, 100);
-    textAlign(RIGHT, CENTER);
     textSize(10);
-    text((int)(j * (maxDelayedFlights / 10)), 40, y); // Adjusted X position
+    text((int)(j * (maxDelayedFlights / 10)), 30, y); // Adjusted X position
   }
 
   // Label x-axis
