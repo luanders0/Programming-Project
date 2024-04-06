@@ -137,8 +137,10 @@ void setup() {
         table = tableFull;
         print("Full Table Selected");
       }
+        fileSelect.parent.setVisible(false); // Close the window after file selection
     }
   };
+
 
   JButton chooseFile = new JButton("Choose File");
   chooseFile.addActionListener(fileListener);
