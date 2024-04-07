@@ -211,7 +211,7 @@ void setup() {
 
   button = new Button(width/2, height/2, 200, 60, "Lateness Chart");
 
-  homeScreen = loadImage("SquareMainScreen.jpg");
+  homeScreen = loadImage("SquareMainScreen.jpg"); // Avery H
   //clouds = loadImage("ChartScreen.jpg");
   clouds = loadImage("clouds.jpg");
 
@@ -221,7 +221,7 @@ void setup() {
 void draw() {
   background(255);
 
-  switch(screenState) {
+  switch(screenState) { // Avery H set up switch statement for screens 
   case HOME_SCREEN:
     image(homeScreen, 0, 0, 600, 600);
     break;
@@ -352,7 +352,7 @@ void keyPressed() {
 //    button.setLabel("Hide Chart");
 //  }
 //}
-void mousePressed() {
+void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets 
   mainScreen.mousePressed();
   switch(fileButton.getEvent(mouseX, mouseY)) {
     case(FILE_BUTTON):

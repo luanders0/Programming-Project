@@ -1,4 +1,4 @@
-class MainScreen {
+class MainScreen { // Avery H
   PImage HomeScreen;
   PImage Clouds;
   int areaX0 = 400;
