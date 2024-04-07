@@ -106,11 +106,4 @@ public class OriginChart {
     }
     return max;
   }
-
-
-  // Assign colors based on flight count
-  // Assign blue color to all bars
-  int getColorValue(int flights) {
-    return color(0, 0, 255); // Blue color
-  }
 }

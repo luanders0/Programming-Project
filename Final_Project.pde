@@ -221,7 +221,7 @@ void draw() {
       busyRoutes.drawChart();
       fill(0);
       textSize(20);
-      text("Busiest Routes", width/2, 30);
+      text("Top 10 Busiest Routes", width/2, 30);
     }
     else if (latenessDraw) {
       latenessPlot.drawChart();
