@@ -24,48 +24,48 @@ public class OriginChart {
       }
     }
 
-    int maxFlights = getMax(flightsPerState);
+   int maxFlights = getMax(flightsPerState);
 
     // Calculate the dimensions and positions based on canvas size
-    float chartWidth = 500;
-    float chartHeight = 600;
+    float chartWidth = width - 100; 
+    float chartHeight = height - 200; 
     float barWidth = chartWidth / flightsPerState.length;
     float startX = 50;
-    float startY = 550;
-    float xAxisLabelX = 250;
-    float xAxisLabelY = 580;
-    float yAxisLabelX =-250;
-    float yAxisLabelY = 10;
+    float startY = height - 100; // Adjusted startY
+    float xAxisLabelX = width / 2;
+    float xAxisLabelY = height - 50; 
 
     // Draw the y-axis with numerical values
     fill(0);
     for (int i = 0; i <= maxFlights; i += 20) {
-      float y = map(i, 0, maxFlights, startY, 0);
+      float y = map(i, 0, maxFlights, startY, 100); 
       text(i, 30, y);
       textSize(12);
-      line(100, y, 600 - 100, y);
+      line(100, y, width - 100, y); 
     }
 
     // Draw the x-axis label
     text("STATE NAME", xAxisLabelX, xAxisLabelY);
 
-    // Draw the y-axis label
-    rotate(-HALF_PI);
-    text("NUMBER OF FLIGHTS", yAxisLabelX, yAxisLabelY);
-    rotate(HALF_PI);
+    pushMatrix();
+    translate(10, height / 2);
+    rotate(-HALF_PI); // Rotating text label vertically
+    textAlign(CENTER, CENTER);
+    text("Number of Flights", 0, 0); // Adjusted position for the label
+    popMatrix();
 
     // Draw bars and state abbreviations with smaller text size
-    textSize(6); // Adjust the text size here
+    textSize(10); // Adjust the text size here
     for (int i = 0; i < flightsPerState.length; i++) {
       int flights = flightsPerState[i];
-      int colorValue = getColorValue(flights);
-      fill(colorValue, 100, 100);
+      fill(0, 0, 255);
       float barHeight = map(flights, 0, maxFlights, 0, chartHeight);
       float x = startX + i * barWidth;
       rect(x, startY - barHeight, barWidth, barHeight);
 
       fill(0);
       text(stateAbbreviations[i], x + barWidth / 2, startY + 15); // Adjusted the vertical position and added smaller text size
+      textSize(7);
     }
     textSize(16);
   }
@@ -103,11 +103,5 @@ public class OriginChart {
     }
     return max;
   }
-
-  // Assign colors based on flight count
-  // Assign blue color to all bars
-int getColorValue(int flights) {
-    return color(0, 0, 255); // Blue color
-}
 
 }
