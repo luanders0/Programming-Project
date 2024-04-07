@@ -6,17 +6,13 @@ import java.util.Collections;
 import java.util.Comparator;
 
 class busyRoutes {
-  Table table1;
+  Table table;
   HashMap<String, Integer> routeCounts; // Store flight counts for each route
   ArrayList<String> topRoutes; // Store top routes
 
-
   busyRoutes(Table flightTable) {
-
     // Load CSV file
     table = flightTable;
-
-    //table = loadTable("flights2k..csv", "header");
 
     // Initialize route counts hashmap
     routeCounts = new HashMap<String, Integer>();
@@ -62,52 +58,65 @@ class busyRoutes {
         int count2 = routeCounts.get(route2);
         return Integer.compare(count2, count1); // Sort in descending order
       }
-    }
-    );
+    });
   }
 
-  void drawChart() {
-    // Draw top N routes
-    int barWidth = 20;
-    int startX = 10;
-    int startY = 100;
-    int maxHeight = height - 200;
-    int maxFlights = routeCounts.get(topRoutes.get(0));
+void drawChart() {
+  // Determine the maximum number of flights
+  int maxFlights = routeCounts.get(topRoutes.get(0));
 
-    textSize(16);
-    // Draw y-axis
-    stroke(0);
-    line(startX, startY, startX, startY + maxHeight);
+  // Determine the dimensions of the chart
+  int startX = 50;
+  int startY = 50;
+  int chartWidth = width - startX - 50; // Adjusted width
+  int chartHeight = height - startY - 100; // Adjusted height
+
+  // Calculate the width of each bar
+  float barWidth = chartWidth / (float) min(10, topRoutes.size());
+
+  textSize(16);
+  fill(0);
+  pushMatrix(); // Save the current transformation matrix
+  translate(startX - 10, startY + chartHeight); // Move the origin to the end of the y-axis
+  rotate(-HALF_PI); // Rotate the coordinate system by -90 degrees
+  text("Flights", chartWidth / 2, -30); // Draw the label
+  popMatrix(); // Restore the previous transformation matrix
+
+  // Draw x-axis
+  line(startX, startY + chartHeight, startX + chartWidth, startY + chartHeight);
+  text("Routes", startX + chartWidth / 2, startY + chartHeight + 40);
+
+  textSize(10);
+
+  // Draw y-axis tick marks and labels
+  for (int i = 0; i <= 10; i++) {
+    float y = map(i * (maxFlights / 10.0), 0, maxFlights, startY + chartHeight, startY);
+    text((int)(i * (maxFlights / 10.0)), startX - 10, y + 5); // Adjusted X position and shift to the right
+  }
+
+  // Draw bars for each route
+  for (int i = 0; i < min(10, topRoutes.size()); i++) {
+    String route = topRoutes.get(i);
+    int flights = routeCounts.get(route);
+
+    // Calculate bar height based on flight count
+    float barHeight = map(flights, 0, maxFlights, 0, chartHeight);
+
+    // Calculate the position of the bar
+    float barX = startX + i * barWidth + barWidth / 4; // Adjusted bar position
+    float barY = startY + chartHeight - barHeight;
+
+    // Draw bar
+    fill(0, 0, 255);
+    rect(barX, barY, barWidth / 2, barHeight); // Adjusted bar width
+
+    // Draw route label
     fill(0);
-    pushMatrix(); // Save the current transformation matrix
-    translate(startX - 10, startY + maxHeight); // Move the origin to the end of the y-axis
-    rotate(-HALF_PI); // Rotate the coordinate system by -90 degrees
-    text("Flights", 200, -30); // Draw the label
-    popMatrix(); // Restore the previous transformation matrix
-
-    // Draw x-axis
-    line(startX, startY + maxHeight, startX + (min(10, topRoutes.size()) * 60), startY + maxHeight);
-    text("Routes", startX + (min(10, topRoutes.size()) * 60) / 2, startY + maxHeight + 60);
-
-    textSize(12);
-
-    // Draw bars for each route
-    for (int i = 0; i < min(10, topRoutes.size()); i++) {
-      String route = topRoutes.get(i);
-      int flights = routeCounts.get(route);
-
-      // Calculate bar height based on flight count
-      float barHeight = map(flights, 0, maxFlights, 0, maxHeight);
-
-      // Draw bar
-      fill(0, 0, 255);
-      rect(startX + i * 60, startY + maxHeight - barHeight, barWidth, barHeight);
-
-      // Draw route label
-      fill(0);
-      text(route, startX + i * 60, startY + maxHeight + 20);
-    }
-    textSize(16);
     textAlign(CENTER);
+    text(route, barX + barWidth / 4, startY + chartHeight + 20); // Adjusted label position
   }
+  textSize(16);
+}
+
+
 }
