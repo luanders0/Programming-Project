@@ -5,19 +5,22 @@ import java.util.ArrayList;
 
 public class OriginChart {
 
-  Table table; // excel file loaded into object 'table'
+  DataTable table; // excel file loaded into object 'table'
   int colorStep = 30; // The step for grouping flights
 
-  OriginChart(Table table) {
+  OriginChart(DataTable table) {
     this.table = table;
   }
 
   void drawOriginChart() {
-    String[] stateAbbreviations = getStateAbbreviations();
+    DataSeries stateColumn = table.get("ORIGIN_STATE_ABR");
+    String[] stateList = new String[stateColumn.length()];
+    stateList = stateColumn.asStringArray();
+
+    String[] stateAbbreviations = getStateAbbreviations(stateList);
     int[] flightsPerState = new int[stateAbbreviations.length];
 
-    for (TableRow row : table.rows()) {
-      String state = row.getString(5);
+    for (String state : stateList) {
       int stateIndex = getStateIndex(state, stateAbbreviations);
       if (stateIndex != -1) {
         flightsPerState[stateIndex]++;
@@ -80,11 +83,10 @@ public class OriginChart {
     return -1;
   }
 
-  String[] getStateAbbreviations() {
+  String[] getStateAbbreviations(String[] stateList) {
     ArrayList<String> abbreviationsList = new ArrayList<String>();
 
-    for (TableRow row : table.rows()) {
-      String state = row.getString(5);
+    for (String state : stateList) {
       if (!abbreviationsList.contains(state)) {
         abbreviationsList.add(state);
       }
@@ -104,4 +106,10 @@ public class OriginChart {
     return max;
   }
 
+
+  // Assign colors based on flight count
+  // Assign blue color to all bars
+  int getColorValue(int flights) {
+    return color(0, 0, 255); // Blue color
+  }
 }

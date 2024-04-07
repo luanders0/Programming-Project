@@ -1,3 +1,9 @@
+import hivis.common.*;
+import hivis.data.*;
+import hivis.data.reader.*;
+import hivis.data.view.*;
+import hivis.example.*;
+
 import processing.data.Table;
 import processing.data.TableRow;
 import java.util.HashMap;
@@ -24,7 +30,8 @@ final int LABELY = 500;
 
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
 
-Table table, table2k, table10k, table100k, tableFull;
+
+DataTable table, table2k, table10k, table100k, tableFull;
 
 
 //String userInput = "";
@@ -45,7 +52,7 @@ int totalFlightCount = -1;
 
 PieChart pieChart;
 PieChartOrigin pieChartOrigin;
-BusyPie BusyRoutesPie;
+BusyPie busyRoutesPie;
 String userInput = "";
 
 boolean latenessDraw = false;
@@ -81,11 +88,10 @@ void setup() {
   size(600, 600);
   textAlign(CENTER, CENTER);
   
-
-  table2k = loadTable("flights2k.csv", "header");
-  table10k = loadTable("flights10k.csv", "header");
-  table100k = loadTable("flights100k.csv", "header");
-  tableFull = loadTable("flights_full.csv", "header");
+  table2k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("/data/flights2k.csv")));
+  table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("/data/flights10k.csv")));
+  table100k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("/data/flights100k.csv")));
+  tableFull = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("/data/flights_full.csv")));
   barChartFont = loadFont("BellMTBold-48.vlw");
   
   rockwellFont = loadFont("Rockwell-BoldItalic-48.vlw");
@@ -107,7 +113,6 @@ void setup() {
 
   clickSound = new SoundFile(this, "click.wav");
 
-  println(table.getRowCount() + " total rows in table");
 
 
   //ZF
@@ -121,8 +126,8 @@ void setup() {
   userInput = showInputBox(); // Prompt user for input
   pieChart = new PieChart(table);
   pieChartOrigin = new PieChartOrigin("flights2k.csv", color(0, 0, 255), color(255, 0, 255));
-  BusyRoutesPie = new BusyPie(table);
-  latenessChart = new LatenessPieChart(table);
+  busyRoutesPie = new BusyPie(table);
+  //latenessChart = new LatenessPieChart(table);
 
   //zf
 
@@ -144,6 +149,8 @@ void setup() {
       if (fileButtons[1].isSelected()) {
         table = table10k;
         print("10K Table Selected");
+        busyRoutesPie.processData(table);
+        busyRoutesPie.sortRoutes();
       }
       if (fileButtons[2].isSelected()) {
         table = table100k;
@@ -168,6 +175,7 @@ void setup() {
       latenessDraw = true;
       originDraw = false;
       busyDraw = false;
+      destDraw = false;
     }
   };
 
@@ -177,7 +185,8 @@ void setup() {
       //this code is executed when the 2nd button is pressed
       originDraw = true;
       latenessDraw = false;
-      busyDraw = false;      
+      busyDraw = false;   
+      destDraw = false;
     }
   };
 
@@ -188,6 +197,7 @@ void setup() {
       busyDraw = true;
       originDraw = false;
       latenessDraw = false;
+      destDraw = false;
     }
   };
 
@@ -199,6 +209,9 @@ void setup() {
       pieChart = new PieChart(table);
       userInput = userInput.toUpperCase(); // Convert to uppercase
       destDraw = true;
+      busyDraw = false;
+      originDraw = false;
+      latenessDraw = false;
     }
   };
 
@@ -294,7 +307,7 @@ void draw() {
       //  }
     }
     if (busyDraw) {
-       BusyRoutesPie.drawPieChart(width/2, height/2, 300);
+       busyRoutesPie.drawPieChart(width/2, height/2, 300);
        fill(0);
       textSize(20);
       text("Top 15 Busiest Routes", width/2, 30);

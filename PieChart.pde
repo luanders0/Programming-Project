@@ -1,21 +1,22 @@
 //ZF
 class PieChart {
-  Table table;
-  Table table1;
-  Table table2;
-  Table table3;
-  
-  PieChart(Table table) {
+  DataTable table, table1, table2, table3;
+
+  PieChart(DataTable table) {
     this.table = table;
   }
 
   void drawPieChart(float x, float y, float diameter, String inputAbbreviation) {
     HashMap<String, Integer> dateCounts = new HashMap<String, Integer>();
-
-   
-    for (TableRow row : table.rows()) {
-      String date = row.getString("FL_DATE"); 
-      String abbreviation = row.getString("ORIGIN"); 
+    
+    DataSeries dateColumn = table.get("FL_DATE");
+    String[] rawDates = dateColumn.asStringArray();
+    DataSeries originColumn = table.get("ORIGIN");
+    String[] origins = originColumn.asStringArray();
+    
+    for (int i = 0; i < dateColumn.length(); i++) {
+      String date = rawDates[i];
+      String abbreviation = origins[i];
       if (abbreviation.equals(inputAbbreviation)) {
         if (dateCounts.containsKey(date)) {
           int count = dateCounts.get(date);
@@ -55,7 +56,7 @@ class PieChart {
       float labelY = y + sin(startAngle - angle / 2) * diameter / 2;
       textAlign(CENTER, CENTER);
       fill(0);
-      String[] dateParts = dates[i].split(" ");    
+      String[] dateParts = dates[i].split(" ");
       text(dateParts[0], labelX, labelY); // Display only the date part
     }
   }

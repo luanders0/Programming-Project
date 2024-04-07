@@ -6,27 +6,32 @@ import java.util.Collections;
 import java.util.Comparator;
 
 class BusyPie {
-  Table table;
+  DataTable table;
   HashMap<String, Integer> routeCounts; // Store flight counts for each route
   ArrayList<String> topRoutes; // Store top routes
   ArrayList<Integer> colors; // Store colors for each route
   int totalFlights; // Total number of flights
   color[] sliceColors = {#fa41e9, #9e30fc, #05c9e8, #04e09f, #54ed07, #98fabc}; //colours for pie slices
-  
-  
-  BusyPie(Table flightTable) {
-    table = flightTable;
+
+
+  BusyPie(DataTable flightTable) {
     routeCounts = new HashMap<String, Integer>();
-    processData();
+    processData(flightTable);
     sortRoutes();
     assignColors();
   }
-  
-  void processData() {
+
+  void processData(DataTable flightTable) {
+    table = flightTable;
+    
     totalFlights = 0;
-    for (TableRow row : table.rows()) {
-      String origin = row.getString("ORIGIN");
-      String destination = row.getString("DEST");
+    DataSeries originColumn = table.get("ORIGIN");
+    String[] origins = originColumn.asStringArray();
+    DataSeries destColumn = table.get("DEST");
+    String[] dests = destColumn.asStringArray();
+    for (int i = 0; i < originColumn.length(); i++) {
+      String origin = origins[i];
+      String destination = dests[i];
       String route = origin + "-" + destination;
       if (routeCounts.containsKey(route)) {
         int count = routeCounts.get(route);
@@ -46,44 +51,45 @@ class BusyPie {
         int count2 = routeCounts.get(route2);
         return Integer.compare(count2, count1);
       }
-    });
-     // Limit to top 15 routes
+    }
+    );
+    // Limit to top 15 routes
     if (topRoutes.size() > 15) {
       topRoutes = new ArrayList<String>(topRoutes.subList(0, 15));
     }
   }
-  
+
   void assignColors() {
     colors = new ArrayList<Integer>();
     for (int i = 0; i < topRoutes.size(); i++) {
       colors.add(color(random(255), random(255), random(255)));
     }
   }
-  
+
   void drawPieChart(float x, float y, float diameter) {
     int totalTopFlights = 0;
     for (String route : topRoutes) {
       totalTopFlights += routeCounts.get(route);
     }
-    
+
     float startAngle = 0;
     for (String route : topRoutes) {
       float angle = map(routeCounts.get(route), 0, totalTopFlights, 0, TWO_PI);
       float endAngle = startAngle + angle;
-  
+
       // Determine slice color
       int sliceColorIndex = topRoutes.indexOf(route) % sliceColors.length;
       color sliceColor = sliceColors[sliceColorIndex];
-  
+
       // Draw the slice
       fill(sliceColor);
       arc(x, y, diameter, diameter, startAngle, endAngle);
-      
+
       // If the mouse is over the slice make it bigger
       if (mouseOverSlice(x, y, diameter, startAngle, endAngle)) {
         float expandedDiameter = diameter + 20; // Increase diameter by 20 pixels
         arc(x, y, expandedDiameter, expandedDiameter, startAngle, endAngle);
-        
+
         // Display label at the bottom right corner
         fill(0);
         textSize(20);
@@ -91,7 +97,7 @@ class BusyPie {
         String labelText = routeCities[0] + " to " + routeCities[1] + ": " + routeCounts.get(route) + " flights\n";
         text(labelText, 490, 570);
       }
-      
+
       startAngle = endAngle;
     }
   }
@@ -105,5 +111,5 @@ class BusyPie {
     }
     // Check if angle to mouse is within the range of the current slice
     return angleToMouse >= startAngle && angleToMouse <= endAngle && dist(mouseX, mouseY, x, y) <= diameter / 2;
-}
+  }
 }

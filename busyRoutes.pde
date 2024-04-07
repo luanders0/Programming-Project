@@ -6,15 +6,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 class busyRoutes {
-  Table table1;
+  DataTable table;
   HashMap<String, Integer> routeCounts; // Store flight counts for each route
   ArrayList<String> topRoutes; // Store top routes
 
 
-  busyRoutes(Table flightTable) {
-
-    // Load CSV file
-    table = flightTable;
+  busyRoutes(DataTable flightTable) {
 
     //table = loadTable("flights2k..csv", "header");
 
@@ -22,7 +19,7 @@ class busyRoutes {
     routeCounts = new HashMap<String, Integer>();
 
     // Process data
-    processData();
+    processData(flightTable);
 
     // Sort routes by flight count
     sortRoutes();
@@ -31,12 +28,22 @@ class busyRoutes {
     drawChart();
   }
 
-  void processData() {
+  void processData(DataTable flightTable) {
     // Iterate through each row in the CSV
-    for (TableRow row : table.rows()) {
+    table = flightTable;
+    
+    DataSeries originColumn = table.get("ORIGIN");
+    DataSeries destColumn = table.get("DEST");
+
+    String[] origins = originColumn.asStringArray();
+    String[] dests = destColumn.asStringArray();
+    
+    print(dests.length);
+
+    for (int i = 0; i < destColumn.length(); i++) {
       // Get origin and destination airports
-      String origin = row.getString("ORIGIN");
-      String destination = row.getString("DEST");
+      String origin = origins[i]; //<>//
+      String destination = dests[i];
 
       // Create a route string (combination of origin and destination)
       String route = origin + "-" + destination;
