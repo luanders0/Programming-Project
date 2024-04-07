@@ -44,11 +44,11 @@ public class OriginChart {
       float y = map(i, 0, maxFlights, startY, 100); 
       text(i, 30, y);
       textSize(12);
-      line(100, y, width - 100, y); 
-    }
+    line(startX, y, startX + chartWidth, y);    }
 
     // Draw the x-axis label
-    text("STATE NAME", xAxisLabelX, xAxisLabelY);
+    textSize(16);
+    text("State", xAxisLabelX, xAxisLabelY);
 
     pushMatrix();
     translate(10, height / 2);
@@ -67,8 +67,9 @@ public class OriginChart {
       rect(x, startY - barHeight, barWidth, barHeight);
 
       fill(0);
-      text(stateAbbreviations[i], x + barWidth / 2, startY + 15); // Adjusted the vertical position and added smaller text size
       textSize(7);
+      text(stateAbbreviations[i], x + barWidth / 2, startY + 15); // Adjusted the vertical position and added smaller text size
+      
     }
     textSize(16);
   }
