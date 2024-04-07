@@ -88,10 +88,12 @@ void drawChart() {
 
   textSize(10);
 
-  // Draw y-axis tick marks and labels
-  for (int i = 0; i <= 10; i++) {
-    float y = map(i * (maxFlights / 10.0), 0, maxFlights, startY + chartHeight, startY);
-    text((int)(i * (maxFlights / 10.0)), startX - 10, y + 5); // Adjusted X position and shift to the right
+   int maxYValue = (int) ceil((maxFlights / 50.0)) * 50;
+
+  int numTicks = min(17, maxYValue / 5); 
+  for (int i = 0; i <= numTicks; i++) {
+    float y = map(i * 5, 0, maxYValue, startY + chartHeight, startY);
+    text(i * 5, startX - 10, y - 10);
   }
 
   // Draw bars for each route
@@ -100,7 +102,7 @@ void drawChart() {
     int flights = routeCounts.get(route);
 
     // Calculate bar height based on flight count
-    float barHeight = map(flights, 0, maxFlights, 0, chartHeight);
+    float barHeight = map(flights, 0, maxYValue, 0, chartHeight * 1.7); 
 
     // Calculate the position of the bar
     float barX = startX + i * barWidth + barWidth / 4; // Adjusted bar position
@@ -116,7 +118,7 @@ void drawChart() {
     text(route, barX + barWidth / 4, startY + chartHeight + 20); // Adjusted label position
   }
   textSize(16);
-}
+  }
 
 
 }

@@ -45,7 +45,7 @@ public class OriginChart {
     }
 
     // Draw the x-axis label
-    text("STATE NAME", xAxisLabelX, xAxisLabelY);
+    text("State", xAxisLabelX, xAxisLabelY);
 
     pushMatrix();
     translate(10, height / 2);
