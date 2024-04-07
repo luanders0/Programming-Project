@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import processing.sound.*;
+import gifAnimation.*;
 
 final int EVENT_NULL = -1;
 final int HOME_SCREEN = 0;
@@ -71,6 +72,7 @@ PFont rockwellFont;
 Button button;
 PImage homeScreen;
 PImage clouds;
+PImage[] allFrames;
 int screenState;
 MainScreen mainScreen;
 SoundFile clickSound;
@@ -78,6 +80,7 @@ SoundFile clickSound;
 void setup() {
   size(600, 600);
   textAlign(CENTER, CENTER);
+  
 
   table2k = loadTable("flights2k.csv", "header");
   table10k = loadTable("flights10k.csv", "header");
@@ -88,7 +91,7 @@ void setup() {
   rockwellFont = loadFont("Rockwell-BoldItalic-48.vlw");
 
   PImage file = loadImage("fileButton.png");
-  fileButton = new Widget(525, 30, file, FILE_BUTTON);
+  fileButton = new Widget(485, 60, file, FILE_BUTTON);
   //barChart = new Widget(250, 200, 100, 60, "Bar Chart", color(255, 0, 0), null, BAR_CHART_BUTTON);
   //backButton = new Widget(30, 50, 50, 20, "back", color(255), barChartFont, BACK_BUTTON);
   //pieChartButton = new Widget(250, 300, 100, 60, "Pie Chart", color(255,0,0), null, PIE_CHART_BUTTON);
@@ -214,6 +217,8 @@ void setup() {
   homeScreen = loadImage("SquareMainScreen.jpg"); // Avery H
   //clouds = loadImage("ChartScreen.jpg");
   clouds = loadImage("clouds.jpg");
+  frameRate(30);
+  allFrames = Gif.getPImages(this, "cloudScreen.gif");
 
   mainScreen = new MainScreen(homeScreen, clouds);
 }
@@ -226,7 +231,10 @@ void draw() {
     image(homeScreen, 0, 0, 600, 600);
     break;
   case CHART_SELECT:
-    image(clouds, 0, 0);
+    background(0);
+    int currentFrame = frameCount % allFrames.length;
+    image(allFrames[currentFrame], 60, 60);
+    //image(clouds, 0, 0);
     fileButton.draw();
     barChart.draw();
     backButton.draw();
