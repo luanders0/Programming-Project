@@ -18,16 +18,18 @@ class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
     labelColor= color(0);
    }
    
-  Widget(int x,int y, int fontSize, String label, color widgetColor, color backgroundColor, PFont widgetFont, int event){
+  Widget(int x,int y, int width, int height, int fontSize, String label, color widgetColor, color backgroundColor, PFont widgetFont, int event){
     this.x=x; 
     this.y=y; 
+    this.width = width;
+    this.height = height;
     this.fontSize = fontSize;
     this.label=label; 
     this.event=event; 
     this.widgetColor=widgetColor; 
     this.widgetFont=widgetFont;
     labelColor= color(255);
-    backgroundColor = color(0);
+    this.backgroundColor = backgroundColor;
    }
    
   Widget(int x,int y, PImage image, int event){
