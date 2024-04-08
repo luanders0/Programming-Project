@@ -66,7 +66,6 @@ busyRoutes busyRoutes;
 LatenessPieChart latenessChart;
 Widget fileButton, barChart, pieChartButton, backButton, pressHere;
 Button button;
-MainScreen mainScreen;
 Screen latenessScreen, pieScreen;
 ActionListener[] buttonListeners = new ActionListener[4];
 JRadioButton[] fileButtons = new JRadioButton[4];
@@ -199,7 +198,7 @@ void setup() {
   clouds = loadImage("clouds.jpg");
   frameRate(30);
   allFramesClouds = Gif.getPImages(this, "cloudScreen.gif");
-  mainScreen = new MainScreen(homeScreen, clouds);
+  //mainScreen = new MainScreen(homeScreen, clouds);
   frameRate(15);
   allFramesPlanes = Gif.getPImages(this, "PlanesGIF.gif");
 }
@@ -212,7 +211,6 @@ void draw() {
     int currentFramePlanes = frameCount % allFramesPlanes.length;
     image(allFramesPlanes[currentFramePlanes], 0, 0, 600, 600);
     pressHere.draw();
-    //image(homeScreen, 0, 0, 600, 600);
     break;
   case CHART_SELECT:
     int currentFrameClouds = frameCount % allFramesClouds.length;
@@ -291,7 +289,6 @@ String showInputBox() {
 }
 
 void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets 
-  mainScreen.mousePressed();
   switch(pressHere.getEvent(mouseX, mouseY)) {
     case(HERE_BUTTON):
       screenState = CHART_SELECT;
@@ -325,7 +322,7 @@ void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets
    if (screenState != HOME_SCREEN ) { // Adjusted condition to check for PIE_SCREEN
     switch(backButton.getEvent(mouseX, mouseY)) {
       case(BACK_BUTTON):
-        if (screenState == PIE_SCREEN ) { // Adjusted condition to check for PIE_SCREEN
+        if (screenState == PIE_SCREEN || screenState == BAR_SCREEN) { // Adjusted condition to check for PIE_SCREEN
           screenState = CHART_SELECT; // Set back to CHART_SELECT when pressing back on PIE_SCREEN
         } else {
           screenState = HOME_SCREEN; // Set back to HOME_SCREEN for other screens
