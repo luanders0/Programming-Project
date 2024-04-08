@@ -27,6 +27,7 @@ final int PIE_CHART_TEXT = 8;
 final int LABELX = 500;
 final int LABELY = 500;
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
+final int HERE_BUTTON = 9;
 
 boolean pieUserInput = true;
 boolean latenessDraw = false;
@@ -51,7 +52,8 @@ int screenState;
 
 PImage homeScreen;
 PImage clouds;
-PImage[] allFrames;
+PImage[] allFramesClouds;
+PImage[] allFramesPlanes;
 PFont barChartFont;
 String userInput = "";
 
@@ -62,7 +64,7 @@ lateness_plot latenessPlot;
 OriginChart originChart;
 busyRoutes busyRoutes;
 LatenessPieChart latenessChart;
-Widget fileButton, barChart, pieChartButton, backButton;
+Widget fileButton, barChart, pieChartButton, backButton, pressHere;
 Button button;
 MainScreen mainScreen;
 Screen latenessScreen, pieScreen;
@@ -89,6 +91,7 @@ void setup() {
   barChart = new Widget(230, 200, 150, 80, "Bar Chart", color(255, 255, 255), barChartFont, BAR_CHART_BUTTON);
   pieChartButton = new Widget(230, 300, 150, 80, "Pie Chart", color(255, 255, 255), barChartFont, PIE_CHART_BUTTON);
   backButton = new Widget(30, 50, 100, 40, "Back", color(255), barChartFont, BACK_BUTTON);
+  pressHere = new Widget(300, 350, 100, "CLICK HERE FOR \nFLIGHT INFO", (0), (255), barChartFont, HERE_BUTTON);
 
   table = table2k;
   userInput = showInputBox();
@@ -195,8 +198,10 @@ void setup() {
   homeScreen = loadImage("SquareMainScreen.jpg"); // Avery H
   clouds = loadImage("clouds.jpg");
   frameRate(30);
-  allFrames = Gif.getPImages(this, "cloudScreen.gif");
+  allFramesClouds = Gif.getPImages(this, "cloudScreen.gif");
   mainScreen = new MainScreen(homeScreen, clouds);
+  frameRate(15);
+  allFramesPlanes = Gif.getPImages(this, "PlanesGIF.gif");
 }
 
 void draw() {
@@ -204,11 +209,14 @@ void draw() {
 
   switch(screenState) { // Avery H set up switch statement for screens 
   case HOME_SCREEN:
-    image(homeScreen, 0, 0, 600, 600);
+    int currentFramePlanes = frameCount % allFramesPlanes.length;
+    image(allFramesPlanes[currentFramePlanes], 0, 0, 600, 600);
+    pressHere.draw();
+    //image(homeScreen, 0, 0, 600, 600);
     break;
   case CHART_SELECT:
-    int currentFrame = frameCount % allFrames.length;
-    image(allFrames[currentFrame], 0, 0, 600, 600);
+    int currentFrameClouds = frameCount % allFramesClouds.length;
+    image(allFramesClouds[currentFrameClouds], 0, 0, 600, 600);
     fileButton.draw();
     barChart.draw();
     backButton.draw();
@@ -284,6 +292,13 @@ String showInputBox() {
 
 void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets 
   mainScreen.mousePressed();
+  switch(pressHere.getEvent(mouseX, mouseY)) {
+    case(HERE_BUTTON):
+      screenState = CHART_SELECT;
+      break;
+    case(EVENT_NULL):
+      break;
+  }
   switch(fileButton.getEvent(mouseX, mouseY)) {
     case(FILE_BUTTON):
       fileSelect.popup();

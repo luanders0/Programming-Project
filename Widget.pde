@@ -1,7 +1,7 @@
 class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
-  int x, y, width, height;
+  int x, y, width, height, fontSize;
   String label; int event;
-  color widgetColor, labelColor;
+  color widgetColor, labelColor, backgroundColor;
   PFont widgetFont;
   boolean mouseOver;
   PImage image;
@@ -16,6 +16,18 @@ class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
     this.widgetColor=widgetColor; 
     this.widgetFont=widgetFont;
     labelColor= color(0);
+   }
+   
+  Widget(int x,int y, int fontSize, String label, color widgetColor, color backgroundColor, PFont widgetFont, int event){
+    this.x=x; 
+    this.y=y; 
+    this.fontSize = fontSize;
+    this.label=label; 
+    this.event=event; 
+    this.widgetColor=widgetColor; 
+    this.widgetFont=widgetFont;
+    labelColor= color(255);
+    backgroundColor = color(0);
    }
    
   Widget(int x,int y, PImage image, int event){
