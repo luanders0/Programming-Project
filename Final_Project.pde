@@ -241,7 +241,7 @@ void draw() {
     backButton.draw();
     pieChartButton.draw();
     break;    
-  case BAR_SCREEN:
+  case BAR_SCREEN: 
     background(#248cdc);
     backButton.draw();
     if (busyDraw) {
@@ -292,7 +292,7 @@ void draw() {
     break;
   }
   
-switch(barScreen) {
+switch(barScreen) { // ella added 100k bar charts 
   case BAR_10K:
     buttonPanel.popup();
     backButton.draw();
@@ -334,12 +334,6 @@ void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets
         break;
     }
     
-   //if(barScreen == CHART_SELECT){
-   //  switch(fileButton.getEvent(mouseX, mouseY)){
-   //    case(FILE_BUTTON):
-   //    fileSelect.popup();
-   //    break;
-   //  }
     switch(barChart.getEvent(mouseX, mouseY)) {
       case(BAR_CHART_BUTTON):
         screenState = BAR_SCREEN;
