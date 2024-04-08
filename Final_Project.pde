@@ -28,6 +28,9 @@ final int LABELX = 500;
 final int LABELY = 500;
 final String[] FILE_TEXT = {"2k Flights", "10k Flights", "100k Flights", "Month of Flights"};
 final int HERE_BUTTON = 9;
+final int BAR_10K = 1;
+final int BAR_CHART_100K = 2;
+final int BAR_FULK = 1;
 
 boolean pieUserInput = true;
 boolean latenessDraw = false;
@@ -49,6 +52,7 @@ int lateFlightCount = 0;
 int cancelledFlightCount = 0;
 int totalFlightCount = -1;
 int screenState;
+int barScreen;
 
 PImage homeScreen;
 PImage clouds;
@@ -62,6 +66,8 @@ PieChartOrigin pieChartOrigin;
 BusyPie busyRoutesPie;
 lateness_plot latenessPlot;
 OriginChart originChart;
+OriginChart10k originChart10k;
+OriginChart100k originChart100k;
 busyRoutes busyRoutes;
 LatenessPieChart latenessChart;
 Widget fileButton, barChart, pieChartButton, backButton, pressHere;
@@ -77,10 +83,19 @@ DataTable table, table2k, table10k, table100k, tableFull;
 void setup() {
   size(600, 600);
   textAlign(CENTER, CENTER);
+  
+  DataTable table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights10k.csv")));
+  // Initialize an instance of OriginChart10k with the loaded table
+  originChart10k = new OriginChart10k(table10k);
+  
+  DataTable table100k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights100k.csv")));
+  // Initialize an instance of OriginChart100k with the loaded table
+  originChart100k = new OriginChart100k(table100k);
+
 
   table2k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights2k.csv")));
-  table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights10k.csv")));
-  table100k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights100k.csv")));
+  //table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights10k.csv")));
+  //table100k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights100k.csv")));
   tableFull = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights_full.csv")));
 
   barChartFont = loadFont("BellMTBold-48.vlw");
@@ -93,9 +108,13 @@ void setup() {
   pressHere = new Widget(250, 350, 100, 40, 100, "CLICK HERE FOR \nFLIGHT INFO", (0), (255), barChartFont, HERE_BUTTON);
 
   table = table2k;
+  table = table10k;
+  table = table100k;
   userInput = showInputBox();
   clickSound = new SoundFile(this, "click.wav");
   originChart = new OriginChart(table);
+  originChart10k = new OriginChart10k(table);
+  originChart100k = new OriginChart100k(table);
   latenessPlot = new lateness_plot(table);
   busyRoutes = new busyRoutes(table);
   pieChart = new PieChart(table);
@@ -121,12 +140,15 @@ void setup() {
       if (fileButtons[1].isSelected()) {
         table = table10k;
         print("10K Table Selected");
-        busyRoutesPie.processData(table);
-        busyRoutesPie.sortRoutes();
-      }
+        //busyRoutesPie.processData(table);
+        //busyRoutesPie.sortRoutes();
+        //originChart10k.drawOriginChart10K();
+        barScreen = BAR_10K;
+    }
       if (fileButtons[2].isSelected()) {
         table = table100k;
         print("100K Table Selected");
+        barScreen = BAR_CHART_100K;
       }
       if (fileButtons[3].isSelected()) {
         table = tableFull;
@@ -205,7 +227,7 @@ void setup() {
 void draw() {
   background(255);
 
-  switch(screenState) { // Avery H set up switch statement for screens
+  switch(screenState) { // Avery H set up switch statement for screens 
   case HOME_SCREEN:
     int currentFramePlanes = frameCount % allFramesPlanes.length;
     image(allFramesPlanes[currentFramePlanes], 0, 0, 600, 600);
@@ -218,7 +240,7 @@ void draw() {
     barChart.draw();
     backButton.draw();
     pieChartButton.draw();
-    break;
+    break;    
   case BAR_SCREEN:
     background(#248cdc);
     backButton.draw();
@@ -269,6 +291,24 @@ void draw() {
     }
     break;
   }
+  
+switch(barScreen) {
+  case BAR_10K:
+    buttonPanel.popup();
+    backButton.draw();
+    if (originDraw) {
+      originChart10k.drawOriginChart10K();
+    }
+    break;
+  case BAR_CHART_100K:
+    buttonPanel.popup();
+    backButton.draw();
+    if (originDraw) {
+      originChart100k.drawOriginChart100K();
+    }
+    break;
+}
+
 }
 
 String showInputBox() {
@@ -293,6 +333,13 @@ void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets
       case(EVENT_NULL):
         break;
     }
+    
+   //if(barScreen == CHART_SELECT){
+   //  switch(fileButton.getEvent(mouseX, mouseY)){
+   //    case(FILE_BUTTON):
+   //    fileSelect.popup();
+   //    break;
+   //  }
     switch(barChart.getEvent(mouseX, mouseY)) {
       case(BAR_CHART_BUTTON):
         screenState = BAR_SCREEN;

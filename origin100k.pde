@@ -3,16 +3,16 @@ import processing.data.Table;
 import processing.data.TableRow;
 import java.util.ArrayList;
 
-public class OriginChart10k {
+public class OriginChart100k {
 
   DataTable table; // excel file loaded into object 'table'
   int colorStep = 30; // The step for grouping flights
 
-  OriginChart10k(DataTable table) {
+  OriginChart100k(DataTable table) {
     this.table = table;
   }
 
-  void drawOriginChart10K() {
+  void drawOriginChart100K() {
     DataSeries stateColumn = table.get("ORIGIN_STATE_ABR");
     String[] stateList = new String[stateColumn.length()];
     stateList = stateColumn.asStringArray();
