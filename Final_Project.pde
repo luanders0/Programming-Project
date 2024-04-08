@@ -198,7 +198,6 @@ void setup() {
   clouds = loadImage("clouds.jpg");
   frameRate(30);
   allFramesClouds = Gif.getPImages(this, "cloudScreen.gif");
-  //mainScreen = new MainScreen(homeScreen, clouds);
   frameRate(15);
   allFramesPlanes = Gif.getPImages(this, "PlanesGIF.gif");
 }
