@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class OriginChart100k {
 
   DataTable table; // excel file loaded into object 'table'
-  int colorStep = 30; // The step for grouping flights
 
   OriginChart100k(DataTable table) {
     this.table = table;
