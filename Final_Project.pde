@@ -96,7 +96,7 @@ void setup() {
   barChart = new Widget(230, 200, 150, 80, "Bar Chart", color(255, 255, 255), barChartFont, BAR_CHART_BUTTON);
   pieChartButton = new Widget(230, 300, 150, 80, "Pie Chart", color(255, 255, 255), barChartFont, PIE_CHART_BUTTON);
   backButton = new Widget(30, 50, 100, 40, "Back", color(255), barChartFont, BACK_BUTTON);
-  pressHere = new Widget(250, 350, 100, 40, 100, "CLICK HERE FOR \nFLIGHT INFO", (0), (255), barChartFont, HERE_BUTTON);
+  pressHere = new Widget(250, 350, 100, 40, 100, "click here for \nflight info", (0), barChartFont, HERE_BUTTON);
 
   table = table2k;
   userInput = showInputBox();
@@ -234,8 +234,8 @@ void setup() {
   clouds = loadImage("clouds.jpg");
   frameRate(30);
   allFramesClouds = Gif.getPImages(this, "cloudScreen.gif");
-  frameRate(15);
-  allFramesPlanes = Gif.getPImages(this, "PlanesGIF.gif");
+  frameRate(5);
+  allFramesPlanes = Gif.getPImages(this, "planeCrashGIF.gif");
 }
 
 void draw() {
