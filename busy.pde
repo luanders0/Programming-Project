@@ -76,7 +76,7 @@ void drawChart() {
 
   // Determine the dimensions of the chart
   int startX = 50;
-  int startY = 50;
+  int startY = 105;
   int chartWidth = width - startX - 50; // Adjusted width
   int chartHeight = height - startY - 100; // Adjusted height
 
@@ -85,7 +85,7 @@ void drawChart() {
 
   // Draw x-axis
   line(startX, startY + chartHeight, startX + chartWidth, startY + chartHeight);
-  text("Routes", startX + chartWidth / 2, startY + chartHeight + 40);
+  text("ROUTE", startX + chartWidth / 2, startY + chartHeight + 40);
 
   textSize(10);
 
