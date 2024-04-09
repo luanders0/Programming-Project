@@ -18,7 +18,7 @@ public class OriginChart {
     this.table = table;
   }
 
-  void drawOriginChart() { // method to draw 2k origin chart
+void drawOriginChart() { // method to draw origin chart
     DataSeries stateColumn = table.get("ORIGIN_STATE_ABR"); // get column named 'ORIGIN' from excel table
     String[] stateList = new String[stateColumn.length()]; 
     stateList = stateColumn.asStringArray(); // convert the data in stateColumn to an array of strings
@@ -34,37 +34,20 @@ public class OriginChart {
       }
     }
 
-   int maxFlights = getMax(flightsPerState); // get the maximum number of flights to draw the y axis 
+    int maxFlights = getMax(flightsPerState); // get the maximum number of flights to draw the y axis 
 
     // Calculate the dimensions and positions based on canvas size
     float chartWidth = width - 100; 
     float chartHeight = height - 200; 
-    float barWidth = chartWidth / flightsPerState.length;
+    float barWidth = chartWidth / (flightsPerState.length * 2); 
     float startX = 50;
-    float startY = height - 100; 
+    float startY = height - 50;
     float xAxisLabelX = width / 2;
-    float xAxisLabelY = height - 50; 
-
-    // Draw the y-axis with numerical values
-    fill(0);
-    for (int i = 0; i <= maxFlights; i += 20) {
-      float y = map(i, 0, maxFlights, startY, 100); 
-      text(i, 30, y);
-      textSize(12);
-    line(startX, y, startX + chartWidth, y); // horizontal grid lines
-    }
+    float xAxisLabelY = height - 15; 
 
     // Draw the x-axis label
     textSize(16);
-    text("State", xAxisLabelX, xAxisLabelY);
-
-    // draw rotated label for y axis 
-    pushMatrix();
-    translate(10, height / 2);
-    rotate(-HALF_PI); // Rotating text label vertically
-    textAlign(CENTER, CENTER);
-    text("Number of Flights", 0, 0); 
-    popMatrix();
+    text("STATE", xAxisLabelX, xAxisLabelY);
 
     // Draw bars and state abbreviations with smaller text size
     textSize(10); 
@@ -72,7 +55,7 @@ public class OriginChart {
       int flights = flightsPerState[i];
       fill(0, 0, 255);
       float barHeight = map(flights, 0, maxFlights, 0, chartHeight);
-      float x = startX + i * barWidth;
+      float x = startX + (i * 2) * barWidth; 
       rect(x, startY - barHeight, barWidth, barHeight); // draw bars
 
       // state abbreviations
@@ -80,9 +63,16 @@ public class OriginChart {
       textSize(7);
       text(stateAbbreviations[i], x + barWidth / 2, startY + 15); 
       
+      // Number of flights above the bar
+      fill(255,0,0);
+      textSize(8);
+      text(flights, x + barWidth / 2, startY - barHeight - 5); // Display number of flights above the bar
     }
     textSize(16);
-  }
+    fill(0);
+}
+
+
 
   // Get the index of a state abbreviation in the array
   int getStateIndex(String stateAbbreviation, String[] stateAbbreviations) {

@@ -18,7 +18,7 @@ class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
     labelColor= color(0);
    }
    
-  Widget(int x,int y, int width, int height, int fontSize, String label, color widgetColor, color backgroundColor, PFont widgetFont, int event){
+  Widget(int x,int y, int width, int height, int fontSize, String label, color widgetColor, PFont widgetFont, int event){
     this.x=x; 
     this.y=y; 
     this.width = width;
@@ -29,7 +29,7 @@ class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
     this.widgetColor=widgetColor; 
     this.widgetFont=widgetFont;
     labelColor= color(255);
-    this.backgroundColor = backgroundColor;
+    //this.backgroundColor = backgroundColor;
    }
    
   Widget(int x,int y, PImage image, int event){

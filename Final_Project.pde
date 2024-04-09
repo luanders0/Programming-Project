@@ -56,6 +56,7 @@ int barScreen;
 
 PImage homeScreen;
 PImage clouds;
+PImage cursor;
 PImage[] allFramesClouds;
 PImage[] allFramesPlanes;
 PFont barChartFont;
@@ -81,7 +82,7 @@ DataTable table, table2k, table10k, table100k, tableFull;
 void setup() {
   size(600, 600);
   textAlign(CENTER, CENTER);
-
+  cursor = loadImage("planeMouse.png");
 
   table2k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights2k.csv")));
   table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights10k.csv")));
@@ -95,7 +96,7 @@ void setup() {
   barChart = new Widget(230, 200, 150, 80, "Bar Chart", color(255, 255, 255), barChartFont, BAR_CHART_BUTTON);
   pieChartButton = new Widget(230, 300, 150, 80, "Pie Chart", color(255, 255, 255), barChartFont, PIE_CHART_BUTTON);
   backButton = new Widget(30, 50, 100, 40, "Back", color(255), barChartFont, BACK_BUTTON);
-  pressHere = new Widget(250, 350, 100, 40, 100, "CLICK HERE FOR \nFLIGHT INFO", (0), (255), barChartFont, HERE_BUTTON);
+  pressHere = new Widget(250, 350, 100, 40, 100, "click here for \nflight info", (0), barChartFont, HERE_BUTTON);
 
   table = table2k;
   userInput = showInputBox();
@@ -186,7 +187,6 @@ void setup() {
     }
   };
 
-
   JButton chooseFile = new JButton("Choose File");
   chooseFile.addActionListener(fileListener);
 
@@ -248,12 +248,13 @@ void setup() {
   clouds = loadImage("clouds.jpg");
   frameRate(30);
   allFramesClouds = Gif.getPImages(this, "cloudScreen.gif");
-  frameRate(15);
-  allFramesPlanes = Gif.getPImages(this, "PlanesGIF.gif");
+  frameRate(5);
+  allFramesPlanes = Gif.getPImages(this, "planeCrashGIF.gif");
 }
 
 void draw() {
   background(255);
+  cursor(cursor);
 
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
@@ -284,7 +285,6 @@ void draw() {
       text("Delayed Flights", width/2, 30);
     } else if (originDraw) {
       originChart.drawOriginChart();
-      fill(0);
       textSize(20);
       text("Flights by State", width/2, 30);
     }
@@ -378,6 +378,7 @@ void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets
   switch(pressHere.getEvent(mouseX, mouseY)) {
     case(HERE_BUTTON):
       screenState = CHART_SELECT;
+      clickSound.play();
       break;
     case(EVENT_NULL):
       break;
