@@ -1,3 +1,4 @@
+//Roisin s added bar charts for the late flights
 class lateness_plot {
 
   DataTable table;
@@ -58,7 +59,7 @@ class lateness_plot {
     }
   }
 
-  void drawChart() {
+void drawChart() {
     // Determine the range of delayed flights counts
     int maxDelayedFlights = 0;
     for (int count : delayedFlightsByState.values()) {
@@ -66,39 +67,33 @@ class lateness_plot {
     }
 
     // Draw bars for each state
-    float barWidth = (width - 100) / (float)delayedFlightsByState.size(); // Adjusted width
-    float x = 50; // Adjusted starting x-coordinate
+    float barWidth = (width - 100) / (float)(delayedFlightsByState.size() * 1.07); // Adjusted width for thinner bars
+    float x = 12; // Adjusted starting x-coordinate
     int i = 0;
     for (String state : delayedFlightsByState.keySet()) {
       int count = delayedFlightsByState.get(state);
       float barHeight = map(count, 0, maxDelayedFlights, 0, height - 200); // Adjusted height
       fill(0, 0, 255); // Set blue color for bars
       rect(x, height - 100 - barHeight, barWidth, barHeight);
+      
+      // Put the number on top of the bar
+      fill(0); // Set text color to black
+      textAlign(CENTER, BOTTOM);
+      textSize(8); // Adjust text size
+      text(count, x + barWidth / 2, height - 100 - barHeight - 5); // Adjusted Y position
+      // End of number on top of the bar
+      
       fill(0);
       textSize(8); // Adjusted text size for state abbreviations
       text(state, x + barWidth / 2, height - 80); // Adjusted Y position
-      x += barWidth + 5; // Increased spacing between bars
+      x += barWidth + 2; // Increased spacing between bars
       i++;
-    }
-
-    // Draw rotated label for y-axis
-    pushMatrix();
-    translate(30, height / 2);
-    rotate(-HALF_PI);
-    textFont(createFont("Arial", 16, true)); // Setting font to Arial
-    text("Number of Delayed Flights", -10, -20); // Adjusted X position
-    popMatrix();
-
-    // Draw y-axis tick marks and labels
-    for (int j = 0; j <= 10; j++) {
-      float y = map(j * (maxDelayedFlights / 10), 0, maxDelayedFlights, height - 100, 100);
-      textSize(10);
-      text((int)(j * (maxDelayedFlights / 10)), 30, y); // Adjusted X position
     }
 
     // Label x-axis
     textAlign(CENTER, CENTER);
     textFont(createFont("Arial", 16, true)); // Setting font to Arial
-    text("State", width / 1.75, height - 60);
-  }
+    text("State", width / 2, height - 60);
+}
+
 }
