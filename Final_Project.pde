@@ -109,19 +109,21 @@ void setup() {
   busyRoutesPie = new BusyPie(table);
   latenessChart = new LatenessPieChart(table);
   
-  //DataSeries departureTimes = table.get("DEP_TIME");
-  //DataSeries realDepartureTimes = table.get("CRS_DEP_TIME");
+  DataSeries departureTimes = table.get("DEP_TIME");
+  DataSeries realDepartureTimes = table.get("CRS_DEP_TIME");
   
-  //for (int i = 0; i < departureTimes.length(); i++) {
-  //  if (departureTimes.isEmpty(i)){
-  //    departureTimes.remove(i);
-  //    realDepartureTimes.remove(i);
-  //  }
-  //}
+  for (int i = 0; i < departureTimes.length(); i++) {
+    if (departureTimes.isEmpty(i) || realDepartureTimes.isEmpty(i)){
+      departureTimes.remove(i);
+      i--;
+      realDepartureTimes.remove(i);
+      i--;
+    }
+  }
   
-  //DataSeries delays = departureTimes.subtract(realDepartureTimes);
-  //DataValue avDelay = delays.mean();
-  //print(avDelay);
+  DataSeries delays = departureTimes.subtract(realDepartureTimes);
+  DataValue avDelay = delays.mean();
+  print(avDelay);
   
 
   for (int i = 0; i < fileButtons.length; i++) {
