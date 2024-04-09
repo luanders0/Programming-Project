@@ -11,6 +11,10 @@ public class OriginChart {
   OriginChart(DataTable table) {
     this.table = table;
   }
+  
+  void setTable (DataTable table) {
+    this.table = table;
+  }
 
   void drawOriginChart() {
     DataSeries stateColumn = table.get("ORIGIN_STATE_ABR");

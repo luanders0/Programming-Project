@@ -6,21 +6,19 @@ class lateness_plot {
 
   lateness_plot(DataTable flightTable) {
 
-    // Load CSV file
-    table = flightTable;
-
     // Initialize delayed flights data hashmap
     delayedFlightsByState = new HashMap<String, Integer>();
 
     // Process data
-    processData();
+    processData(flightTable);
 
-    // Display chart
-    drawChart();
   }
 
-  void processData() {
+  void processData(DataTable flightTable) {
     // Initialize color map
+    table = flightTable;
+
+    
     stateColors = new HashMap<String, Integer>();
     DataSeries depTimes = table.get("DEP_TIME");
     DataSeries arrTimes = table.get("ARR_TIME");

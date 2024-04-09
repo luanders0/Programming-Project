@@ -117,20 +117,51 @@ void setup() {
       if (fileButtons[0].isSelected()) {
         table = table2k;
         print("2K Table Selected");
+        busyRoutesPie.processData(table);
+        busyRoutesPie.sortRoutes();
+        latenessPlot.processData(table);
+        originChart.setTable(table);
+        busyRoutes.processData(table);
+        busyRoutes.sortRoutes();
+        pieChart.setTable(table);
+        latenessChart.calculateLateness(table);
       }
       if (fileButtons[1].isSelected()) {
         table = table10k;
         print("10K Table Selected");
+        
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
+        latenessPlot.processData(table);
+        originChart.setTable(table);
+        busyRoutes.processData(table);
+        busyRoutes.sortRoutes();
+        pieChart.setTable(table);
+        latenessChart.calculateLateness(table);
       }
       if (fileButtons[2].isSelected()) {
         table = table100k;
         print("100K Table Selected");
+        busyRoutesPie.processData(table);
+        busyRoutesPie.sortRoutes();
+        latenessPlot.processData(table);
+        originChart.setTable(table);
+        busyRoutes.processData(table);
+        busyRoutes.sortRoutes();
+        pieChart.setTable(table);
+        latenessChart.calculateLateness(table);
       }
       if (fileButtons[3].isSelected()) {
         table = tableFull;
         print("Full Table Selected");
+        busyRoutesPie.processData(table);
+        busyRoutesPie.sortRoutes();
+        latenessPlot.processData(table);
+        originChart.setTable(table);
+        busyRoutes.processData(table);
+        busyRoutes.sortRoutes();
+        pieChart.setTable(table);
+        latenessChart.calculateLateness(table);
       }
       fileSelect.parent.setVisible(false); // Close the window after file selection
     }

@@ -25,7 +25,6 @@ class LatenessPieChart {
       
       
       if (CANCELLED == 1) {
-        println("****Flight was cancelled****");
         cancelledFlightCount++;
         continue; // Skip the rest of the iteration for cancelled flights
       }
@@ -55,13 +54,10 @@ class LatenessPieChart {
       int difference = actualMinutes - scheduledMinutes;
   
       if (difference < 0) {
-        println("Flight was early by: " + (-difference) + " minutes");
         earlyFlightCount++;
       } else if (difference > 0) {
-        println("Flight was late by: " + difference + " minutes");
         lateFlightCount++;
       } else {
-        println("Flight was on time");
         onTimeFlightCount++;
       }
     }

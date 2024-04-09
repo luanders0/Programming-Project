@@ -5,6 +5,10 @@ class PieChart {
   PieChart(DataTable table) {
     this.table = table;
   }
+  
+  void setTable (DataTable table) {
+    this.table = table;
+  }
 
   void drawPieChart(float x, float y, float diameter, String inputAbbreviation) {
     HashMap<String, Integer> dateCounts = new HashMap<String, Integer>();

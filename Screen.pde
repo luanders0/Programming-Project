@@ -13,7 +13,6 @@ class Screen {
   Screen(color screenColor, lateness_plot barPlot) {
     this.screenColor = screenColor;
     this.barPlot = barPlot;
-    barPlot.processData();
   }
 
   void add(Widget w) {

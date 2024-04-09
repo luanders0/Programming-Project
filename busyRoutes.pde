@@ -36,7 +36,6 @@ class busyRoutes {
     String[] origins = originColumn.asStringArray();
     String[] dests = destColumn.asStringArray();
     
-    print(dests.length);
 
     for (int i = 0; i < destColumn.length(); i++) {
       // Get origin and destination airports
