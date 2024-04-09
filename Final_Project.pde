@@ -363,6 +363,7 @@ void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets
   switch(pressHere.getEvent(mouseX, mouseY)) {
     case(HERE_BUTTON):
       screenState = CHART_SELECT;
+      clickSound.play();
       break;
     case(EVENT_NULL):
       break;
