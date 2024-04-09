@@ -72,8 +72,6 @@ void drawOriginChart() { // method to draw origin chart
     fill(0);
 }
 
-
-
   // Get the index of a state abbreviation in the array
   int getStateIndex(String stateAbbreviation, String[] stateAbbreviations) {
     for (int i = 0; i < stateAbbreviations.length; i++) {
