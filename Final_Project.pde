@@ -56,6 +56,7 @@ int barScreen;
 
 PImage homeScreen;
 PImage clouds;
+PImage cursor;
 PImage[] allFramesClouds;
 PImage[] allFramesPlanes;
 PFont barChartFont;
@@ -81,7 +82,7 @@ DataTable table, table2k, table10k, table100k, tableFull;
 void setup() {
   size(600, 600);
   textAlign(CENTER, CENTER);
-
+  cursor = loadImage("planeMouse.png");
 
   table2k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights2k.csv")));
   table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights10k.csv")));
@@ -239,6 +240,7 @@ void setup() {
 
 void draw() {
   background(255);
+  cursor(cursor);
 
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
