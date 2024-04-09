@@ -1,6 +1,5 @@
-//ZF
 class PieChart {
-  DataTable table, table1, table2, table3;
+  DataTable table;
 
   PieChart(DataTable table) {
     this.table = table;
@@ -52,16 +51,41 @@ class PieChart {
       fill(map(i, 0, counts.length, 0, 255), map(i, 0, counts.length, 255, 0), 100); // Adjust color for each slice
       stroke(255);
       strokeWeight(1);
-      arc(x, y, diameter, diameter, startAngle, startAngle + angle);
+      
+      // check if the mouse is over the slice
+      boolean overSlice = mouseOverSlice(x, y, diameter, startAngle, startAngle + angle);
+
+      // Draw the slice
+      if (overSlice) {
+        // Increase diameter by 20 pixels if mouse is over the slice
+        float expandedDiameter = diameter + 20; 
+        arc(x, y, expandedDiameter, expandedDiameter, startAngle, startAngle + angle);
+      } else {
+        arc(x, y, diameter, diameter, startAngle, startAngle + angle);
+      }
+      
+      // if  mouse is hovering over slice then display label
+      if (overSlice) {
+        fill(0);
+        textSize(20);
+        String[] dateParts = dates[i].split(" ");
+        String labelText = dateParts[0] + ": " + counts[i] + " flights";
+        text(labelText, 490, 570);
+      }
+
+      // update startAngle for thre next slice
       startAngle += angle;
-
-
-      float labelX = x + cos(startAngle - angle / 2) * diameter / 2;
-      float labelY = y + sin(startAngle - angle / 2) * diameter / 2;
-      textAlign(CENTER, CENTER);
-      fill(0);
-      String[] dateParts = dates[i].split(" ");
-      text(dateParts[0], labelX, labelY); // Display only the date part
     }
+  }
+  
+  boolean mouseOverSlice(float x, float y, float diameter, float startAngle, float endAngle) {
+    // compute angle to the mouse position
+    float angleToMouse = atan2(mouseY - y, mouseX - x);
+    // normalize angle to be between 0 and TWO_PI
+    if (angleToMouse < 0) {
+      angleToMouse += TWO_PI;
+    }
+    // check if angle to mouse is within the range of the current slice
+    return angleToMouse >= startAngle && angleToMouse <= endAngle && dist(mouseX, mouseY, x, y) <= diameter / 2;
   }
 }

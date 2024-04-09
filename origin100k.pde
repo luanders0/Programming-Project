@@ -1,14 +1,14 @@
+// ella added origin 100k
 import processing.core.PApplet;
 import processing.data.Table;
 import processing.data.TableRow;
 import java.util.ArrayList;
 
-public class OriginChart {
+public class OriginChart100k {
 
   DataTable table; // excel file loaded into object 'table'
-  int colorStep = 30; // The step for grouping flights
 
-  OriginChart(DataTable table) {
+  OriginChart100k(DataTable table) {
     this.table = table;
   }
   
@@ -16,7 +16,7 @@ public class OriginChart {
     this.table = table;
   }
 
-  void drawOriginChart() {
+  void drawOriginChart100K() {
     DataSeries stateColumn = table.get("ORIGIN_STATE_ABR");
     String[] stateList = new String[stateColumn.length()];
     stateList = stateColumn.asStringArray();
