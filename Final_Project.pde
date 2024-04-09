@@ -172,7 +172,6 @@ void setup() {
     }
   };
 
-
   JButton chooseFile = new JButton("Choose File");
   chooseFile.addActionListener(fileListener);
 
