@@ -107,6 +107,21 @@ void setup() {
   pieChartOrigin = new PieChartOrigin("flights2k.csv", color(0, 0, 255), color(255, 0, 255));
   busyRoutesPie = new BusyPie(table);
   latenessChart = new LatenessPieChart(table);
+  
+  //DataSeries departureTimes = table.get("DEP_TIME");
+  //DataSeries realDepartureTimes = table.get("CRS_DEP_TIME");
+  
+  //for (int i = 0; i < departureTimes.length(); i++) {
+  //  if (departureTimes.isEmpty(i)){
+  //    departureTimes.remove(i);
+  //    realDepartureTimes.remove(i);
+  //  }
+  //}
+  
+  //DataSeries delays = departureTimes.subtract(realDepartureTimes);
+  //DataValue avDelay = delays.mean();
+  //print(avDelay);
+  
 
   for (int i = 0; i < fileButtons.length; i++) {
     if (i == 0) {
