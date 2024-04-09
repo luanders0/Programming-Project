@@ -77,8 +77,8 @@ void drawChart() {
       rect(x, height - 100 - barHeight, barWidth, barHeight);
       
       // Put the number on top of the bar
-      fill(0); // Set text color to black
       textAlign(CENTER, BOTTOM);
+      fill(255, 0, 0); // Set text color to red for numbers
       textSize(8); // Adjust text size
       text(count, x + barWidth / 2, height - 100 - barHeight - 5); // Adjusted Y position
       // End of number on top of the bar
@@ -93,7 +93,7 @@ void drawChart() {
     // Label x-axis
     textAlign(CENTER, CENTER);
     textFont(createFont("Arial", 16, true)); // Setting font to Arial
-    text("State", width / 2, height - 60);
+    text("STATE", width / 2, height - 60);
 }
 
 }
