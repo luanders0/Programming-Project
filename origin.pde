@@ -13,6 +13,10 @@ public class OriginChart {
   OriginChart(DataTable table) { // constructor taking DataTable object as parameter
     this.table = table; // initialise table with parameter
   }
+  
+  void setTable (DataTable table) {
+    this.table = table;
+  }
 
   void drawOriginChart() { // method to draw 2k origin chart
     DataSeries stateColumn = table.get("ORIGIN_STATE_ABR"); // get column named 'ORIGIN' from excel table

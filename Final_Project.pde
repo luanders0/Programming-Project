@@ -83,19 +83,11 @@ DataTable table, table2k, table10k, table100k, tableFull;
 void setup() {
   size(600, 600);
   textAlign(CENTER, CENTER);
-  
-  DataTable table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights10k.csv")));
-  // Initialize an instance of OriginChart10k with the loaded table
-  originChart10k = new OriginChart10k(table10k);
-  
-  DataTable table100k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights100k.csv")));
-  // Initialize an instance of OriginChart100k with the loaded table
-  originChart100k = new OriginChart100k(table100k);
 
 
   table2k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights2k.csv")));
-  //table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights10k.csv")));
-  //table100k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights100k.csv")));
+  table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights10k.csv")));
+  table100k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights100k.csv")));
   tableFull = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights_full.csv")));
 
   barChartFont = loadFont("BellMTBold-48.vlw");
@@ -108,13 +100,9 @@ void setup() {
   pressHere = new Widget(250, 350, 100, 40, 100, "CLICK HERE FOR \nFLIGHT INFO", (0), (255), barChartFont, HERE_BUTTON);
 
   table = table2k;
-  table = table10k;
-  table = table100k;
   userInput = showInputBox();
   clickSound = new SoundFile(this, "click.wav");
   originChart = new OriginChart(table);
-  originChart10k = new OriginChart10k(table);
-  originChart100k = new OriginChart100k(table);
   latenessPlot = new lateness_plot(table);
   busyRoutes = new busyRoutes(table);
   pieChart = new PieChart(table);

@@ -13,12 +13,12 @@ class LatenessPieChart {
     DataSeries schDepTimes = table.get("CRS_DEP_TIME");
     DataSeries depTimes = table.get("DEP_TIME");
     DataSeries cancelled = table.get("CANCELLED");
+    String[] CrsDep = schDepTimes.asStringArray();
+    String[] deps = depTimes.asStringArray();
   
     for (int i = 0; i < depTimes.length(); i++) {
       totalFlightCount++;
-  
-      String[] CrsDep = schDepTimes.asStringArray();
-      String[] deps = depTimes.asStringArray();
+      
       String CRS_DEP_TIME = CrsDep[i];
       String DEP_TIME = deps[i];
       int CANCELLED = cancelled.getInt(i);
