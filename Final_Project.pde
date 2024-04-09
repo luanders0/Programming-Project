@@ -66,8 +66,6 @@ PieChartOrigin pieChartOrigin;
 BusyPie busyRoutesPie;
 lateness_plot latenessPlot;
 OriginChart originChart;
-OriginChart10k originChart10k;
-OriginChart100k originChart100k;
 busyRoutes busyRoutes;
 LatenessPieChart latenessChart;
 Widget fileButton, barChart, pieChartButton, backButton, pressHere;
@@ -135,7 +133,7 @@ void setup() {
       }
       if (fileButtons[1].isSelected()) {
         table = table10k;
-        print("10K Table Selected");        
+        print("10K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
         latenessPlot.processData(table);
@@ -242,7 +240,7 @@ void setup() {
 void draw() {
   background(255);
 
-  switch(screenState) { // Avery H set up switch statement for screens 
+  switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
     int currentFramePlanes = frameCount % allFramesPlanes.length;
     image(allFramesPlanes[currentFramePlanes], 0, 0, 600, 600);
@@ -255,8 +253,8 @@ void draw() {
     barChart.draw();
     backButton.draw();
     pieChartButton.draw();
-    break;    
-  case BAR_SCREEN: 
+    break;
+  case BAR_SCREEN:
     background(#248cdc);
     backButton.draw();
     if (busyDraw) {
@@ -306,24 +304,6 @@ void draw() {
     }
     break;
   }
-  
-switch(barScreen) { // ella added 100k bar charts 
-  case BAR_10K:
-    buttonPanel.popup();
-    backButton.draw();
-    if (originDraw) {
-      originChart10k.drawOriginChart10K();
-    }
-    break;
-  case BAR_CHART_100K:
-    buttonPanel.popup();
-    backButton.draw();
-    if (originDraw) {
-      originChart100k.drawOriginChart100K();
-    }
-    break;
-}
-
 }
 
 String showInputBox() {
@@ -348,7 +328,7 @@ void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets
       case(EVENT_NULL):
         break;
     }
-    
+
     switch(barChart.getEvent(mouseX, mouseY)) {
       case(BAR_CHART_BUTTON):
         screenState = BAR_SCREEN;
@@ -377,7 +357,7 @@ void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets
         break;
       case(EVENT_NULL):
         break;
-    }
+      }
     clickSound.play();
   }
   switch(pressHere.getEvent(mouseX, mouseY)) {
