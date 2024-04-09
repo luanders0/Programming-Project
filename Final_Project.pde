@@ -271,7 +271,6 @@ void draw() {
       text("Delayed Flights", width/2, 30);
     } else if (originDraw) {
       originChart.drawOriginChart();
-      fill(0);
       textSize(20);
       text("Flights by State", width/2, 30);
     }
