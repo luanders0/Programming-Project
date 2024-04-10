@@ -187,7 +187,7 @@ class PieChartOrigin {
     initializeData();
   }
 
-  // MouseOverSlice method similar to the original one
+//EH - boolean to check if the mouse is hovering over a slice
   boolean mouseOverSlice(float centerX, float centerY, float x, float y, float diameter, float startAngle, float endAngle) {
     // Compute angle to the mouse position
     float angleToMouse = atan2(mouseY - centerY, mouseX - centerX);

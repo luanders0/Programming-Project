@@ -304,6 +304,7 @@ void draw() {
       text("Flights by State", width/2, 30);
     }
     break;
+    //EH pie chart with titles and draw charts
   case PIE_SCREEN:
     background(#7ccc9d);
     backButton.draw();
