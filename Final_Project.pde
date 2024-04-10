@@ -334,7 +334,7 @@ void draw() {
       pieChart.drawPieChart(width/2, height/2, 300, userInput);
       fill(0);
       textSize(20);
-      String label = "Number of flights leaving airport " + userInput + " in January 2022";
+      String label = "Number of flights airving in airport " + userInput + " in January 2022";
       text(label, width/2, 30);
     }
     break;

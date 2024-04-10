@@ -12,7 +12,7 @@
   void drawPieChart(float x, float y, float diameter, String inputOrigin) {
     HashMap<String, Integer> carrierCounts = new HashMap<String, Integer>();
     
-    DataSeries originColumn = table.get("ORIGIN");
+    DataSeries originColumn = table.get("DEST");
       String[] origins = originColumn.asStringArray();
     DataSeries carrierColumn = table.get("MKT_CARRIER");
     String[] carriers = carrierColumn.asStringArray();
