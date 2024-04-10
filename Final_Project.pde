@@ -105,7 +105,7 @@ void setup() {
   latenessPlot = new lateness_plot(table);
   busyRoutes = new busyRoutes(table);
   pieChart = new PieChart(table);
-  pieChartOrigin = new PieChartOrigin("flights2k.csv", color(0, 0, 255), color(255, 0, 255));
+  pieChartOrigin = new PieChartOrigin(table);
   busyRoutesPie = new BusyPie(table);
   latenessChart = new LatenessPieChart(table);
   
@@ -148,6 +148,8 @@ void setup() {
         busyRoutes.sortRoutes();
         pieChart.setTable(table);
         latenessChart.calculateLateness(table);
+        pieChartOrigin.setTable(table);
+        pieChartOrigin.updateTable(table);
       }
       if (fileButtons[1].isSelected()) {
         table = table10k;
@@ -160,6 +162,8 @@ void setup() {
         busyRoutes.sortRoutes();
         pieChart.setTable(table);
         latenessChart.calculateLateness(table);
+        pieChartOrigin.setTable(table);
+        pieChartOrigin.updateTable(table);
       }
       if (fileButtons[2].isSelected()) {
         table = table100k;
@@ -172,6 +176,8 @@ void setup() {
         busyRoutes.sortRoutes();
         pieChart.setTable(table);
         latenessChart.calculateLateness(table);
+        pieChartOrigin.setTable(table);
+        pieChartOrigin.updateTable(table);      
       }
       if (fileButtons[3].isSelected()) {
         table = tableFull;
@@ -184,6 +190,8 @@ void setup() {
         busyRoutes.sortRoutes();
         pieChart.setTable(table);
         latenessChart.calculateLateness(table);
+        pieChartOrigin.setTable(table);
+        pieChartOrigin.updateTable(table);
       }
       fileSelect.parent.setVisible(false); // Close the window after file selection
     }

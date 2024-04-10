@@ -1,83 +1,125 @@
-class PieChart {
+ class PieChart {
   DataTable table;
 
   PieChart(DataTable table) {
     this.table = table;
   }
   
-  void setTable (DataTable table) {
+  void setTable(DataTable table) {
     this.table = table;
   }
 
-  void drawPieChart(float x, float y, float diameter, String inputAbbreviation) {
-    HashMap<String, Integer> dateCounts = new HashMap<String, Integer>();
+  void drawPieChart(float x, float y, float diameter, String inputOrigin) {
+    HashMap<String, Integer> carrierCounts = new HashMap<String, Integer>();
     
-    DataSeries dateColumn = table.get("FL_DATE");
-    String[] rawDates = dateColumn.asStringArray();
     DataSeries originColumn = table.get("ORIGIN");
-    String[] origins = originColumn.asStringArray();
+      String[] origins = originColumn.asStringArray();
+    DataSeries carrierColumn = table.get("MKT_CARRIER");
+    String[] carriers = carrierColumn.asStringArray();
     
-    for (int i = 0; i < dateColumn.length(); i++) {
-      String date = rawDates[i];
-      String abbreviation = origins[i];
-      if (abbreviation.equals(inputAbbreviation)) {
-        if (dateCounts.containsKey(date)) {
-          int count = dateCounts.get(date);
-          dateCounts.put(date, count + 1);
+    // Count flights for the specified origin and carrier
+    for (int i = 0; i < originColumn.length(); i++) {
+      String origin = origins[i];
+      String carrier = carriers[i];
+      
+      if (origin.equals(inputOrigin)) {
+        if (carrierCounts.containsKey(carrier)) {
+          int count = carrierCounts.get(carrier);
+          carrierCounts.put(carrier, count + 1);
         } else {
-          dateCounts.put(date, 1);
+          carrierCounts.put(carrier, 1);
         }
       }
     }
 
-    String[] dates = new String[dateCounts.size()];
-    int[] counts = new int[dateCounts.size()];
-    int index = 0;
-    for (String date : dateCounts.keySet()) {
-      dates[index] = date;
-      counts[index] = dateCounts.get(date);
-      index++;
-    }
-
     // Draw the pie chart
     float total = 0;
-    for (int value : counts) {
+    for (int value : carrierCounts.values()) {
       total += value;
     }
 
     float startAngle = 0;
-    for (int i = 0; i < counts.length; i++) {
-      float angle = map(counts[i], 0, total, 0, TWO_PI);
-      fill(map(i, 0, counts.length, 0, 255), map(i, 0, counts.length, 255, 0), 100); // Adjust color for each slice
+    int i = 0;
+    for (String carrier : carrierCounts.keySet()) {
+      float angle = map(carrierCounts.get(carrier), 0, total, 0, TWO_PI);
+      
+      // Set color for the slices using a gradient from #acfeff to #6fa8ff
+      int colorStart = color(172, 254, 255); // #acfeff
+      int colorEnd = color(111, 168, 255);   // #6fa8ff
+      int interColor = lerpColor(colorStart, colorEnd, (float)i / carrierCounts.size());
+      fill(interColor);
+      
       stroke(255);
       strokeWeight(1);
       
-      // check if the mouse is over the slice
-      boolean overSlice = mouseOverSlice(x, y, diameter, startAngle, startAngle + angle);
-
+      // Draw the slice
+      arc(x, y, diameter, diameter, startAngle, startAngle + angle);
+      
+            boolean overSlice = mouseOverSlice(x, y, diameter, startAngle, startAngle + angle);
+      
       // Draw the slice
       if (overSlice) {
-        // Increase diameter by 20 pixels if mouse is over the slice
         float expandedDiameter = diameter + 20; 
         arc(x, y, expandedDiameter, expandedDiameter, startAngle, startAngle + angle);
       } else {
         arc(x, y, diameter, diameter, startAngle, startAngle + angle);
       }
       
-      // if  mouse is hovering over slice then display label
-      if (overSlice) {
-        fill(0);
-        textSize(20);
-        String[] dateParts = dates[i].split(" ");
-        String labelText = dateParts[0] + ": " + counts[i] + " flights";
-        text(labelText, 490, 570);
-      }
+if (overSlice) {
+    fill(0);
+    textSize(20);
+    // Access the count for the current carrier abbreviation
+    int flightCount = carrierCounts.get(carrier);
+    // Convert abbreviation to airline name
+    String airlineName;
+    switch (carrier) {
+        case "AA":
+            airlineName = "American Airlines";
+            break;
+        case "AS":
+            airlineName = "Alaska Airlines";
+            break;
+        case "B6":
+            airlineName = "JetBlue Airways";
+            break;
+        case "HA":
+            airlineName = "Hawaiian Airlines";
+            break;
+        case "NK":
+            airlineName = "Spirit Airlines";
+            break;
+        case "WN":
+            airlineName = "Southwest Airlines";
+            break;
+        case "G4":
+            airlineName = "Allegiant Air";
+            break;
+        case "UA":
+            airlineName = "United Airlines";
+            break;
+        case "F9":
+            airlineName = "Frontier Airlines";
+            break;
+        case "DL":
+            airlineName = "Delta Air Lines";
+            break;
+        default:
+            airlineName = carrier; // If the abbreviation is not recognized, keep it as is
+            break;
+    }
+    // Construct the label text with airline name
+    String labelText = flightCount + " flights flew with " + airlineName;
+    // Draw the label
+    text(labelText, 420, 570);
+}
 
-      // update startAngle for thre next slice
+      // Update startAngle for the next slice
       startAngle += angle;
+      i++;
     }
   }
-  
+
+ 
   boolean mouseOverSlice(float x, float y, float diameter, float startAngle, float endAngle) {
     // compute angle to the mouse position
     float angleToMouse = atan2(mouseY - y, mouseX - x);
