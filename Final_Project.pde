@@ -290,7 +290,7 @@ void draw() {
     pieChartButton.draw();
     break;
   case BAR_SCREEN:
-    background(#6ab187);
+    background(#7ccc9d);
     backButton.draw();
     if (busyDraw) {
       busyRoutes.drawChart();
@@ -312,7 +312,7 @@ void draw() {
     }
     break;
   case PIE_SCREEN:
-    background(#6ab187);
+    background(#7ccc9d);
     backButton.draw();
     if (originDraw) {
       pieChartOrigin.draw(width/2, height/2, width/2, height/2, 300);
