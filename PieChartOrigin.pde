@@ -21,9 +21,7 @@ class PieChartOrigin {
         // Extract necessary data from the DataTable object
         DataSeries originColumn = table.get("ORIGIN");
         String[] origins = originColumn.asStringArray();
-        DataSeries carrierColumn = table.get("MKT_CARRIER");
-        String[] carriers = carrierColumn.asStringArray();
-
+ 
         // Initialize arrays
         totalStrings = originColumn.length(); // Assuming each row corresponds to one three-letter string
         threeLetterStrings = new String[totalStrings];
