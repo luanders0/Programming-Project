@@ -111,31 +111,45 @@ void setup() {
   
   
   
-  DataSeries departureTimes = table.get("DEP_TIME");
-  DataSeries realDepartureTimes = table.get("CRS_DEP_TIME");
-  
+  DataSeries realDepartureTimes = table.get("DEP_TIME");
+  DataSeries departureTimes = table.get("CRS_DEP_TIME");
   for (int i = 0; i < departureTimes.length(); i++) {
-    if (departureTimes.isEmpty(i) || realDepartureTimes.isEmpty(i)){
-      departureTimes.remove(i);
-      i--;
+    if (realDepartureTimes.isEmpty(i)){
       realDepartureTimes.remove(i);
       i--;
+      departureTimes.remove(i);
+      i--;
     }
-    if ((departureTimes.getInt(i) - realDepartureTimes.getInt(i)) < -2000) {
-      int temp = departureTimes.getInt(i);
-      temp += 2400;
+    if (departureTimes.getInt(i) > 100) {
+      int temp = departureTimes.getInt(i) / 100;
+      int remainder = departureTimes.getInt(i) % 100;
+      temp *= 60;
+      temp += remainder;
       departureTimes.set(i, temp);
+    }
+    if (realDepartureTimes.getInt(i) > 100) {
+      int temp = realDepartureTimes.getInt(i) / 100;
+      int remainder = realDepartureTimes.getInt(i) % 100;
+      temp *= 60;
+      temp += remainder;
+      realDepartureTimes.set(i, temp);
     }
   }
   
-  DataSeries delays = departureTimes.subtract(realDepartureTimes);
+  DataSeries tempDelays = realDepartureTimes.subtract(departureTimes);
+  DataSeries delays = tempDelays.copy();
+  for (int i = 0; i < delays.length(); i++) {
+    if (delays.getInt(i) < 0) {
+      delays.remove(i);
+      i--;
+    }
+  }
   DataValue avDelay = delays.mean();
-  print(avDelay);
+  println(avDelay);
   
   DataValue maxVal = delays.max();
-  DataValue minVal = delays.min();
   
-  print("Longest Delay: " + maxVal + "\nShortest Delay: " + minVal);
+  print("Longest Delay: " + maxVal);
   
   
   for (int i = 0; i < fileButtons.length; i++) {
