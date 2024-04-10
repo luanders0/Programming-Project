@@ -65,7 +65,7 @@ String userInput = "";
 float floatDelay;
 String roundedDelay;
 
-DataSeries delays, tempDelays;
+DataSeries realDepartureTimes, departureTimes, delays, tempDelays;
 DataValue avDelay, maxDelay;
 
 PieChart pieChart;
@@ -115,8 +115,9 @@ void setup() {
   latenessChart = new LatenessPieChart(table);
   
   
-  
-  calculateDelay(table);
+  realDepartureTimes = table.get("DEP_TIME");
+  departureTimes = table.get("CRS_DEP_TIME");
+  calculateDelay();
   
 
   
@@ -135,7 +136,7 @@ void setup() {
       public void actionPerformed (ActionEvent e) {
       if (fileButtons[0].isSelected()) {
         table = table2k;
-        calculateDelay(table);
+        calculateDelay();
         print("2K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -149,7 +150,7 @@ void setup() {
       }
       if (fileButtons[1].isSelected()) {
         table = table10k;
-        calculateDelay(table);
+        calculateDelay();
         print("10K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -163,7 +164,7 @@ void setup() {
       }
       if (fileButtons[2].isSelected()) {
         table = table100k;
-        calculateDelay(table);
+        calculateDelay();
         print("100K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -177,7 +178,7 @@ void setup() {
       }
       if (fileButtons[3].isSelected()) {
         table = tableFull;
-        calculateDelay(table);
+        calculateDelay();
         print("Full Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -341,9 +342,7 @@ void draw() {
   }
 }
 
-void calculateDelay(DataTable table) {
-  DataSeries realDepartureTimes = table.get("DEP_TIME");
-  DataSeries departureTimes = table.get("CRS_DEP_TIME");
+void calculateDelay() {
   for (int i = 0; i < departureTimes.length(); i++) {
     if (realDepartureTimes.isEmpty(i)){
       realDepartureTimes.remove(i);
