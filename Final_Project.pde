@@ -125,7 +125,12 @@ void setup() {
   DataValue avDelay = delays.mean();
   print(avDelay);
   
-
+  DataValue maxVal = delays.max();
+  DataValue minVal = delays.min();
+  
+  print("Longest Delay: " + maxVal + "\nShortest Delay: " + minVal);
+  
+  
   for (int i = 0; i < fileButtons.length; i++) {
     if (i == 0) {
       fileButtons[i] = new JRadioButton(FILE_TEXT[i], true);
@@ -250,7 +255,6 @@ void setup() {
   clouds = loadImage("clouds.jpg");
   frameRate(30);
   allFramesClouds = Gif.getPImages(this, "cloudScreen.gif");
-  frameRate(5);
   allFramesPlanes = Gif.getPImages(this, "planeCrashGIF.gif");
 }
 
