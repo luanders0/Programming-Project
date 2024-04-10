@@ -54,6 +54,9 @@ int cancelledFlightCount = 0;
 int totalFlightCount = -1;
 int screenState;
 int barScreen;
+int maxDelayMinutes, maxDelayHours;
+
+String avRounded;
 
 PImage homeScreen;
 PImage clouds;
@@ -65,7 +68,7 @@ String userInput = "";
 float floatDelay;
 String roundedDelay;
 
-DataSeries delays, tempDelays;
+DataSeries realDepartureTimes, departureTimes, delays, tempDelays;
 DataValue avDelay, maxDelay;
 
 PieChart pieChart;
@@ -100,7 +103,7 @@ void setup() {
   fileButton = new Widget(485, 60, file, FILE_BUTTON);
   barChart = new Widget(230, 200, 150, 80, "Bar Chart", color(255, 255, 255), barChartFont, BAR_CHART_BUTTON);
   pieChartButton = new Widget(230, 300, 150, 80, "Pie Chart", color(255, 255, 255), barChartFont, PIE_CHART_BUTTON);
-  backButton = new Widget(30, 50, 100, 40, "Back", color(255), barChartFont, BACK_BUTTON);
+  backButton = new Widget(30, 25, 100, 40, "Back", color(255), barChartFont, BACK_BUTTON);
   pressHere = new Widget(250, 350, 100, 40, 100, "click here for \nflight info", (0), barChartFont, HERE_BUTTON);
 
   table = table2k;
@@ -115,8 +118,9 @@ void setup() {
   latenessChart = new LatenessPieChart(table);
   
   
-  
-  calculateDelay(table);
+  realDepartureTimes = table.get("DEP_TIME");
+  departureTimes = table.get("CRS_DEP_TIME");
+  calculateDelay();
   
 
   
@@ -135,7 +139,7 @@ void setup() {
       public void actionPerformed (ActionEvent e) {
       if (fileButtons[0].isSelected()) {
         table = table2k;
-        calculateDelay(table);
+        calculateDelay();
         print("2K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -149,7 +153,7 @@ void setup() {
       }
       if (fileButtons[1].isSelected()) {
         table = table10k;
-        calculateDelay(table);
+        calculateDelay();
         print("10K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -163,7 +167,7 @@ void setup() {
       }
       if (fileButtons[2].isSelected()) {
         table = table100k;
-        calculateDelay(table);
+        calculateDelay();
         print("100K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -177,7 +181,7 @@ void setup() {
       }
       if (fileButtons[3].isSelected()) {
         table = tableFull;
-        calculateDelay(table);
+        calculateDelay();
         print("Full Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -266,8 +270,9 @@ void setup() {
 void draw() {
   background(255);
   cursor(cursor);
-  floatDelay = avDelay.getFloat();
+  floatDelay = maxDelayMinutes;
   roundedDelay = nf(floatDelay, 0, 0);
+  String delay = maxDelayHours + " Hour(s) " + maxDelayMinutes + " Minute(s)";
   
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
@@ -285,7 +290,7 @@ void draw() {
     pieChartButton.draw();
     break;
   case BAR_SCREEN:
-    background(#6ab187);
+    background(#7ccc9d);
     backButton.draw();
     if (busyDraw) {
       busyRoutes.drawChart();
@@ -299,7 +304,7 @@ void draw() {
       text("Delayed Flights", width/2, 30);
       color(0);
       textSize(20);
-      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxDelay + " minutes", 300, 100);
+      text("Average Delay : " + avRounded + " minutes" + "\nLongest Delay: " + delay, 300, 100);
     } else if (originDraw) {
       originChart.drawOriginChart();
       textSize(20);
@@ -307,7 +312,7 @@ void draw() {
     }
     break;
   case PIE_SCREEN:
-    background(#6ab187);
+    background(#7ccc9d);
     backButton.draw();
     if (originDraw) {
       pieChartOrigin.draw(width/2, height/2, width/2, height/2, 300);
@@ -322,7 +327,7 @@ void draw() {
       text("Flights by Lateness", width/2, 30);
       color(0);
       textSize(20);
-      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxDelay + " minutes", 130, 575);
+      text("Average Delay : " + avRounded + " minutes" + "\nLongest Delay: " + delay, 200, 575);
     }
     if (busyDraw) {
       busyRoutesPie.drawPieChart(width/2, height/2, 300);
@@ -341,9 +346,7 @@ void draw() {
   }
 }
 
-void calculateDelay(DataTable table) {
-  DataSeries realDepartureTimes = table.get("DEP_TIME");
-  DataSeries departureTimes = table.get("CRS_DEP_TIME");
+void calculateDelay() {
   for (int i = 0; i < departureTimes.length(); i++) {
     if (realDepartureTimes.isEmpty(i)){
       realDepartureTimes.remove(i);
@@ -377,6 +380,13 @@ void calculateDelay(DataTable table) {
   }
   avDelay = delays.mean();
   maxDelay = delays.max();
+  
+  float avFloat = avDelay.getInt();
+  avRounded = nf(avFloat, 0, 0);
+  
+  maxDelayHours = maxDelay.getInt() / 60;
+  maxDelayMinutes = maxDelay.getInt() - maxDelayHours*60;
+  
 }
 
 String showInputBox() {
