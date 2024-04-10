@@ -1,8 +1,5 @@
 import hivis.common.*;
 import hivis.data.*;
-import hivis.data.reader.*;
-import hivis.data.view.*;
-import hivis.example.*;
 import processing.data.Table;
 import processing.data.TableRow;
 import java.util.HashMap;
@@ -80,7 +77,6 @@ busyRoutes busyRoutes;
 LatenessPieChart latenessChart;
 Widget fileButton, barChart, pieChartButton, backButton, pressHere;
 Button button;
-Screen latenessScreen, pieScreen;
 ActionListener[] pieListeners = new ActionListener[4];
 JRadioButton[] fileButtons = new JRadioButton[4];
 Dialog_Pane piePanel, fileSelect, barPanel;
@@ -92,7 +88,7 @@ void setup() {
   textAlign(CENTER, CENTER);
   cursor = loadImage("planeMouse.png");
 
-  table2k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights2k.csv")));
+  table2k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights2k.csv"))); // Lukas A added table config 4/2/2024
   table10k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights10k.csv")));
   table100k = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights100k.csv")));
   tableFull = HV.loadSpreadSheet(HV.loadSSConfig().sourceFile(sketchPath("data/flights_full.csv")));
@@ -100,7 +96,7 @@ void setup() {
   barChartFont = loadFont("BellMTBold-48.vlw");
   PImage file = loadImage("fileButton.png");
 
-  fileButton = new Widget(485, 60, file, FILE_BUTTON);
+  fileButton = new Widget(485, 60, file, FILE_BUTTON); 
   barChart = new Widget(230, 200, 150, 80, "Bar Chart", color(255, 255, 255), barChartFont, BAR_CHART_BUTTON);
   pieChartButton = new Widget(230, 300, 150, 80, "Pie Chart", color(255, 255, 255), barChartFont, PIE_CHART_BUTTON);
   backButton = new Widget(30, 25, 100, 40, "Back", color(255), barChartFont, BACK_BUTTON);
@@ -256,8 +252,6 @@ void setup() {
   barPanel = new Dialog_Pane(barButtonText, "Choose Your Button", "Buttons", barListeners, 200, 100);
   
   fileSelect = new Dialog_Pane(fileButtons, "Please select file size", 100, 100, chooseFile);
-  lateness_plot latenessPlot = new lateness_plot(table);
-  latenessScreen = new Screen(color(255), latenessPlot);
   button = new Button(width/2, height/2, 200, 60, "Lateness Chart");
 
   homeScreen = loadImage("SquareMainScreen.jpg"); // Avery H
@@ -276,7 +270,7 @@ void draw() {
   
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
-    int gifSpeed = 2;  // slow down speed of GIF
+    int gifSpeed = 5;  // slow down speed of GIF
     int currentFramePlanes = (frameCount / gifSpeed) % allFramesPlanes.length;
     image(allFramesPlanes[currentFramePlanes], 0, 0, 600, 600);
     pressHere.draw();
@@ -289,7 +283,7 @@ void draw() {
     backButton.draw();
     pieChartButton.draw();
     break;
-  case BAR_SCREEN:
+  case BAR_SCREEN: // Lukas A updated the main switch statement to make it simpler and more understandable 4/3/2024
     background(#7ccc9d);
     backButton.draw();
     if (busyDraw) {
@@ -346,7 +340,7 @@ void draw() {
   }
 }
 
-void calculateDelay() {
+void calculateDelay() { // Lukas A added code to calculate flight delay 4/10/2024
   for (int i = 0; i < departureTimes.length(); i++) {
     if (realDepartureTimes.isEmpty(i)){
       realDepartureTimes.remove(i);
