@@ -39,7 +39,7 @@ class busyRoutes {
     String[] dests = destColumn.asStringArray();
     
 
-    for (int i = 0; i < destColumn.length(); i++) {
+    for (int i = 0; i < destColumn.length(); i++) { //<>//
       // Get origin and destination airports
       String origin = origins[i]; //<>//
       String destination = dests[i];
@@ -114,7 +114,7 @@ void drawChart() {
     if (mouseX > barX && mouseX < barX + barWidth / 2 && mouseY > barY && mouseY < barY + barHeight) {
       textAlign(CENTER, BOTTOM);
       fill(255, 0, 0); 
-      textSize(8); 
+      textSize(12); 
       text(flights, barX + barWidth / 4, barY - 5); 
     }
 

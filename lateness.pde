@@ -74,7 +74,7 @@ void drawChart() {
       if (mouseX > x && mouseX < x + barWidth && mouseY > height - 100 - barHeight && mouseY < height - 100) {
         textAlign(CENTER, BOTTOM);
         fill(255, 0, 0); // Set text color to red for numbers
-        textSize(8); // Adjust text size
+        textSize(12); // Adjust text size
         text(count, x + barWidth / 2, height - 100 - barHeight - 5); // Adjusted Y position
         
         // Make the state abbreviation bigger
