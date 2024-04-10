@@ -5,11 +5,13 @@ class Screen {
   ArrayList screenWidgets;
   color screenColor;
 
+ // Constructor for a Screen with widgets
   Screen(color screenColor, ArrayList screenWidgets) {
     this.screenWidgets = screenWidgets;
     this.screenColor=screenColor;
   }
 
+// Constructor for a Screen with a bar plot
   Screen(color screenColor, lateness_plot barPlot) {
     this.screenColor = screenColor;
     this.barPlot = barPlot;
