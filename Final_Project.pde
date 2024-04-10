@@ -109,6 +109,8 @@ void setup() {
   busyRoutesPie = new BusyPie(table);
   latenessChart = new LatenessPieChart(table);
   
+  
+  
   DataSeries departureTimes = table.get("DEP_TIME");
   DataSeries realDepartureTimes = table.get("CRS_DEP_TIME");
   
@@ -118,6 +120,11 @@ void setup() {
       i--;
       realDepartureTimes.remove(i);
       i--;
+    }
+    if ((departureTimes.getInt(i) - realDepartureTimes.getInt(i)) < -2000) {
+      int temp = departureTimes.getInt(i);
+      temp += 2400;
+      departureTimes.set(i, temp);
     }
   }
   
@@ -250,7 +257,7 @@ void setup() {
   clouds = loadImage("clouds.jpg");
   frameRate(30);
   allFramesClouds = Gif.getPImages(this, "cloudScreen.gif");
-  frameRate(5);
+  //frameRate(5);
   allFramesPlanes = Gif.getPImages(this, "planeCrashGIF.gif");
 }
 
@@ -273,7 +280,7 @@ void draw() {
     pieChartButton.draw();
     break;
   case BAR_SCREEN:
-    background(#248cdc);
+    background(#6ab187);
     backButton.draw();
     if (busyDraw) {
       busyRoutes.drawChart();
@@ -285,6 +292,7 @@ void draw() {
       fill(0);
       textSize(20);
       text("Delayed Flights", width/2, 30);
+      
     } else if (originDraw) {
       originChart.drawOriginChart();
       textSize(20);
@@ -292,7 +300,7 @@ void draw() {
     }
     break;
   case PIE_SCREEN:
-    background(#248cdc);
+    background(#6ab187);
     backButton.draw();
     if (originDraw) {
       pieChartOrigin.draw(width/2, height/2, width/2, height/2, 300);
