@@ -64,6 +64,8 @@ PImage[] allFramesPlanes;
 PFont barChartFont;
 String userInput = "";
 
+DataSeries delays, tempDelays;
+
 PieChart pieChart;
 PieChartOrigin pieChartOrigin;
 BusyPie busyRoutesPie;
@@ -138,8 +140,8 @@ void setup() {
     }
   }
   
-  DataSeries tempDelays = realDepartureTimes.subtract(departureTimes);
-  DataSeries delays = tempDelays.copy();
+  tempDelays = realDepartureTimes.subtract(departureTimes);
+  delays = tempDelays.copy();
   for (int i = 0; i < delays.length(); i++) {
     if (delays.getInt(i) < 0) {
       delays.remove(i);
@@ -147,11 +149,9 @@ void setup() {
     }
   }
   avDelay = delays.mean();
-  println(avDelay);
   
   maxVal = delays.max();
   
-  print("Longest Delay: " + maxVal);
   
   
   for (int i = 0; i < fileButtons.length; i++) {
@@ -178,6 +178,7 @@ void setup() {
         latenessChart.calculateLateness(table);
         pieChartOrigin.setTable(table);
         pieChartOrigin.updateTable(table);
+        delays = tempDelays.copy();
       }
       if (fileButtons[1].isSelected()) {
         table = table10k;
@@ -192,6 +193,7 @@ void setup() {
         latenessChart.calculateLateness(table);
         pieChartOrigin.setTable(table);
         pieChartOrigin.updateTable(table);
+        delays = tempDelays.copy();
       }
       if (fileButtons[2].isSelected()) {
         table = table100k;
@@ -205,7 +207,8 @@ void setup() {
         pieChart.setTable(table);
         latenessChart.calculateLateness(table);
         pieChartOrigin.setTable(table);
-        pieChartOrigin.updateTable(table);      
+        pieChartOrigin.updateTable(table); 
+        delays = tempDelays.copy();
       }
       if (fileButtons[3].isSelected()) {
         table = tableFull;
@@ -220,6 +223,7 @@ void setup() {
         latenessChart.calculateLateness(table);
         pieChartOrigin.setTable(table);
         pieChartOrigin.updateTable(table);
+        delays = tempDelays.copy();
       }
       fileSelect.parent.setVisible(false); // Close the window after file selection
     }
@@ -292,7 +296,7 @@ void setup() {
 void draw() {
   background(255);
   cursor(cursor);
-  float floatDelay = float(avDelay.toString());
+  float floatDelay = avDelay.getFloat();
   //float hoursDelay = floatDelay % 60;
   //float minDelay = floatDelay - hoursDelay*60;
   String roundedDelay = nf(floatDelay, 0, 0);
@@ -326,15 +330,14 @@ void draw() {
       fill(0);
       textSize(20);
       text("Delayed Flights", width/2, 30);
-      
+      color(0);
+      textSize(20);
+      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 300, 100);
     } else if (originDraw) {
       originChart.drawOriginChart();
       textSize(20);
       text("Flights by State", width/2, 30);
     }
-    color(0);
-    textSize(20);
-    text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 300, 100);
     break;
   case PIE_SCREEN:
     background(#6ab187);
@@ -350,6 +353,9 @@ void draw() {
       fill(0);
       textSize(20);
       text("Flights by Lateness", width/2, 30);
+      color(0);
+      textSize(20);
+      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 130, 575);
     }
     if (busyDraw) {
       busyRoutesPie.drawPieChart(width/2, height/2, 300);
@@ -364,9 +370,6 @@ void draw() {
       String label = "Number of flights leaving airport " + userInput + " in January 2022";
       text(label, width/2, 30);
     }
-    color(0);
-    textSize(20);
-    text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 130, 575);
     break;
   }
 }
