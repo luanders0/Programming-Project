@@ -71,7 +71,7 @@ class busyRoutes {
       }
     });
   }
-  
+
 void drawChart() {
   // Determine the maximum number of flights
   int maxFlights = routeCounts.get(topRoutes.get(0));
@@ -110,11 +110,13 @@ void drawChart() {
     fill(0, 0, 255);
     rect(barX, barY, barWidth / 2, barHeight); 
 
-    // Put the number on top of the bar
-    textAlign(CENTER, BOTTOM);
-    fill(255, 0, 0); 
-    textSize(8); 
-    text(flights, barX + barWidth / 4, barY - 5); 
+    // Put the number on top of the bar if mouse is over it
+    if (mouseX > barX && mouseX < barX + barWidth / 2 && mouseY > barY && mouseY < barY + barHeight) {
+      textAlign(CENTER, BOTTOM);
+      fill(255, 0, 0); 
+      textSize(8); 
+      text(flights, barX + barWidth / 4, barY - 5); 
+    }
 
     // Draw route label
     fill(0);
@@ -123,4 +125,5 @@ void drawChart() {
   }
   textSize(16);
 }
+
 }

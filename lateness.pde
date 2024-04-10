@@ -70,16 +70,25 @@ void drawChart() {
       fill(0, 0, 255); // Set blue color for bars
       rect(x, height - 100 - barHeight, barWidth, barHeight);
       
-      // Put the number on top of the bar
-      textAlign(CENTER, BOTTOM);
-      fill(255, 0, 0); // Set text color to red for numbers
-      textSize(8); // Adjust text size
-      text(count, x + barWidth / 2, height - 100 - barHeight - 5); // Adjusted Y position
-      // End of number on top of the bar
+      // Put the number on top of the bar if mouse is over it
+      if (mouseX > x && mouseX < x + barWidth && mouseY > height - 100 - barHeight && mouseY < height - 100) {
+        textAlign(CENTER, BOTTOM);
+        fill(255, 0, 0); // Set text color to red for numbers
+        textSize(8); // Adjust text size
+        text(count, x + barWidth / 2, height - 100 - barHeight - 5); // Adjusted Y position
+        
+        // Make the state abbreviation bigger
+        textSize(12); // Adjust text size for state abbreviation
+        fill(0); // Set text color to black
+        text(state, x + barWidth / 2, height - 80); // Fixed Y position
+      }
+      else {
+        // Draw state abbreviation with default size if mouse is not over the bar
+        textSize(8); // Adjusted text size for state abbreviations
+        fill(0); // Set text color to black
+        text(state, x + barWidth / 2, height - 80); // Fixed Y position
+      }
       
-      fill(0);
-      textSize(8); // Adjusted text size for state abbreviations
-      text(state, x + barWidth / 2, height - 80); // Adjusted Y position
       x += barWidth + 2; // Increased spacing between bars
       i++;
     }
