@@ -18,7 +18,7 @@ class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
     labelColor= color(0);
    }
    
-  Widget(int x,int y, int width, int height, int fontSize, String label, color widgetColor, PFont widgetFont, int event){ // Avery H edited constuctors to fit different widget types
+  Widget(int x,int y, int width, int height, int fontSize, String label, color widgetColor, PFont widgetFont, int event){ // Avery H edited to fit different widget types
     this.x=x; 
     this.y=y; 
     this.width = width;
