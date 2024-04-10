@@ -1,4 +1,4 @@
-class LatenessPieChart {
+class LatenessPieChart {  //EH - class for lateness pie chart
   int totalFlightCount;
   int earlyFlightCount;
   int onTimeFlightCount;
@@ -9,6 +9,7 @@ class LatenessPieChart {
     calculateLateness(table);
   }
 
+// calculates how late/early each flight is (or on time) 
   void calculateLateness(DataTable table) {
     DataSeries schDepTimes = table.get("CRS_DEP_TIME");
     DataSeries depTimes = table.get("DEP_TIME");
@@ -39,7 +40,7 @@ class LatenessPieChart {
         schDepMinute = int(schDepFloat % 100); // minute part
       }
   
-      // Parse actual departure time
+      // parse actual departure time
       int depHour = 0;
       int depMinute = 0;
       if (DEP_TIME != null && !DEP_TIME.isEmpty()) {
@@ -63,7 +64,7 @@ class LatenessPieChart {
     }
   }
 
-
+//draws the pie chart
   void draw(float centerX, float centerY, float x, float y, float diameter) {
     int[] flightStatus = {earlyFlightCount, onTimeFlightCount, lateFlightCount, cancelledFlightCount};
     String[] flightLabels = {"Early", "On Time", "Late", "Cancelled"};
@@ -75,7 +76,7 @@ class LatenessPieChart {
       float angle = map(flightStatus[i], 0, totalFlightCount, 0, TWO_PI);
       float endAngle = startAngle + angle;
 
-
+      //if mouse is hovering over a slice
       if (mouseOverSlice(centerX, centerY, x, y, diameter, startAngle, endAngle)) {
 
         // labels for pie chart that show when piece is being hovered over   
@@ -98,7 +99,7 @@ class LatenessPieChart {
     }
   }
 
-
+//EH - boolean to check if the mouse is hovering over a slice
   boolean mouseOverSlice(float centerX, float centerY, float x, float y, float diameter, float startAngle, float endAngle) {
     // compute angle to the mouse position
     float angleToMouse = atan2(mouseY - y, mouseX - x);
