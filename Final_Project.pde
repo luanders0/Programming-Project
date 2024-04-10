@@ -103,7 +103,7 @@ void setup() {
   pressHere = new Widget(250, 350, 100, 40, 100, "click here for \nflight info", (0), barChartFont, HERE_BUTTON);
 
   table = table2k;
-  userInput = showInputBox();
+  
   clickSound = new SoundFile(this, "click.wav");
   originChart = new OriginChart(table);
   latenessPlot = new lateness_plot(table);
@@ -118,11 +118,7 @@ void setup() {
   departureTimes = table.get("CRS_DEP_TIME");
   calculateDelay();
   
-
-  
-  
-  
-  for (int i = 0; i < fileButtons.length; i++) {
+  for (int i = 0; i < fileButtons.length; i++) { // Lukas A added a radio button panel to select files 4/1/2024
     if (i == 0) {
       fileButtons[i] = new JRadioButton(FILE_TEXT[i], true);
     } else {
@@ -130,13 +126,13 @@ void setup() {
     }
   }
 
-  ActionListener fileListener = new ActionListener() {
+  ActionListener fileListener = new ActionListener() { 
     @Override
       public void actionPerformed (ActionEvent e) {
       if (fileButtons[0].isSelected()) {
         table = table2k;
         calculateDelay();
-        print("2K Table Selected");
+        
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
         latenessPlot.processData(table);
@@ -150,7 +146,7 @@ void setup() {
       if (fileButtons[1].isSelected()) {
         table = table10k;
         calculateDelay();
-        print("10K Table Selected");
+        
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
         latenessPlot.processData(table);
@@ -164,7 +160,7 @@ void setup() {
       if (fileButtons[2].isSelected()) {
         table = table100k;
         calculateDelay();
-        print("100K Table Selected");
+        
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
         latenessPlot.processData(table);
@@ -178,7 +174,7 @@ void setup() {
       if (fileButtons[3].isSelected()) {
         table = tableFull;
         calculateDelay();
-        print("Full Table Selected");
+        
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
         latenessPlot.processData(table);
@@ -196,7 +192,7 @@ void setup() {
   JButton chooseFile = new JButton("Choose File");
   chooseFile.addActionListener(fileListener);
 
-  pieListeners[0] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
+  pieListeners[0] = new ActionListener() { // Lukas A added code for pie chart buttons 26/3/24
     @Override
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 1st button is pressed
@@ -243,7 +239,7 @@ void setup() {
     }
   };
 
-  String[] buttonText = {"Sort by Lateness", "Sort by Origin", "Sort by Busy Routes", "Sort By Destination Airport"};
+  String[] buttonText = {"Sort by Lateness", "Sort by Origin", "Sort by Busy Routes", "Sort By Destination Airport"}; // Lukas A changed the Dialog_Pane config to make it consistent with the query options for bar/pie charts 4/10/2024
   piePanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", pieListeners, 200, 100);
   String[] barButtonText = new String[buttonText.length - 1];
   arrayCopy(buttonText, 0, barButtonText, 0, 3);
@@ -270,20 +266,22 @@ void draw() {
   
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
-    int gifSpeed = 5;  // slow down speed of GIF
+    int gifSpeed = 4;  // slow down speed of GIF
     int currentFramePlanes = (frameCount / gifSpeed) % allFramesPlanes.length;
     image(allFramesPlanes[currentFramePlanes], 0, 0, 600, 600);
     pressHere.draw();
     break;
-  case CHART_SELECT:
+  case CHART_SELECT: // Lukas A updated the main switch statement to make it simpler and more understandable 4/3/2024
     int currentFrameClouds = frameCount % allFramesClouds.length;
     image(allFramesClouds[currentFrameClouds], 0, 0, 600, 600);
     fileButton.draw();
     barChart.draw();
     backButton.draw();
     pieChartButton.draw();
+    barPanel.parent.setVisible(false);
+    piePanel.parent.setVisible(false);
     break;
-  case BAR_SCREEN: // Lukas A updated the main switch statement to make it simpler and more understandable 4/3/2024
+  case BAR_SCREEN:
     background(#7ccc9d);
     backButton.draw();
     if (busyDraw) {
@@ -381,19 +379,6 @@ void calculateDelay() { // Lukas A added code to calculate flight delay 4/10/202
   maxDelayHours = maxDelay.getInt() / 60;
   maxDelayMinutes = maxDelay.getInt() - maxDelayHours*60;
   
-}
-
-String showInputBox() {
-  fill(0);
-  textSize(16);
-  if ( pieUserInput == true ) {
-    if (userInput.isEmpty()) {
-      text("Enter three-letter abbreviation:", width/2, height/2 - 20);
-    } else {
-      text("Enter three-letter abbreviation: " + userInput, width/2, height/2 - 20);
-    }
-  }
-  return "";
 }
 
 void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets
