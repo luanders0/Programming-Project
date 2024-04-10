@@ -53,42 +53,6 @@ class lateness_plot {
     }
   }
 
-//void drawChart() {
-//    // Determine the range of delayed flights counts
-//    int maxDelayedFlights = 0;
-//    for (int count : delayedFlightsByState.values()) {
-//      maxDelayedFlights = Math.max(maxDelayedFlights, count);
-//    }
-
-//    // Draw bars for each state
-//    float barWidth = (width - 100) / (float)(delayedFlightsByState.size() * 1.07); // Adjusted width for thinner bars
-//    float x = 12; // Adjusted starting x-coordinate
-//    int i = 0;
-//    for (String state : delayedFlightsByState.keySet()) {
-//      int count = delayedFlightsByState.get(state);
-//      float barHeight = map(count, 0, maxDelayedFlights, 0, height - 200); // Adjusted height
-//      fill(0, 0, 255); // Set blue color for bars
-//      rect(x, height - 100 - barHeight, barWidth, barHeight);
-      
-//      // Put the number on top of the bar
-//      textAlign(CENTER, BOTTOM);
-//      fill(255, 0, 0); // Set text color to red for numbers
-//      textSize(8); // Adjust text size
-//      text(count, x + barWidth / 2, height - 100 - barHeight - 5); // Adjusted Y position
-//      // End of number on top of the bar
-      
-//      fill(0);
-//      textSize(8); // Adjusted text size for state abbreviations
-//      text(state, x + barWidth / 2, height - 80); // Adjusted Y position
-//      x += barWidth + 2; // Increased spacing between bars
-//      i++;
-//    }
-
-//    // Label x-axis
-//    textAlign(CENTER, CENTER);
-//    textFont(createFont("Arial", 16, true)); // Setting font to Arial
-//    text("STATE", width / 2, height - 60);
-//}
 void drawChart() {
     // Determine the range of delayed flights counts
     int maxDelayedFlights = 0;
