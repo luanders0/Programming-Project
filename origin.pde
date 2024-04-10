@@ -63,10 +63,12 @@ void drawOriginChart() { // method to draw origin chart
       textSize(7);
       text(stateAbbreviations[i], x + barWidth / 2, startY + 15); 
       
-      // Number of flights above the bar
-      fill(255,0,0);
-      textSize(8);
-      text(flights, x + barWidth / 2, startY - barHeight - 5); // Display number of flights above the bar
+      if (mouseX >= x && mouseX <= x + barWidth && mouseY <= startY && mouseY >= startY - barHeight) {
+        // Display number of flights above the bar when mouse is over it
+        fill(255, 0, 0);
+        textSize(12);
+        text(flights, x + barWidth / 2, startY - barHeight - 5);
+      }
     }
     textSize(16);
     fill(0);
