@@ -2,7 +2,6 @@ class Button {
   float x, y;
   float w, h;
   String label;
-  //SoundFile clickSound; 
 
   Button(float x, float y, float w, float h, String label) {
     this.x = x;

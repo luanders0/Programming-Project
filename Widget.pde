@@ -29,7 +29,6 @@ class Widget { // Lukas A added widget functionality (not debugged) 3/14/2024
     this.widgetColor=widgetColor; 
     this.widgetFont=widgetFont;
     labelColor= color(255);
-    //this.backgroundColor = backgroundColor;
    }
    
   Widget(int x,int y, PImage image, int event){

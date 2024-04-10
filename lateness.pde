@@ -3,7 +3,6 @@ class lateness_plot {
 
   DataTable table;
   HashMap<String, Integer> delayedFlightsByState; // Store delayed flight count for each state
-  HashMap<String, Integer> stateColors; // Store colors for each state
 
   lateness_plot(DataTable flightTable) {
 
@@ -20,7 +19,7 @@ class lateness_plot {
     table = flightTable;
 
     
-    stateColors = new HashMap<String, Integer>();
+    //stateColors = new HashMap<String, Integer>();
     DataSeries depTimes = table.get("DEP_TIME");
     DataSeries arrTimes = table.get("ARR_TIME");
     DataSeries realDepTimes = table.get("CRS_DEP_TIME");
@@ -48,11 +47,6 @@ class lateness_plot {
             delayedFlightsByState.put(originState, 1);
           } else {
             delayedFlightsByState.put(originState, delayedFlightsByState.get(originState) + 1);
-          }
-
-          // Assign a random color to the state if not assigned yet
-          if (!stateColors.containsKey(originState)) {
-            stateColors.put(originState, color(random(255), random(255), random(255)));
           }
         }
       }
