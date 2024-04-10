@@ -334,7 +334,7 @@ void draw() {
     }
     color(0);
     textSize(20);
-    text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 300, 50);
+    text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 300, 100);
     break;
   case PIE_SCREEN:
     background(#6ab187);
