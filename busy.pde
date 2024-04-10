@@ -1,17 +1,9 @@
-//Roisin s added bar charts for the top 10 busy routes
-
-import processing.data.Table;
-import processing.data.TableRow;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+//Roisin s added bar charts for the top 15 busy routes
 
 class busyRoutes {
   DataTable table;
   HashMap<String, Integer> routeCounts; // Store flight counts for each route
   ArrayList<String> topRoutes; // Store top routes
-
 
   busyRoutes(DataTable flightTable) {
 
@@ -39,7 +31,6 @@ class busyRoutes {
     String[] origins = originColumn.asStringArray();
     String[] dests = destColumn.asStringArray();
     
- //<>//
     for (int i = 0; i < destColumn.length(); i++) {
       // Get origin and destination airports
       String origin = origins[i]; //<>//
@@ -48,7 +39,7 @@ class busyRoutes {
       // Create a route string (combination of origin and destination)
       String route = origin + "-" + destination;
 
-      // Increment the count for this route in the hashmap
+      // Increment the count for this route in the hashmap //<>//
       if (routeCounts.containsKey(route)) {
         int count = routeCounts.get(route);
         routeCounts.put(route, count + 1);
@@ -72,8 +63,8 @@ class busyRoutes {
       }
     });
   }
-
-void drawChart() {
+  
+  void drawChart() {
   // Determine the maximum number of flights
   int maxFlights = routeCounts.get(topRoutes.get(0));
 
@@ -89,7 +80,6 @@ void drawChart() {
   // Draw x-axis
   line(startX, startY + chartHeight, startX + chartWidth, startY + chartHeight);
   text("ROUTE", startX + chartWidth / 2, startY + chartHeight + 40);
-
   textSize(10);
 
   // Determine the scale factor for bar heights

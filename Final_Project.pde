@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import processing.sound.*;
 import gifAnimation.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 final int EVENT_NULL = -1;
 final int HOME_SCREEN = 0;
@@ -293,8 +296,8 @@ void draw() {
       textSize(20);
       text("Delayed Flights", width/2, 30);
       color(0);
-      textSize(20);
-      text("Average Delay : " + avRounded + " minutes" + "\nLongest Delay: " + delay, 300, 100);
+      textSize(16);
+      text("Average Delay : " + avRounded + " minutes" + "\nLongest Delay: " + delay, 300, 70);
     } else if (originDraw) {
       originChart.drawOriginChart();
       textSize(20);
@@ -329,7 +332,7 @@ void draw() {
       pieChart.drawPieChart(width/2, height/2, 300, userInput);
       fill(0);
       textSize(20);
-      String label = "Number of flights airving in airport " + userInput + " in January 2022"; // Avery H
+      String label = "Number of flights ariving in airport " + userInput + " in January 2022"; // Avery H
       text(label, width/2, 30);
     }
     break;

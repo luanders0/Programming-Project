@@ -17,9 +17,7 @@ class lateness_plot {
   void processData(DataTable flightTable) {
     // Initialize color map
     table = flightTable;
-
     
-    //stateColors = new HashMap<String, Integer>();
     DataSeries depTimes = table.get("DEP_TIME");
     DataSeries arrTimes = table.get("ARR_TIME");
     DataSeries realDepTimes = table.get("CRS_DEP_TIME");
