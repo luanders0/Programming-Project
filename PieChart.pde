@@ -65,6 +65,11 @@
         arc(x, y, diameter, diameter, startAngle, startAngle + angle);
       }
       
+     fill(0);
+     textSize(20);
+     String label = "Total Flights: " + int(total);
+     text(label, 420, 545);
+      
 if (overSlice) {
     fill(0);
     textSize(20);
