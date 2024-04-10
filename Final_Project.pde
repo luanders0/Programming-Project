@@ -40,7 +40,6 @@ boolean busyDraw = false;
 boolean busyRoutesDraw = false;
 boolean destDraw = false;
 
-DataValue avDelay, maxVal;
 
 int difference = 0;
 int schDepHour = 0;
@@ -63,8 +62,11 @@ PImage[] allFramesClouds;
 PImage[] allFramesPlanes;
 PFont barChartFont;
 String userInput = "";
+float floatDelay;
+String roundedDelay;
 
 DataSeries delays, tempDelays;
+DataValue avDelay, maxDelay;
 
 PieChart pieChart;
 PieChartOrigin pieChartOrigin;
@@ -115,42 +117,9 @@ void setup() {
   
   
   
-  DataSeries realDepartureTimes = table.get("DEP_TIME");
-  DataSeries departureTimes = table.get("CRS_DEP_TIME");
-  for (int i = 0; i < departureTimes.length(); i++) {
-    if (realDepartureTimes.isEmpty(i)){
-      realDepartureTimes.remove(i);
-      i--;
-      departureTimes.remove(i);
-      i--;
-    }
-    if (departureTimes.getInt(i) > 100) {
-      int temp = departureTimes.getInt(i) / 100;
-      int remainder = departureTimes.getInt(i) % 100;
-      temp *= 60;
-      temp += remainder;
-      departureTimes.set(i, temp);
-    }
-    if (realDepartureTimes.getInt(i) > 100) {
-      int temp = realDepartureTimes.getInt(i) / 100;
-      int remainder = realDepartureTimes.getInt(i) % 100;
-      temp *= 60;
-      temp += remainder;
-      realDepartureTimes.set(i, temp);
-    }
-  }
+  calculateDelay(table);
   
-  tempDelays = realDepartureTimes.subtract(departureTimes);
-  delays = tempDelays.copy();
-  for (int i = 0; i < delays.length(); i++) {
-    if (delays.getInt(i) < 0) {
-      delays.remove(i);
-      i--;
-    }
-  }
-  avDelay = delays.mean();
-  
-  maxVal = delays.max();
+
   
   
   
@@ -167,6 +136,7 @@ void setup() {
       public void actionPerformed (ActionEvent e) {
       if (fileButtons[0].isSelected()) {
         table = table2k;
+        calculateDelay(table);
         print("2K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -176,12 +146,11 @@ void setup() {
         busyRoutes.sortRoutes();
         pieChart.setTable(table);
         latenessChart.calculateLateness(table);
-        pieChartOrigin.setTable(table);
         pieChartOrigin.updateTable(table);
-        delays = tempDelays.copy();
       }
       if (fileButtons[1].isSelected()) {
         table = table10k;
+        calculateDelay(table);
         print("10K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -191,12 +160,11 @@ void setup() {
         busyRoutes.sortRoutes();
         pieChart.setTable(table);
         latenessChart.calculateLateness(table);
-        pieChartOrigin.setTable(table);
         pieChartOrigin.updateTable(table);
-        delays = tempDelays.copy();
       }
       if (fileButtons[2].isSelected()) {
         table = table100k;
+        calculateDelay(table);
         print("100K Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -206,12 +174,11 @@ void setup() {
         busyRoutes.sortRoutes();
         pieChart.setTable(table);
         latenessChart.calculateLateness(table);
-        pieChartOrigin.setTable(table);
         pieChartOrigin.updateTable(table); 
-        delays = tempDelays.copy();
       }
       if (fileButtons[3].isSelected()) {
         table = tableFull;
+        calculateDelay(table);
         print("Full Table Selected");
         busyRoutesPie.processData(table);
         busyRoutesPie.sortRoutes();
@@ -221,9 +188,7 @@ void setup() {
         busyRoutes.sortRoutes();
         pieChart.setTable(table);
         latenessChart.calculateLateness(table);
-        pieChartOrigin.setTable(table);
         pieChartOrigin.updateTable(table);
-        delays = tempDelays.copy();
       }
       fileSelect.parent.setVisible(false); // Close the window after file selection
     }
@@ -296,12 +261,9 @@ void setup() {
 void draw() {
   background(255);
   cursor(cursor);
-  float floatDelay = avDelay.getFloat();
-  //float hoursDelay = floatDelay % 60;
-  //float minDelay = floatDelay - hoursDelay*60;
-  String roundedDelay = nf(floatDelay, 0, 0);
-  //print( hoursDelay + "hours" + roundedDelay + "min");
-
+  floatDelay = avDelay.getFloat();
+  roundedDelay = nf(floatDelay, 0, 0);
+  
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
     int gifSpeed = 2;  // slow down speed of GIF
@@ -332,7 +294,7 @@ void draw() {
       text("Delayed Flights", width/2, 30);
       color(0);
       textSize(20);
-      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 300, 100);
+      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxDelay + " minutes", 300, 100);
     } else if (originDraw) {
       originChart.drawOriginChart();
       textSize(20);
@@ -355,7 +317,7 @@ void draw() {
       text("Flights by Lateness", width/2, 30);
       color(0);
       textSize(20);
-      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 130, 575);
+      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxDelay + " minutes", 130, 575);
     }
     if (busyDraw) {
       busyRoutesPie.drawPieChart(width/2, height/2, 300);
@@ -372,6 +334,44 @@ void draw() {
     }
     break;
   }
+}
+
+void calculateDelay(DataTable table) {
+  DataSeries realDepartureTimes = table.get("DEP_TIME");
+  DataSeries departureTimes = table.get("CRS_DEP_TIME");
+  for (int i = 0; i < departureTimes.length(); i++) {
+    if (realDepartureTimes.isEmpty(i)){
+      realDepartureTimes.remove(i);
+      i--;
+      departureTimes.remove(i);
+      i--;
+    }
+    if (departureTimes.getInt(i) > 100) {
+      int temp = departureTimes.getInt(i) / 100;
+      int remainder = departureTimes.getInt(i) % 100;
+      temp *= 60;
+      temp += remainder;
+      departureTimes.set(i, temp);
+    }
+    if (realDepartureTimes.getInt(i) > 100) {
+      int temp = realDepartureTimes.getInt(i) / 100;
+      int remainder = realDepartureTimes.getInt(i) % 100;
+      temp *= 60;
+      temp += remainder;
+      realDepartureTimes.set(i, temp);
+    }
+  }
+  
+  tempDelays = realDepartureTimes.subtract(departureTimes);
+  delays = tempDelays.copy();
+  for (int i = 0; i < delays.length(); i++) {
+    if (delays.getInt(i) < 0) {
+      delays.remove(i);
+      i--;
+    }
+  }
+  avDelay = delays.mean();
+  maxDelay = delays.max();
 }
 
 String showInputBox() {
