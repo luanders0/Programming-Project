@@ -1,31 +1,31 @@
+// Zara F created pie chart to show the amount of flights by state
 class PieChartOrigin {
-  DataTable table; // DataTable object to store the data
+  DataTable table; 
   String[] twoLetterStrings;
   int[] counts;
   int totalStrings;
   color[] sliceColors = {#acfeff, #89e2ff, #6fa8ff, #5349ff, #7420ff, #98fabc};
 
-  // Constructor that takes a DataTable object as input
+  // Constructor
   PieChartOrigin(DataTable table) {
     this.table = table;
-    initializeData(); // Call the method to initialize data
+    initializeData();
   }
 
-  // Method to initialize data
+  // sorting + initialising the data
   void initializeData() {
-    // Extract necessary data from the DataTable object
     DataSeries originColumn = table.get("ORIGIN_STATE_ABR");
     String[] origins = originColumn.asStringArray();
 
-    // Initialize arrays
-    totalStrings = originColumn.length(); // Assuming each row corresponds to one two-letter string
+
+    totalStrings = originColumn.length();
     twoLetterStrings = new String[totalStrings];
     counts = new int[totalStrings];
 
-    // Compute frequency counts
     for (int i = 0; i < totalStrings; i++) {
       int count = 0;
       String currentString = origins[i];
+      
       // Check if the current string has already been counted
       boolean counted = false;
       for (int j = 0; j < i; j++) {
@@ -46,6 +46,7 @@ class PieChartOrigin {
     }
   }
 
+// getting the full names of states for the labels
   String getStateFullName(String stateAbbreviation) {
     switch (stateAbbreviation) {
     case "AL":
@@ -156,9 +157,8 @@ class PieChartOrigin {
   }
 
 
-  // Draw method similar to the original one
+  // Draws the pie chart
   void draw(float centerX, float centerY, float x, float y, float diameter) {
-    // Draw the pie chart using the extracted data
     float startAngle = 0;
     for (int i = 0; i < counts.length; i++) {
       float angle = map(counts[i], 0, totalStrings, 0, TWO_PI);
@@ -181,7 +181,7 @@ class PieChartOrigin {
       startAngle = endAngle;
     }
   }
-
+// updates the table if the user changes the table amount e.g. 2K, 10K
   void updateTable(DataTable table) {
     this.table = table;
     initializeData();

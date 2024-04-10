@@ -1,26 +1,19 @@
-import processing.data.Table;
-import processing.data.TableRow;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
+// Zara F added a pie chart to show the top 15 busiest routes
 class BusyPie {
   DataTable table;
-  HashMap<String, Integer> routeCounts; // Store flight counts for each route
-  ArrayList<String> topRoutes; // Store top routes
-  ArrayList<Integer> colors; // Store colors for each route
-  int totalFlights; // Total number of flights
-  color[] sliceColors = {#fa41e9, #9e30fc, #05c9e8, #04e09f, #54ed07, #98fabc}; //colours for pie slices
+  HashMap<String, Integer> routeCounts;
+  ArrayList<String> topRoutes;
+  ArrayList<Integer> colors;
+  int totalFlights;
+  color[] sliceColors = {#fa41e9, #9e30fc, #05c9e8, #04e09f, #54ed07, #98fabc};
 
-
+//constructor
   BusyPie(DataTable flightTable) {
-    routeCounts = new HashMap<String, Integer>();
     processData(flightTable);
     sortRoutes();
     assignColors();
   }
-
+//sorting + initialising the data
   void processData(DataTable flightTable) {
     table = flightTable;
     routeCounts = new HashMap<String, Integer>(); // Reset routeCounts to start fresh
@@ -41,7 +34,8 @@ class BusyPie {
         String dest = dests[i];
         String destCity = destCities[i];
         
-         String route = origin + " (" + originCity + ") to \n" + dest + " (" + destCity + ")";
+        //creating a label to be used later on
+        String route = origin + " (" + originCity + ") to \n" + dest + " (" + destCity + ")";
         
         if (routeCounts.containsKey(route)) {
             int count = routeCounts.get(route);
@@ -54,7 +48,7 @@ class BusyPie {
     }
 }
 
-
+ // only taking the top 15 routes for the piechart
   void sortRoutes() {
     topRoutes = new ArrayList<String>(routeCounts.keySet());
     Collections.sort(topRoutes, new Comparator<String>() {
@@ -65,19 +59,19 @@ class BusyPie {
       }
     }
     );
-    // Limit to top 15 routes
     if (topRoutes.size() > 15) {
       topRoutes = new ArrayList<String>(topRoutes.subList(0, 15));
     }
   }
 
+//giving random colours from the list provided for each pie chart slice
   void assignColors() {
     colors = new ArrayList<Integer>();
     for (int i = 0; i < topRoutes.size(); i++) {
       colors.add(color(random(255), random(255), random(255)));
     }
   }
-
+//draws the piechart
 void drawPieChart(float x, float y, float diameter) {
     int totalTopFlights = 0;
     for (String route : topRoutes) {
@@ -89,11 +83,11 @@ void drawPieChart(float x, float y, float diameter) {
         float angle = map(routeCounts.get(route), 0, totalTopFlights, 0, TWO_PI);
         float endAngle = startAngle + angle;
 
-        // Determine slice color
+        // Chooses slice color
         int sliceColorIndex = topRoutes.indexOf(route) % sliceColors.length;
         color sliceColor = sliceColors[sliceColorIndex];
 
-        // Draw the slice
+        // Draws the slice
         fill(sliceColor);
         arc(x, y, diameter, diameter, startAngle, endAngle);
 
@@ -108,7 +102,7 @@ void drawPieChart(float x, float y, float diameter) {
             String labelText = route + ": \n" + routeCounts.get(route) + " flights\n";
             text(labelText, 490, 570);
         }
-
+  //start processs over
         startAngle = endAngle;
     }
 }
