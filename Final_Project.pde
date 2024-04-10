@@ -40,6 +40,8 @@ boolean busyDraw = false;
 boolean busyRoutesDraw = false;
 boolean destDraw = false;
 
+DataValue avDelay, maxVal;
+
 int difference = 0;
 int schDepHour = 0;
 int schDepMinute = 0;
@@ -144,10 +146,10 @@ void setup() {
       i--;
     }
   }
-  DataValue avDelay = delays.mean();
+  avDelay = delays.mean();
   println(avDelay);
   
-  DataValue maxVal = delays.max();
+  maxVal = delays.max();
   
   print("Longest Delay: " + maxVal);
   
@@ -290,6 +292,11 @@ void setup() {
 void draw() {
   background(255);
   cursor(cursor);
+  float floatDelay = float(avDelay.toString());
+  //float hoursDelay = floatDelay % 60;
+  //float minDelay = floatDelay - hoursDelay*60;
+  String roundedDelay = nf(floatDelay, 0, 0);
+  //print( hoursDelay + "hours" + roundedDelay + "min");
 
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
@@ -325,6 +332,9 @@ void draw() {
       textSize(20);
       text("Flights by State", width/2, 30);
     }
+    color(0);
+    textSize(20);
+    text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 300, 50);
     break;
   case PIE_SCREEN:
     background(#6ab187);
@@ -354,6 +364,9 @@ void draw() {
       String label = "Number of flights leaving airport " + userInput + " in January 2022";
       text(label, width/2, 30);
     }
+    color(0);
+    textSize(20);
+    text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 130, 575);
     break;
   }
 }
