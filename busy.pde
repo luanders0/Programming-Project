@@ -1,4 +1,5 @@
 //Roisin s added bar charts for the top 10 busy routes
+
 import processing.data.Table;
 import processing.data.TableRow;
 import java.util.HashMap;
@@ -38,8 +39,8 @@ class busyRoutes {
     String[] origins = originColumn.asStringArray();
     String[] dests = destColumn.asStringArray();
     
-
-    for (int i = 0; i < destColumn.length(); i++) { //<>//
+ //<>//
+    for (int i = 0; i < destColumn.length(); i++) {
       // Get origin and destination airports
       String origin = origins[i]; //<>//
       String destination = dests[i];
@@ -83,7 +84,7 @@ void drawChart() {
   int chartHeight = height - startY - 100; 
 
   // Calculate the width of each bar
-  float barWidth = chartWidth / (float) min(10, topRoutes.size());
+  float barWidth = chartWidth / (float) min(15, topRoutes.size());
 
   // Draw x-axis
   line(startX, startY + chartHeight, startX + chartWidth, startY + chartHeight);
@@ -95,7 +96,7 @@ void drawChart() {
   float scaleFactor = (float) chartHeight / maxFlights;
 
   // Draw bars for each route
-  for (int i = 0; i < min(10, topRoutes.size()); i++) {
+  for (int i = 0; i < min(15, topRoutes.size()); i++) {
     String route = topRoutes.get(i);
     int flights = routeCounts.get(route);
 
@@ -121,6 +122,7 @@ void drawChart() {
     // Draw route label
     fill(0);
     textAlign(CENTER);
+    textSize(7.5); // Adjusted text size for route labels
     text(route, barX + barWidth / 4, startY + chartHeight + 20); 
   }
   textSize(16);
