@@ -78,10 +78,9 @@ LatenessPieChart latenessChart;
 Widget fileButton, barChart, pieChartButton, backButton, pressHere;
 Button button;
 Screen latenessScreen, pieScreen;
-ActionListener[] buttonListeners = new ActionListener[4];
+ActionListener[] pieListeners = new ActionListener[4];
 JRadioButton[] fileButtons = new JRadioButton[4];
-Dialog_Pane buttonPanel;
-Dialog_Pane fileSelect;
+Dialog_Pane piePanel, fileSelect, barPanel;
 SoundFile clickSound;
 DataTable table, table2k, table10k, table100k, tableFull;
 
@@ -197,7 +196,7 @@ void setup() {
   JButton chooseFile = new JButton("Choose File");
   chooseFile.addActionListener(fileListener);
 
-  buttonListeners[0] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
+  pieListeners[0] = new ActionListener() { // Lukas A added code for Dialog_Pane buttons 26/3/24
     @Override
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 1st button is pressed
@@ -208,7 +207,7 @@ void setup() {
     }
   };
 
-  buttonListeners[1] = new ActionListener() {
+  pieListeners[1] = new ActionListener() {
     @Override
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 2nd button is pressed
@@ -219,7 +218,7 @@ void setup() {
     }
   };
 
-  buttonListeners[2] = new ActionListener() {
+  pieListeners[2] = new ActionListener() {
     @Override
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 3rd button is pressed
@@ -230,11 +229,11 @@ void setup() {
     }
   };
 
-  buttonListeners[3] = new ActionListener() {
+  pieListeners[3] = new ActionListener() {
     @Override
       public void actionPerformed (ActionEvent e) {
       //this code is executed when the 4th button is pressed
-      userInput = buttonPanel.getInput("Please enter destination airport");
+      userInput = piePanel.getInput("Please enter destination airport");
       pieChart = new PieChart(table);
       userInput = userInput.toUpperCase(); // Convert to uppercase
       destDraw = true;
@@ -245,7 +244,13 @@ void setup() {
   };
 
   String[] buttonText = {"Sort by Lateness", "Sort by Origin", "Sort by Busy Routes", "Sort By Destination Airport"};
-  buttonPanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", buttonListeners, 200, 100);
+  piePanel = new Dialog_Pane(buttonText, "Choose Your Button", "Buttons", pieListeners, 200, 100);
+  String[] barButtonText = new String[buttonText.length - 1];
+  arrayCopy(buttonText, 0, barButtonText, 0, 3);
+  ActionListener[] barListeners = new ActionListener[pieListeners.length - 1];
+  arrayCopy(pieListeners, 0, barListeners, 0, 3);
+  barPanel = new Dialog_Pane(barButtonText, "Choose Your Button", "Buttons", barListeners, 200, 100);
+  
   fileSelect = new Dialog_Pane(fileButtons, "Please select file size", 100, 100, chooseFile);
   lateness_plot latenessPlot = new lateness_plot(table);
   latenessScreen = new Screen(color(255), latenessPlot);
@@ -400,14 +405,14 @@ void mousePressed() { // Avery H & Lukas A worked on mousePressed & widgets
     switch(barChart.getEvent(mouseX, mouseY)) {
       case(BAR_CHART_BUTTON):
         screenState = BAR_SCREEN;
-        buttonPanel.popup();
+        barPanel.popup();
         break;
       case(EVENT_NULL):
         break;
     }
     switch(pieChartButton.getEvent(mouseX, mouseY)) {
       case(PIE_CHART_BUTTON):
-        buttonPanel.popup();
+        piePanel.popup();
         screenState = PIE_SCREEN;
         break;
       case(EVENT_NULL):
