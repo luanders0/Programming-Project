@@ -54,6 +54,9 @@ int cancelledFlightCount = 0;
 int totalFlightCount = -1;
 int screenState;
 int barScreen;
+int maxDelayMinutes, maxDelayHours;
+
+String avRounded;
 
 PImage homeScreen;
 PImage clouds;
@@ -101,7 +104,7 @@ void setup() {
   fileButton = new Widget(485, 60, file, FILE_BUTTON);
   barChart = new Widget(230, 200, 150, 80, "Bar Chart", color(255, 255, 255), barChartFont, BAR_CHART_BUTTON);
   pieChartButton = new Widget(230, 300, 150, 80, "Pie Chart", color(255, 255, 255), barChartFont, PIE_CHART_BUTTON);
-  backButton = new Widget(30, 50, 100, 40, "Back", color(255), barChartFont, BACK_BUTTON);
+  backButton = new Widget(30, 25, 100, 40, "Back", color(255), barChartFont, BACK_BUTTON);
   pressHere = new Widget(250, 350, 100, 40, 100, "click here for \nflight info", (0), barChartFont, HERE_BUTTON);
 
   table = table2k;
@@ -261,8 +264,9 @@ void setup() {
 void draw() {
   background(255);
   cursor(cursor);
-  floatDelay = avDelay.getFloat();
+  floatDelay = maxDelayMinutes;
   roundedDelay = nf(floatDelay, 0, 0);
+  String delay = maxDelayHours + " Hour(s) " + maxDelayMinutes + " Minute(s)";
   
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
@@ -294,7 +298,7 @@ void draw() {
       text("Delayed Flights", width/2, 30);
       color(0);
       textSize(20);
-      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxDelay + " minutes", 300, 100);
+      text("Average Delay : " + avRounded + " minutes" + "\nLongest Delay: " + delay, 300, 100);
     } else if (originDraw) {
       originChart.drawOriginChart();
       textSize(20);
@@ -317,7 +321,7 @@ void draw() {
       text("Flights by Lateness", width/2, 30);
       color(0);
       textSize(20);
-      text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxDelay + " minutes", 130, 575);
+      text("Average Delay : " + avRounded + " minutes" + "\nLongest Delay: " + delay, 200, 575);
     }
     if (busyDraw) {
       busyRoutesPie.drawPieChart(width/2, height/2, 300);
@@ -330,7 +334,7 @@ void draw() {
       fill(0);
       textSize(20);
       String label = "Number of flights leaving airport " + userInput + " in January 2022";
-      text(label, width/2, 30);
+      text(label, width/2, 75);
     }
     break;
   }
@@ -372,6 +376,13 @@ void calculateDelay(DataTable table) {
   }
   avDelay = delays.mean();
   maxDelay = delays.max();
+  
+  float avFloat = avDelay.getInt();
+  avRounded = nf(avFloat, 0, 0);
+  
+  maxDelayHours = maxDelay.getInt() / 60;
+  maxDelayMinutes = maxDelay.getInt() - maxDelayHours*60;
+  
 }
 
 String showInputBox() {
