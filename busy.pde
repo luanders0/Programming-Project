@@ -122,7 +122,7 @@ void drawChart() {
     // Draw route label
     fill(0);
     textAlign(CENTER);
-    textSize(7.5); // Adjusted text size for route labels
+    textSize(7); // Adjusted text size for route labels
     text(route, barX + barWidth / 4, startY + chartHeight + 20); 
   }
   textSize(16);
