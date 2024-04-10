@@ -96,7 +96,7 @@ void setup() {
   barChartFont = loadFont("BellMTBold-48.vlw");
   PImage file = loadImage("fileButton.png");
 
-  fileButton = new Widget(485, 60, file, FILE_BUTTON); 
+  fileButton = new Widget(485, 60, file, FILE_BUTTON); // Avery H and Lukas A added widgets 3/4/24
   barChart = new Widget(230, 200, 150, 80, "Bar Chart", color(255, 255, 255), barChartFont, BAR_CHART_BUTTON);
   pieChartButton = new Widget(230, 300, 150, 80, "Pie Chart", color(255, 255, 255), barChartFont, PIE_CHART_BUTTON);
   backButton = new Widget(30, 25, 100, 40, "Back", color(255), barChartFont, BACK_BUTTON);
@@ -250,9 +250,7 @@ void setup() {
   fileSelect = new Dialog_Pane(fileButtons, "Please select file size", 100, 100, chooseFile);
   button = new Button(width/2, height/2, 200, 60, "Lateness Chart");
 
-  homeScreen = loadImage("SquareMainScreen.jpg"); // Avery H
-  clouds = loadImage("clouds.jpg");
-  frameRate(30);
+  frameRate(30); // Avery H added GIFs 7/4/24
   allFramesClouds = Gif.getPImages(this, "cloudScreen.gif");
   allFramesPlanes = Gif.getPImages(this, "planeCrashGIF.gif");
 }
@@ -260,7 +258,7 @@ void setup() {
 void draw() {
   background(255);
   cursor(cursor);
-  floatDelay = maxDelayMinutes;
+  floatDelay = maxDelayMinutes; // Avery H added calculations for average and max delays in min/hours 10/4/24
   roundedDelay = nf(floatDelay, 0, 0);
   String delay = maxDelayHours + " Hour(s) " + maxDelayMinutes + " Minute(s)";
   
@@ -370,10 +368,10 @@ void calculateDelay() { // Lukas A added code to calculate flight delay 4/10/202
       i--;
     }
   }
-  avDelay = delays.mean();
-  maxDelay = delays.max();
+  avDelay = delays.mean(); // Lukas A loaded mean 10/4/24
+  maxDelay = delays.max(); // Avery H loaded max delay 10/4/24
   
-  float avFloat = avDelay.getInt();
+  float avFloat = avDelay.getInt(); // Avery h added calculations for rounding and converting mins to hours 10/4/24
   avRounded = nf(avFloat, 0, 0);
   
   maxDelayHours = maxDelay.getInt() / 60;
