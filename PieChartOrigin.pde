@@ -1,30 +1,25 @@
 class PieChartOrigin {
   DataTable table; // DataTable object to store the data
-  String[] threeLetterStrings;
+  String[] twoLetterStrings;
   int[] counts;
   int totalStrings;
   color[] sliceColors = {#acfeff, #89e2ff, #6fa8ff, #5349ff, #7420ff, #98fabc};
 
   // Constructor that takes a DataTable object as input
   PieChartOrigin(DataTable table) {
-    setTable(table);
-    initializeData(); // Call the method to initialize data
-  }
-
-  // Method to set the DataTable object
-  void setTable(DataTable table) {
     this.table = table;
+    initializeData(); // Call the method to initialize data
   }
 
   // Method to initialize data
   void initializeData() {
     // Extract necessary data from the DataTable object
-    DataSeries originColumn = table.get("ORIGIN");
+    DataSeries originColumn = table.get("ORIGIN_STATE_ABR");
     String[] origins = originColumn.asStringArray();
 
     // Initialize arrays
-    totalStrings = originColumn.length(); // Assuming each row corresponds to one three-letter string
-    threeLetterStrings = new String[totalStrings];
+    totalStrings = originColumn.length(); // Assuming each row corresponds to one two-letter string
+    twoLetterStrings = new String[totalStrings];
     counts = new int[totalStrings];
 
     // Compute frequency counts
@@ -34,13 +29,13 @@ class PieChartOrigin {
       // Check if the current string has already been counted
       boolean counted = false;
       for (int j = 0; j < i; j++) {
-        if (currentString.equals(threeLetterStrings[j])) {
+        if (currentString.equals(twoLetterStrings[j])) {
           counted = true;
           break;
         }
       }
       if (!counted) {
-        threeLetterStrings[i] = currentString;
+        twoLetterStrings[i] = currentString;
         for (int j = i; j < totalStrings; j++) {
           if (currentString.equals(origins[j])) {
             count++;
@@ -50,10 +45,116 @@ class PieChartOrigin {
       }
     }
   }
-  void updateTable(DataTable table) {
-    setTable(table);
-    initializeData();
+
+  String getStateFullName(String stateAbbreviation) {
+    switch (stateAbbreviation) {
+    case "AL":
+      return "Alabama";
+    case "AK":
+      return "Alaska";
+    case "AZ":
+      return "Arizona";
+    case "AR":
+      return "Arkansas";
+    case "CA":
+      return "California";
+    case "CO":
+      return "Colorado";
+    case "CT":
+      return "Connecticut";
+    case "DE":
+      return "Delaware";
+    case "FL":
+      return "Florida";
+    case "GA":
+      return "Georgia";
+    case "HI":
+      return "Hawaii";
+    case "ID":
+      return "Idaho";
+    case "IL":
+      return "Illinois";
+    case "IN":
+      return "Indiana";
+    case "IA":
+      return "Iowa";
+    case "KS":
+      return "Kansas";
+    case "KY":
+      return "Kentucky";
+    case "LA":
+      return "Louisiana";
+    case "ME":
+      return "Maine";
+    case "MD":
+      return "Maryland";
+    case "MA":
+      return "Massachusetts";
+    case "MI":
+      return "Michigan";
+    case "MN":
+      return "Minnesota";
+    case "MS":
+      return "Mississippi";
+    case "MO":
+      return "Missouri";
+    case "MT":
+      return "Montana";
+    case "NE":
+      return "Nebraska";
+    case "NV":
+      return "Nevada";
+    case "NH":
+      return "New Hampshire";
+    case "NJ":
+      return "New Jersey";
+    case "NM":
+      return "New Mexico";
+    case "NY":
+      return "New York";
+    case "NC":
+      return "North Carolina";
+    case "ND":
+      return "North Dakota";
+    case "OH":
+      return "Ohio";
+    case "OK":
+      return "Oklahoma";
+    case "OR":
+      return "Oregon";
+    case "PA":
+      return "Pennsylvania";
+    case "PR":
+      return "Puerto Rico";
+    case "RI":
+      return "Rhode Island";
+    case "SC":
+      return "South Carolina";
+    case "SD":
+      return "South Dakota";
+    case "TN":
+      return "Tennessee";
+    case "TX":
+      return "Texas";
+    case "UT":
+      return "Utah";
+    case "VT":
+      return "Vermont";
+    case "VA":
+      return "Virginia";
+    case "WA":
+      return "Washington";
+    case "WV":
+      return "West Virginia";
+    case "WI":
+      return "Wisconsin";
+    case "WY":
+      return "Wyoming";
+    default:
+      return "Unknown";
+    }
   }
+
 
   // Draw method similar to the original one
   void draw(float centerX, float centerY, float x, float y, float diameter) {
@@ -67,7 +168,7 @@ class PieChartOrigin {
       if (mouseOverSlice(centerX, centerY, x, y, diameter, startAngle, endAngle)) {
         fill(0);
         textSize(20); // Use a bolder font and larger size
-        text(threeLetterStrings[i] + ": " + counts[i], 490, 570);
+        text(getStateFullName(twoLetterStrings[i])+", " + twoLetterStrings[i] + ": " + counts[i], 490, 570);
 
         float expandedDiameter = diameter + 20; // Increase diameter by 20 pixels
         fill(sliceColors[i % sliceColors.length]);
@@ -79,6 +180,11 @@ class PieChartOrigin {
       }
       startAngle = endAngle;
     }
+  }
+
+  void updateTable(DataTable table) {
+    this.table = table;
+    initializeData();
   }
 
   // MouseOverSlice method similar to the original one

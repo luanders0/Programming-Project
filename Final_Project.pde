@@ -286,7 +286,7 @@ void draw() {
       busyRoutes.drawChart();
       fill(0);
       textSize(20);
-      text("Top 10 Busiest Routes", width/2, 30);
+      text("Top 15 Busiest Routes", width/2, 30);
     } else if (latenessDraw) {
       latenessPlot.drawChart();
       fill(0);
@@ -308,7 +308,7 @@ void draw() {
       pieChartOrigin.draw(width/2, height/2, width/2, height/2, 300);
       fill(0);
       textSize(20);
-      text("Flights by State", width/2, 30);
+      text("Flights by State (and Territories)", width/2, 30);
     }
     if (latenessDraw) {
       latenessChart.draw(width/2, height/2, width/2, height/2, 300);
