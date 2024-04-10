@@ -40,6 +40,8 @@ boolean busyDraw = false;
 boolean busyRoutesDraw = false;
 boolean destDraw = false;
 
+DataValue avDelay, maxVal;
+
 int difference = 0;
 int schDepHour = 0;
 int schDepMinute = 0;
@@ -111,31 +113,45 @@ void setup() {
   
   
   
-  DataSeries departureTimes = table.get("DEP_TIME");
-  DataSeries realDepartureTimes = table.get("CRS_DEP_TIME");
-  
+  DataSeries realDepartureTimes = table.get("DEP_TIME");
+  DataSeries departureTimes = table.get("CRS_DEP_TIME");
   for (int i = 0; i < departureTimes.length(); i++) {
-    if (departureTimes.isEmpty(i) || realDepartureTimes.isEmpty(i)){
-      departureTimes.remove(i);
-      i--;
+    if (realDepartureTimes.isEmpty(i)){
       realDepartureTimes.remove(i);
       i--;
+      departureTimes.remove(i);
+      i--;
     }
-    if ((departureTimes.getInt(i) - realDepartureTimes.getInt(i)) < -2000) {
-      int temp = departureTimes.getInt(i);
-      temp += 2400;
+    if (departureTimes.getInt(i) > 100) {
+      int temp = departureTimes.getInt(i) / 100;
+      int remainder = departureTimes.getInt(i) % 100;
+      temp *= 60;
+      temp += remainder;
       departureTimes.set(i, temp);
+    }
+    if (realDepartureTimes.getInt(i) > 100) {
+      int temp = realDepartureTimes.getInt(i) / 100;
+      int remainder = realDepartureTimes.getInt(i) % 100;
+      temp *= 60;
+      temp += remainder;
+      realDepartureTimes.set(i, temp);
     }
   }
   
-  DataSeries delays = departureTimes.subtract(realDepartureTimes);
-  DataValue avDelay = delays.mean();
-  print(avDelay);
+  DataSeries tempDelays = realDepartureTimes.subtract(departureTimes);
+  DataSeries delays = tempDelays.copy();
+  for (int i = 0; i < delays.length(); i++) {
+    if (delays.getInt(i) < 0) {
+      delays.remove(i);
+      i--;
+    }
+  }
+  avDelay = delays.mean();
+  println(avDelay);
   
-  DataValue maxVal = delays.max();
-  DataValue minVal = delays.min();
+  maxVal = delays.max();
   
-  print("Longest Delay: " + maxVal + "\nShortest Delay: " + minVal);
+  print("Longest Delay: " + maxVal);
   
   
   for (int i = 0; i < fileButtons.length; i++) {
@@ -276,10 +292,16 @@ void setup() {
 void draw() {
   background(255);
   cursor(cursor);
+  float floatDelay = float(avDelay.toString());
+  //float hoursDelay = floatDelay % 60;
+  //float minDelay = floatDelay - hoursDelay*60;
+  String roundedDelay = nf(floatDelay, 0, 0);
+  //print( hoursDelay + "hours" + roundedDelay + "min");
 
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
-    int currentFramePlanes = frameCount % allFramesPlanes.length;
+    int gifSpeed = 2;  // slow down speed of GIF
+    int currentFramePlanes = (frameCount / gifSpeed) % allFramesPlanes.length;
     image(allFramesPlanes[currentFramePlanes], 0, 0, 600, 600);
     pressHere.draw();
     break;
@@ -310,6 +332,9 @@ void draw() {
       textSize(20);
       text("Flights by State", width/2, 30);
     }
+    color(0);
+    textSize(20);
+    text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 300, 100);
     break;
   case PIE_SCREEN:
     background(#6ab187);
@@ -339,6 +364,9 @@ void draw() {
       String label = "Number of flights leaving airport " + userInput + " in January 2022";
       text(label, width/2, 30);
     }
+    color(0);
+    textSize(20);
+    text("Average Delay : " + roundedDelay + " minutes" + "\nLongest Delay: " + maxVal + " minutes", 130, 575);
     break;
   }
 }
