@@ -317,7 +317,7 @@ void draw() {
       text("Flights by Lateness", width/2, 30);
       color(0);
       textSize(20);
-      text("Average Delay : " + avRounded + " minutes" + "\nLongest Delay: " + delay, 200, 575);
+      text("Average Delay : " + avRounded + " minutes" + "\nLongest Delay: " + delay, 200, 575); // Avery H
     }
     if (busyDraw) {
       busyRoutesPie.drawPieChart(width/2, height/2, 300);
@@ -329,7 +329,7 @@ void draw() {
       pieChart.drawPieChart(width/2, height/2, 300, userInput);
       fill(0);
       textSize(20);
-      String label = "Number of flights airving in airport " + userInput + " in January 2022";
+      String label = "Number of flights airving in airport " + userInput + " in January 2022"; // Avery H
       text(label, width/2, 30);
     }
     break;
@@ -371,7 +371,7 @@ void calculateDelay() { // Lukas A added code to calculate flight delay 4/10/202
   avDelay = delays.mean(); // Lukas A loaded mean 10/4/24
   maxDelay = delays.max(); // Avery H loaded max delay 10/4/24
   
-  float avFloat = avDelay.getInt(); // Avery h added calculations for rounding and converting mins to hours 10/4/24
+  float avFloat = avDelay.getInt(); // Avery H added calculations for rounding and converting mins to hours 10/4/24
   avRounded = nf(avFloat, 0, 0);
   
   maxDelayHours = maxDelay.getInt() / 60;
