@@ -279,7 +279,8 @@ void draw() {
 
   switch(screenState) { // Avery H set up switch statement for screens
   case HOME_SCREEN:
-    int currentFramePlanes = frameCount % allFramesPlanes.length;
+    int gifSpeed = 2;  // slow down speed of GIF
+    int currentFramePlanes = (frameCount / gifSpeed) % allFramesPlanes.length;
     image(allFramesPlanes[currentFramePlanes], 0, 0, 600, 600);
     pressHere.draw();
     break;
